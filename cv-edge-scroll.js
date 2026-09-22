@@ -232,7 +232,7 @@ Object.assign(figure.style, {
         ['08', '年夜饭刺绣四', 'group5-food-04.png']
       ];
       const group5Path = 'Images/personal-creation/Group5/';
-      const group6Path = 'Images/personal-creation/Group6/';
+      const group6Path = 'Images/personal-creation/group6/';
       const gallery = document.getElementById('gallery');
       document.body.classList.add('is-scrunchie-page');
       document.body.classList.remove('is-professional-page');
