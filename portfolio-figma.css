@@ -1,0 +1,515 @@
+#portfolio.portfolio-figma-page {
+  padding: 0 !important;
+  overflow: hidden;
+  background: #f4f4f3;
+}
+
+#portfolio.portfolio-figma-page > .page-kicker,
+#portfolio.portfolio-figma-page > .page-footer {
+  display: none;
+}
+
+#portfolio .portfolio-overview.portfolio-figma-overview {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  color: #111;
+  background: #f4f4f3;
+}
+
+.portfolio-figma-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  mix-blend-mode: multiply;
+  user-select: none;
+  pointer-events: none;
+}
+
+#portfolio .portfolio-overview.portfolio-figma-overview > .portfolio-figma-word {
+  position: absolute;
+  z-index: 1;
+  left: 50%;
+  bottom: 4.5%;
+  margin: 0;
+  transform: translateX(-50%);
+  color: rgba(19, 19, 19, .12);
+  font: 700 clamp(66px, 8.2vw, 118px)/.8 Arial, sans-serif;
+  letter-spacing: -.075em;
+  pointer-events: none;
+}
+
+.portfolio-figma-menu {
+  position: absolute;
+  z-index: 2;
+  display: grid;
+  align-content: start;
+  margin: 0;
+}
+
+.portfolio-figma-menu--root {
+  top: 48.5%;
+  left: 35%;
+  width: min(46vw, 720px);
+}
+
+.portfolio-figma-menu button {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 9.2rem;
+  align-items: center;
+  gap: 1.25rem;
+  width: 100%;
+  min-width: 0;
+  padding: .22rem 0;
+  border: 0;
+  color: #111;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+}
+
+.portfolio-figma-menu strong {
+  display: block;
+  min-width: 0;
+  font: 400 clamp(30px, 3.15vw, 49px)/1.1 "Chalkboard SE", "Comic Sans MS", "Bradley Hand", cursive;
+  letter-spacing: -.045em;
+  white-space: nowrap;
+  transition: opacity .18s ease, transform .18s ease;
+}
+
+.portfolio-figma-menu em {
+  justify-self: start;
+  font: 400 clamp(12px, 1.15vw, 18px)/1.2 Arial, "PingFang SC", sans-serif;
+  font-style: normal;
+  white-space: nowrap;
+}
+
+.portfolio-figma-menu button:hover strong,
+.portfolio-figma-menu button:focus-visible strong {
+  transform: translateX(.35rem);
+}
+
+.portfolio-figma-menu button:focus-visible {
+  outline: 1px solid currentColor;
+  outline-offset: .3rem;
+}
+
+#portfolio .portfolio-overview.portfolio-figma-overview > .portfolio-academic-origin {
+  position: absolute;
+  z-index: 2;
+  top: 52.3%;
+  left: 16.5%;
+  margin: 0;
+  color: rgba(19, 19, 19, .42);
+  font: 400 clamp(27px, 3vw, 46px)/1 "Chalkboard SE", "Comic Sans MS", "Bradley Hand", cursive;
+  letter-spacing: -.04em;
+}
+
+.portfolio-figma-menu--academic {
+  top: 47.5%;
+  left: 44%;
+  width: min(39vw, 610px);
+}
+
+.portfolio-figma-menu--academic button {
+  grid-template-columns: minmax(0, 1fr) 8.5rem;
+}
+
+@media (max-width: 760px) {
+  .portfolio-figma-bg {
+    object-position: center;
+  }
+
+  .portfolio-figma-menu--root {
+    top: 49%;
+    left: 21%;
+    width: 70%;
+  }
+
+  .portfolio-figma-menu button,
+  .portfolio-figma-menu--academic button {
+    grid-template-columns: minmax(0, 1fr) 5.5rem;
+    gap: .6rem;
+  }
+
+  .portfolio-figma-menu strong {
+    font-size: clamp(22px, 5.2vw, 34px);
+  }
+
+  .portfolio-figma-menu em {
+    font-size: 10px;
+  }
+
+  #portfolio .portfolio-overview.portfolio-figma-overview > .portfolio-academic-origin {
+    top: 43%;
+    left: 9%;
+    font-size: 22px;
+  }
+
+  .portfolio-figma-menu--academic {
+    top: 51%;
+    left: 24%;
+    width: 68%;
+  }
+
+  #portfolio .portfolio-overview.portfolio-figma-overview > .portfolio-figma-word {
+    bottom: 8%;
+    font-size: 58px;
+  }
+}
+
+#portfolio-detail #gallery.collection-gallery.collection-dark .collection-page--image {
+  position: relative;
+  min-height: 100%;
+  padding: 0;
+  overflow: hidden;
+  background: #111;
+}
+
+#portfolio-detail #gallery.collection-gallery .collection-page--image > img {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+#portfolio-detail #gallery.collection-gallery .collection-page--image::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(180deg, rgba(0, 0, 0, .08) 35%, rgba(0, 0, 0, .58) 100%);
+  pointer-events: none;
+}
+
+#portfolio-detail #gallery.collection-gallery .collection-hero-overlay {
+  position: absolute;
+  z-index: 2;
+  left: 9vw;
+  right: 9vw;
+  bottom: 8vh;
+}
+
+#portfolio-detail #gallery.collection-gallery .collection-hero-overlay h1 {
+  margin: 0;
+  color: #fff;
+  font: 500 clamp(54px, 8vw, 118px)/.9 "Playfair Display", "Songti SC", serif;
+  letter-spacing: -.06em;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, .28);
+}
+
+#portfolio-detail #gallery.collection-gallery .collection-concept {
+  min-height: 100%;
+  display: grid;
+  grid-template-columns: minmax(260px, .8fr) minmax(0, 1.2fr);
+  gap: 9vw;
+  align-items: start;
+  padding: 15vh 9vw 13vh;
+  color: #171717;
+  background: #f4f4f3;
+}
+
+body.is-professional-page .site-nav {
+  mix-blend-mode: difference;
+  border-color: rgba(255, 255, 255, .7);
+}
+
+body.is-professional-page .site-nav .nav-item,
+body.is-professional-page .site-nav .nav-item.active {
+  color: #fff;
+}
+
+.collection-concept-heading p {
+  margin: 0 0 2.2rem;
+  font: 11px "DM Mono", monospace;
+  letter-spacing: .18em;
+}
+
+.collection-concept-heading h2 {
+  max-width: 620px;
+  margin: 0;
+  font: 500 clamp(38px, 5.2vw, 78px)/.94 "Playfair Display", "Songti SC", serif;
+  letter-spacing: -.045em;
+}
+
+.collection-concept-heading h3 {
+  margin: 1.6rem 0 0;
+  font: 500 clamp(24px, 2.7vw, 40px)/1.1 "Songti SC", serif;
+  letter-spacing: .08em;
+}
+
+.collection-concept-copy {
+  max-width: 720px;
+  padding-top: 3.1rem;
+}
+
+.collection-concept-copy p {
+  margin: 0 0 1.5rem;
+  font: 400 clamp(15px, 1.25vw, 19px)/2 Arial, "PingFang SC", sans-serif;
+  text-align: justify;
+}
+
+.collection-concept-copy .collection-concept-lines {
+  margin: 2.4rem 0;
+  padding-left: 1.4rem;
+  border-left: 1px solid rgba(20, 20, 20, .42);
+  font-family: "Songti SC", serif;
+  font-size: clamp(17px, 1.5vw, 22px);
+  line-height: 2.15;
+  text-align: left;
+}
+
+/* Figma Group 4 — project material sequence. */
+.professional-board {
+  padding: 0 9vw 14vh;
+  color: #171717;
+  background: #f4f4f3;
+}
+
+.professional-board-section {
+  width: min(100%, 1190px);
+  margin: 0 auto 8rem;
+}
+
+.professional-board-section h2 {
+  margin: 0 0 .9rem;
+  font: 500 clamp(18px, 2.4vw, 35px)/1 Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
+  letter-spacing: -.03em;
+}
+
+.professional-board-section h2 span {
+  font-size: .54em;
+  font-weight: 400;
+  letter-spacing: .04em;
+}
+
+.professional-collage {
+  display: grid;
+  gap: 1.2rem;
+}
+
+.professional-collage img,
+.professional-photo-main,
+.professional-photo-pairs img,
+.professional-furniture img {
+  display: block;
+  width: 100%;
+  object-fit: cover;
+}
+
+.professional-collage img {
+  aspect-ratio: 1.5;
+}
+
+.professional-photos {
+  display: grid;
+  grid-template-columns: minmax(0, 1.42fr) minmax(270px, .58fr);
+  gap: 1.2rem;
+  align-items: start;
+}
+
+.professional-photo-main {
+  height: 100%;
+  min-height: 600px;
+}
+
+.professional-photo-pairs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.2rem;
+}
+
+.professional-photo-pairs img {
+  aspect-ratio: .8;
+}
+
+.professional-photo-pairs .professional-photo-wide {
+  grid-column: 1 / -1;
+  aspect-ratio: 1.6;
+}
+
+.professional-photo-additions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.2rem;
+  margin-top: 1.2rem;
+}
+
+.professional-photo-additions img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1.5;
+  object-fit: cover;
+}
+
+.professional-furniture {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.2rem;
+}
+
+.professional-furniture img {
+  aspect-ratio: 1.35;
+}
+
+.professional-closing-photo {
+  width: min(100%, 1190px);
+  margin: 0 auto 8rem;
+  background: #f4f4f3;
+}
+
+.professional-closing-photo img {
+  display: block;
+  width: min(100%, 1190px);
+  margin: 0 auto;
+  aspect-ratio: 1.5;
+  object-fit: cover;
+}
+
+@media (max-width: 700px) {
+  #portfolio-detail #gallery.collection-gallery .collection-page--image > img {
+    object-position: center center;
+  }
+
+  #portfolio-detail #gallery.collection-gallery .collection-hero-overlay {
+    left: 7vw;
+    right: 7vw;
+    bottom: 7vh;
+  }
+
+  #portfolio-detail #gallery.collection-gallery .collection-hero-overlay h1 {
+    font-size: clamp(44px, 13vw, 68px);
+  }
+
+  #portfolio-detail #gallery.collection-gallery .collection-concept {
+    display: block;
+    min-height: auto;
+    padding: 13vh 7vw 10vh;
+  }
+
+  .collection-concept-heading h2 {
+    font-size: clamp(36px, 11vw, 54px);
+  }
+
+  .collection-concept-copy {
+    padding-top: 4rem;
+  }
+
+  .professional-board {
+    padding: 0 7vw 10vh;
+  }
+
+  .professional-board-section {
+    margin-bottom: 4.5rem;
+  }
+
+  .professional-photos {
+    grid-template-columns: 1fr;
+  }
+
+  .professional-photo-main {
+    min-height: 0;
+    aspect-ratio: .84;
+  }
+
+  .professional-furniture {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: .75rem;
+  }
+
+  .professional-closing-photo {
+    margin-bottom: 4.5rem;
+  }
+  
+  .professional-photo-pairs {
+    gap: .75rem;
+  }
+
+  .professional-photo-additions {
+    gap: .75rem;
+    margin-top: .75rem;
+  }
+}
+
+/* Project detail overlays share the same paper surface as the Portfolio pages. */
+.project-overlay,
+.project-overlay .project-intro,
+.project-overlay .project-detail-gallery,
+.project-overlay .project-afterword,
+.project-overlay .project-after-gallery,
+.project-overlay .project-gallery-column img {
+  color: #171717 !important;
+  background: #f4f4f3 !important;
+}
+
+.project-overlay .project-intro {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+}
+
+.project-overlay .project-intro p,
+.project-overlay .project-afterword p {
+  color: #171717 !important;
+  text-shadow: none !important;
+}
+
+.project-overlay .project-close {
+  padding: .1em .22em;
+  color: #171717;
+  background: rgba(244, 244, 243, .88);
+  line-height: 1;
+}
+
+/* Mountain and Stone Museum — reduce the empty hero before the project text. */
+.project-overlay[data-project="mountain-and-stone-museum"] .project-detail-hero {
+  min-height: 100%;
+  align-items: flex-start;
+  padding: 10vh 7vw 10vh;
+}
+
+.project-overlay[data-project="mountain-and-stone-museum"] .project-detail-hero:before {
+  display: none;
+}
+
+.project-overlay[data-project="mountain-and-stone-museum"] .project-detail-hero div {
+    color: #ffffff;
+}
+.project-overlay[data-project="mountain-and-stone-museum"] .project-scroll {
+  color: #171717;
+}
+
+.project-overlay[data-project="mountain-and-stone-museum"] .project-scroll {
+  bottom: 3vh;
+}
+
+.project-overlay[data-project="mountain-and-stone-museum"] .project-afterword {
+  max-width: 1080px !important;
+  padding: 10vh 7vw 10vh !important;
+}
+
+/* Work Experience — role titles only. */
+#cv .work-panel .work-rows h2 {
+  font-family: Arial, "PingFang SC", "Microsoft YaHei", sans-serif !important;
+}
+
+/* KASA LAMP — retain every drawing at one consistent content width. */
+.project-overlay[data-project="kasa-lamp"] .project-detail-gallery img:nth-child(-n + 4),
+.project-overlay[data-project="kasa-lamp"] .project-detail-gallery img:nth-child(7),
+.project-overlay[data-project="kasa-lamp"] .project-detail-gallery img:nth-child(8) {
+  width: 100%;
+  max-width: none;
+  height: auto;
+  min-height: 0 !important;
+  margin: 0 auto 20px;
+  object-fit: contain;
+}
