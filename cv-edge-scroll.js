@@ -140,6 +140,7 @@ Object.assign(figure.style, {
   const portfolio = document.querySelector('#portfolio .portfolio-overview');
   if (portfolio) {
     const portfolioSection = portfolio.closest('#portfolio');
+    const touchPortfolio = window.matchMedia('(hover: none), (pointer: coarse)');
     let academicRevealedAt = -Infinity;
     portfolioSection?.classList.add('portfolio-figma-page');
     portfolio.classList.add('portfolio-figma-overview');
