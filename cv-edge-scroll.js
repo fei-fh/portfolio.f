@@ -381,6 +381,7 @@ Object.assign(figure.style, {
       if (portfolio.dataset.view === 'academic' && !event.target.closest('button')) renderPortfolio();
     });
     const showAcademicOnIntent = (event) => {
+      if ((event.type === 'pointerover' && event.pointerType === 'touch') || (event.type === 'focusin' && touchPortfolio.matches)) return;
       if (portfolio.dataset.view === 'root' && event.target.closest('[data-portfolio-group="academic"]')) {
         academicRevealedAt = performance.now();
         renderPortfolio('academic');
@@ -389,11 +390,13 @@ Object.assign(figure.style, {
     portfolio.addEventListener('pointerover', showAcademicOnIntent);
     portfolio.addEventListener('focusin', showAcademicOnIntent);
     portfolio.addEventListener('pointerout', (event) => {
+      if (event.pointerType === 'touch') return;
       const academicMenu = event.target.closest('.portfolio-figma-menu--academic');
       if (!academicMenu || academicMenu.contains(event.relatedTarget)) return;
       renderPortfolio();
     });
     portfolio.addEventListener('focusout', (event) => {
+      if (touchPortfolio.matches) return;
       const academicMenu = event.target.closest('.portfolio-figma-menu--academic');
       if (!academicMenu || academicMenu.contains(event.relatedTarget)) return;
       renderPortfolio();
@@ -407,7 +410,7 @@ Object.assign(figure.style, {
       renderPortfolio('academic');
     }, true);
     portfolio.addEventListener('pointerdown', (event) => {
-      if (portfolio.dataset.view === 'academic' && performance.now() - academicRevealedAt < 700 && event.target.closest('[data-category]')) {
+      if (event.pointerType !== 'touch' && portfolio.dataset.view === 'academic' && performance.now() - academicRevealedAt < 700 && event.target.closest('[data-category]')) {
         event.preventDefault();
         event.stopImmediatePropagation();
       }
