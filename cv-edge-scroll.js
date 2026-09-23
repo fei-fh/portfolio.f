@@ -243,7 +243,7 @@ Object.assign(figure.style, {
       document.body.classList.add('is-professional-index');
       document.getElementById('category-index').textContent = '03.02 / PORTFOLIO';
       gallery.className = 'professional-index';
-      gallery.innerHTML = `<section class="professional-index-page"><header class="professional-index-header"><p>03.02 / PORTFOLIO</p><h1>Professional Works</h1></header><div class="professional-projects">${professionalProjects.map(({ key, number, title, cover }) => `<button type="button" class="professional-project" data-professional-project="${key}" aria-label="打开 PROJECT ${number} ${title}"><img src="${cover}" alt="${title} 项目封面"><span class="professional-project-shade" aria-hidden="true"></span><span class="professional-project-copy"><small>PROJECT ${number}</small><strong>${title}</strong></span></button>`).join('')}</div></section>`;
+      gallery.innerHTML = `<section class="professional-index-page"><div class="professional-projects">${professionalProjects.map(({ key, number, title, cover }) => `<button type="button" class="professional-project" data-professional-project="${key}" aria-label="打开 PROJECT ${number} ${title}"><img src="${cover}" alt="${title} 项目封面"><span class="professional-project-shade" aria-hidden="true"></span><span class="professional-project-copy"><small>PROJECT ${number}</small><strong>${title}</strong></span></button>`).join('')}</div></section>`;
       document.querySelector('.project-pager')?.remove();
       goTo('portfolio-detail');
     };
