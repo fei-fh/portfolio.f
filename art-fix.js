@@ -4,7 +4,7 @@
     const gallery = document.getElementById('gallery');
     if (!gallery) return;
     gallery.className = 'art-vertical-gallery';
-    gallery.innerHTML = `<h1>Sketches of Phenomena</h1>${artwork.map((number) => `<figure><img src="Images/ph${number}.jpg" alt="Sketch ${number}"></figure>`).join('')}<div class="art-gallery-spacer"></div>`;
+    renderPrioritizedImages(gallery, `<h1>Sketches of Phenomena</h1>${artwork.map((number) => `<figure><img src="Images/ph${number}.jpg" alt="Sketch ${number}"></figure>`).join('')}<div class="art-gallery-spacer"></div>`, 'figure:first-of-type img');
     gallery.style.cssText = 'position:relative;display:block;box-sizing:border-box;width:100%;height:100%;overflow-y:auto;overflow-x:hidden;padding:15vh 7vw 8vh;background:#111;';
     const title = gallery.querySelector('h1');
     const figures = [...gallery.querySelectorAll('figure')];

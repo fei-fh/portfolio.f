@@ -9,6 +9,8 @@
     const figure = document.createElement('figure');
     figure.className = 'about-photo';
     const image = document.createElement('img');
+    image.loading = 'lazy';
+    image.decoding = 'async';
     image.src = `Images/about/${file}`;
     image.alt = '学习、制作与生活记录';
     figure.append(image);
@@ -147,7 +149,8 @@ Object.assign(figure.style, {
         ? [['1', 'Architecture', '建筑课程', 'architecture'], ['2', 'Product', '产品设计', 'product'], ['3', 'Art', '现象素描', 'art']]
         : [['01', 'Academic Works', '学生作品', 'academic'], ['02', 'Professional Works', '落地项目', 'professional'], ['03', 'Personal Creation', '个人项目', 'personal']];
       const background = view === 'academic' ? 'Images/portfolio-group2-bg.png' : 'Images/Portfolio/Group1/1.png';
-      portfolio.innerHTML = `<img class="portfolio-figma-bg" src="${background}" alt="" aria-hidden="true"><p class="portfolio-figma-word" aria-hidden="true">portfolio</p>${view === 'academic' ? '<p class="portfolio-academic-origin" aria-hidden="true">01&nbsp; Academic Works</p>' : ''}<nav class="portfolio-figma-menu portfolio-figma-menu--${view}" aria-label="${view === 'academic' ? 'Academic Works 分类' : '作品分类'}">${cards.map(([number, title, label, action]) => `<button type="button" ${view === 'academic' ? `data-category="${action}"` : `data-portfolio-group="${action}"`}><strong>${number}&nbsp; ${title}</strong><em>${label}</em></button>`).join('')}</nav>`;
+      const markup = `<img class="portfolio-figma-bg" src="${background}" alt="" aria-hidden="true"><p class="portfolio-figma-word" aria-hidden="true">portfolio</p>${view === 'academic' ? '<p class="portfolio-academic-origin" aria-hidden="true">01&nbsp; Academic Works</p>' : ''}<nav class="portfolio-figma-menu portfolio-figma-menu--${view}" aria-label="${view === 'academic' ? 'Academic Works 分类' : '作品分类'}">${cards.map(([number, title, label, action]) => `<button type="button" ${view === 'academic' ? `data-category="${action}"` : `data-portfolio-group="${action}"`}><strong>${number}&nbsp; ${title}</strong><em>${label}</em></button>`).join('')}</nav>`;
+      renderPrioritizedImages(portfolio, markup, '.portfolio-figma-bg');
       portfolio.dataset.view = view;
     };
     renderPortfolio();
@@ -248,9 +251,10 @@ Object.assign(figure.style, {
       document.body.classList.toggle('is-professional-page', Boolean(image));
       document.getElementById('category-index').textContent = `${index} / PORTFOLIO`;
       gallery.className = `collection-gallery${dark ? ' collection-dark' : ''}`;
-      gallery.innerHTML = image
+      const markup = image
         ? `<section class="collection-page collection-page--image"><img src="${image}" alt="${title}"><div class="collection-hero-overlay"><h1>${title}</h1></div></section>${after}`
         : `<section class="collection-page">${label ? `<p>${label}</p>` : ''}<h1>${title}</h1>${description ? `<span>${description}</span>` : ''}</section>`;
+      renderPrioritizedImages(gallery, markup, '.collection-page--image > img');
       document.querySelector('.project-pager')?.remove();
       goTo('portfolio-detail');
     };
@@ -260,7 +264,8 @@ Object.assign(figure.style, {
       document.body.classList.add('is-professional-index');
       document.getElementById('category-index').textContent = '03.02 / PORTFOLIO';
       gallery.className = 'professional-index';
-      gallery.innerHTML = `<section class="professional-index-page"><div class="professional-projects">${professionalProjects.map(({ key, number, title, cover }) => `<button type="button" class="professional-project" data-professional-project="${key}" aria-label="打开 PROJECT ${number} ${title}"><img src="${cover}" alt="${title} 项目封面"><span class="professional-project-shade" aria-hidden="true"></span><span class="professional-project-number">PROJECT ${number}</span><div class="project-copy professional-project-copy"><strong>${title}</strong></div><span class="professional-project-prompt">CLICK TO EXPLORE</span></button>`).join('')}</div></section>`;
+      const markup = `<section class="professional-index-page"><div class="professional-projects">${professionalProjects.map(({ key, number, title, cover }) => `<button type="button" class="professional-project" data-professional-project="${key}" aria-label="打开 PROJECT ${number} ${title}"><img src="${cover}" alt="${title} 项目封面"><span class="professional-project-shade" aria-hidden="true"></span><span class="professional-project-number">PROJECT ${number}</span><div class="project-copy professional-project-copy"><strong>${title}</strong></div><span class="professional-project-prompt">CLICK TO EXPLORE</span></button>`).join('')}</div></section>`;
+      renderPrioritizedImages(gallery, markup, '.professional-project:first-child > img');
       document.querySelector('.project-pager')?.remove();
       goTo('portfolio-detail');
       activeProfessionalProject = null;
@@ -318,7 +323,7 @@ Object.assign(figure.style, {
       document.getElementById('category-index').textContent = '03.03 / PORTFOLIO';
       gallery.className = 'scrunchie-gallery';
       const switcher = (items, basePath, label) => `<div class="scrunchie-layout craft-switcher" data-craft-switcher><div class="scrunchie-preview"><img src="${basePath}${items[0][2]}" alt="${items[0][1]}"><p class="scrunchie-name">${items[0][0]} / ${items[0][1]}</p></div><nav class="scrunchie-thumbnails" aria-label="${label}">${items.map(([number, name, file], index) => `<button type="button" class="${index === 0 ? 'is-selected' : ''}" data-craft-name="${name}" data-craft-number="${number}" data-craft-src="${basePath}${file}" aria-pressed="${index === 0}"><img src="${basePath}${file}" alt="${name}"><span>${number}</span></button>`).join('')}</nav></div>`;
-      gallery.innerHTML = `<section class="scrunchie-page"><header><p>个人创作</p><h1>Personal Creation</h1></header><section class="group5-project" aria-label="春节刺绣项目"><div class="group5-top"><img class="group5-hero" src="${group5Path}group5-dish-main.png" alt="春节年夜饭刺绣作品"><div class="group5-food-grid"><img src="${group5Path}group5-detail-01.png" alt="年夜饭制作过程一"><img src="${group5Path}group5-detail-02.png" alt="年夜饭制作过程二"><img src="${group5Path}group5-detail-03.png" alt="年夜饭制作过程三"><img src="${group5Path}group5-detail-04.png" alt="年夜饭制作过程四"><img class="group5-food-table" src="${group5Path}group5-food-table.png" alt="新年团圆饭餐桌"></div></div><p class="group5-description">This project focuses on the theme of Chinese New Year, showcasing the traditional culinary culture. I named this recipe project À table avec Fei, a design inspired by the dishes on my family’s New Year dinner table.<br>In China, the New Year is not only a celebration but also an important occasion for family reunions. Relatives and friends gather around the table, enjoying this moment.</p><div class="group5-interactive">${switcher(embroideryPieces, group5Path, '刺绣作品')}</div><p class="group5-caption">Crocheting and embroidering are calming hobbies.</p>
+      const markup = `<section class="scrunchie-page"><header><p>个人创作</p><h1>Personal Creation</h1></header><section class="group5-project" aria-label="春节刺绣项目"><div class="group5-top"><img class="group5-hero" src="${group5Path}group5-dish-main.png" alt="春节年夜饭刺绣作品"><div class="group5-food-grid"><img src="${group5Path}group5-detail-01.png" alt="年夜饭制作过程一"><img src="${group5Path}group5-detail-02.png" alt="年夜饭制作过程二"><img src="${group5Path}group5-detail-03.png" alt="年夜饭制作过程三"><img src="${group5Path}group5-detail-04.png" alt="年夜饭制作过程四"><img class="group5-food-table" src="${group5Path}group5-food-table.png" alt="新年团圆饭餐桌"></div></div><p class="group5-description">This project focuses on the theme of Chinese New Year, showcasing the traditional culinary culture. I named this recipe project À table avec Fei, a design inspired by the dishes on my family’s New Year dinner table.<br>In China, the New Year is not only a celebration but also an important occasion for family reunions. Relatives and friends gather around the table, enjoying this moment.</p><div class="group5-interactive">${switcher(embroideryPieces, group5Path, '刺绣作品')}</div><p class="group5-caption">Crocheting and embroidering are calming hobbies.</p>
 
 <section class="group6-project">
 <div class="group6-grid">
@@ -354,6 +359,7 @@ Object.assign(figure.style, {
 </section>
 
 </section><section class="scrunchie-section"; aria-label="发圈作品">${switcher(pieces, 'Images/personal-creation/', '发圈款式')}</section><div class="scrunchie-future-content" aria-label="后续个人创作内容"></div></section>`;
+      renderPrioritizedImages(gallery, markup, '.group5-hero');
       
       gallery.addEventListener('click', (event) => {
         const item = event.target.closest('button[data-craft-src]');
@@ -374,6 +380,7 @@ Object.assign(figure.style, {
       });
       document.querySelector('.project-pager')?.remove();
       goTo('portfolio-detail');
+      resetMobileScroll(gallery);
     };
     if (!document.getElementById('collection-page-style')) {
       document.head.insertAdjacentHTML('beforeend', '<style id="collection-page-style">#portfolio-detail #gallery.collection-gallery{display:block;width:100%;height:100%;overflow-y:auto;background:#f4f4f3}.collection-page{min-height:100%;padding:18vh 10vw 8vh;color:#171717}.collection-page p{margin:0 0 1rem;font:11px "DM Mono",monospace;letter-spacing:.14em}.collection-page h1{margin:0;font:500 clamp(56px,9vw,130px)/.86 "Playfair Display","Songti SC",serif;letter-spacing:-.065em}.collection-page span{display:block;margin-top:2rem;font:15px/1.8 Arial,"PingFang SC",sans-serif;color:#666}#portfolio-detail #gallery.collection-dark{background:#111}.collection-dark .collection-page{color:#fff}.collection-dark .collection-page span{color:#aaa}body.is-scrunchie-page .site-nav{border-color:rgba(20,20,20,.28)}body.is-scrunchie-page .site-nav .nav-item{color:#777}body.is-scrunchie-page .site-nav .nav-item.active{color:#171717}body.is-scrunchie-page .site-nav .nav-item.active:after{background:#171717}#portfolio-detail #gallery.scrunchie-gallery{display:block;width:100%;height:100%;overflow-y:auto;background:#f8f7f6;color:#171717}.scrunchie-page{min-height:180vh;padding:13vh 9vw 7vh;background:#f8f7f6}.scrunchie-page header p{margin:0 0 .75rem;font:11px "DM Mono",monospace;letter-spacing:.14em}.scrunchie-page header h1{margin:0 0 5vh;font:500 clamp(42px,5vw,76px)/.9 "Playfair Display","Songti SC",serif;letter-spacing:-.055em}.scrunchie-layout{display:grid;grid-template-columns:minmax(0,7fr) minmax(230px,3fr);gap:3vw;align-items:start}.scrunchie-preview{min-height:min(63vh,690px);display:grid;grid-template-rows:1fr auto;place-items:center;background:#f8f7f6;padding:3vh 3vw}.scrunchie-preview img{display:block;width:100%;height:min(56vh,620px);object-fit:contain;opacity:1;transition:opacity .22s ease}.scrunchie-preview img.is-changing{animation:scrunchie-fade .3s ease}.scrunchie-name{justify-self:start;margin:1.2rem 0 0;font:12px "DM Mono",monospace;letter-spacing:.08em}.scrunchie-thumbnails{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.scrunchie-thumbnails button{position:relative;aspect-ratio:1;background:#f8f7f6;border:1px solid transparent;padding:8px;transition:border-color .2s ease}.scrunchie-thumbnails button:hover,.scrunchie-thumbnails button.is-selected{border-color:#171717}.scrunchie-thumbnails img{display:block;width:100%;height:100%;object-fit:contain}.scrunchie-thumbnails span{position:absolute;right:7px;bottom:6px;font:10px "DM Mono",monospace;letter-spacing:.08em}.scrunchie-future-content{min-height:65vh}@keyframes scrunchie-fade{from{opacity:.16}to{opacity:1}}@media(max-width:700px){.scrunchie-page{min-height:165vh;padding:13vh 6vw 6vh}.scrunchie-page header h1{font-size:48px;margin-bottom:4vh}.scrunchie-layout{display:flex;flex-direction:column;gap:1.5rem}.scrunchie-preview{width:100%;min-height:52vh;padding:2vh 4vw}.scrunchie-preview img{height:43vh}.scrunchie-thumbnails{display:flex;width:100%;overflow-x:auto;padding-bottom:4px}.scrunchie-thumbnails button{flex:0 0 108px}.scrunchie-future-content{min-height:55vh}}</style>');
