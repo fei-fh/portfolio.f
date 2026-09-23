@@ -784,6 +784,32 @@ body.is-professional-page .site-nav .nav-item.active {
   color: #777;
 }
 
+/* CV skills */
+#cv .skills-panel .skills-list .skills-row {
+  display: grid;
+  grid-template-columns: minmax(170px, 0.42fr) minmax(0, 1fr);
+  gap: 2rem;
+  align-items: baseline;
+  letter-spacing: 0;
+}
+
+#cv .skills-panel .skills-row b {
+  min-width: 0;
+}
+
+#cv .skills-panel .skills-tools {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+#cv .skills-panel .skills-note {
+  margin: 1.4rem 0 0;
+  color: #8a8a8a;
+  font-size: 11px;
+  line-height: 1.7;
+  letter-spacing: 0;
+}
+
 @media (max-width: 700px) {
   #cv .work-panel {
     display: block !important;
@@ -817,6 +843,19 @@ body.is-professional-page .site-nav .nav-item.active {
   #cv .work-panel .work-summary {
     font-size: 13px;
     line-height: 1.9;
+  }
+
+  #cv .skills-panel .skills-list .skills-row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: .35rem;
+  }
+
+  #cv .skills-panel .skills-tools {
+    display: block;
+  }
+
+  #cv .skills-panel .skills-note {
+    font-size: 10px;
   }
 }
 

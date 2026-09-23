@@ -74,8 +74,6 @@ const timelineEntries=document.querySelectorAll('.timeline-list article');
 document.querySelector('.timeline-title>span')?.remove();
 const portfolioIntro=document.querySelector('#portfolio .portfolio-overview>div>p');
 if(portfolioIntro) portfolioIntro.textContent='Inspiration';
-const adobeSkills=document.querySelector('.skills-list p:nth-child(3)');
-if(adobeSkills) adobeSkills.innerHTML='<b>Adobe 系列</b>Photoshop（PS）、Illustrator（AI）、InDesign（ID）、Lightroom（LR）';
 if(timelineEntries[0]) timelineEntries[0].querySelector('time').textContent='2017';
 if(timelineEntries[2]) timelineEntries[2].querySelector('time').textContent='2019';
 if(timelineEntries[3]) timelineEntries[3].querySelector('time').textContent='2020';
