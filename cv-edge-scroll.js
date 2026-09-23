@@ -199,9 +199,35 @@ Object.assign(figure.style, {
 </div><div class="professional-board-section"><h2>FURNITURE <span>家具产品图纸及照片</span></h2><div class="professional-furniture"><img src="Images/Professional Works/ffe/251114_ZHAXA_270__Custom Lighting Package_18.png" alt="灯具图纸"><img src="Images/Professional Works/ffe/251114_ZHAXA_270__Custom Lighting Package_20.png" alt="灯具图纸"><img src="Images/Professional Works/ffe/微信图片_20260122170031_1531_1224.jpg" alt="家具照片"><img src="Images/Professional Works/ffe/CSS ZHAXA 道具图纸 251219_46.png" alt="家具图纸"><img src="Images/Professional Works/ffe/微信图片_20260123113518_1573_1224.jpg" alt="家具照片"><img src="Images/Professional Works/ffe/CSS ZHAXA 道具图纸 251219_08.png" alt="家具图纸"><img src="Images/Professional Works/ffe/微信图片_20260122165949_1517_1224.jpg" alt="家具照片"><img src="Images/Professional Works/ffe/CSS ZHAXA 道具图纸 251219_25.png" alt="家具图纸"><img src="Images/Professional Works/ffe/微信图片_20260122170040_1538_1224.jpg" alt="家具照片"></div></div></section>`;
     const professionalBoardWithAddedPhotos = professionalBoard.replace('</div></div></div><div class="professional-board-section"><h2>FURNITURE', '<img class="professional-photo-wide" src="Images/Professional Works/照片/zhaxa (2).png" alt="招商西安湾补充空间照片"></div></div><div class="professional-photo-additions"><img src="Images/Professional Works/照片/31.png" alt="招商西安湾落地照片 31"><img src="Images/Professional Works/照片/32.png" alt="招商西安湾落地照片 32"></div></div><section class="professional-closing-photo"><img src="Images/Professional Works/照片/1.jpg" alt="招商西安湾项目收尾照片"></section><div class="professional-board-section"><h2>FURNITURE');
     const professionalBoardComplete = professionalBoardWithAddedPhotos;
+    const professionalProjects = [
+      { key: 'xian-bay', number: '01', title: '招商西安湾', cover: 'Images/Professional Works/照片/zhaxa (1).png' },
+      { key: 'gmm-shanghai', number: '02', title: 'GMM SHANGHAI', cover: 'Images/Professional Works/GMMSH/主卧套.png' }
+    ];
+    const gmmShanghai = {
+      index: '03.02.02',
+      title: 'GMM SHANGHAI',
+      hero: 'Images/Professional Works/GMMSH/主卧套.png',
+      collage: 'Collage/collage.png',
+      galleryGroups: [
+        { layout: 'pair-portrait', images: [['玄关1.png', 'GMM SHANGHAI 玄关一'], ['玄关2.png', 'GMM SHANGHAI 玄关二']] },
+        { layout: 'full', images: [['车库.png', 'GMM SHANGHAI 车库']] },
+        { layout: 'feature-stack', images: [['b地下玄关.png', 'GMM SHANGHAI 地下玄关'], ['主卫.png', 'GMM SHANGHAI 主卫'], ['客卫.png', 'GMM SHANGHAI 客卫']] },
+        { layout: 'pair-landscape', images: [['主卧办公.png', 'GMM SHANGHAI 主卧办公区'], ['主卧.png', 'GMM SHANGHAI 主卧']] },
+        { layout: 'full', images: [['主卧套.png', 'GMM SHANGHAI 主卧套']] },
+        { layout: 'full', images: [['主卧套-卫生间.png', 'GMM SHANGHAI 主卧套卫生间']] },
+        { layout: 'main-narrow', images: [['客卧套.png', 'GMM SHANGHAI 客卧套'], ['壁画.png', 'GMM SHANGHAI 壁画']] },
+        { layout: 'feature-stack', images: [['衣帽间.png', 'GMM SHANGHAI 衣帽间'], ['盥洗室.png', 'GMM SHANGHAI 盥洗室'], ['走廊.png', 'GMM SHANGHAI 走廊']] }
+      ]
+    };
+    const gmmConcept = `<section class="collection-concept gmm-concept"><div class="collection-concept-heading"><p>DESIGN CONCEPT <span>设计概念</span></p><h2>FRAMECRAFTED REALMS</h2><h3>帧景叠构</h3></div><div class="collection-concept-copy"><p>将分镜的蒙太奇交给空间——每一帧都是被行走的剧情，每一处停顿都是定格的电影情绪。</p><p>设计在此转化为导演语言，用材质作为滤镜、用结构作为关键帧、用色彩作为声轨，让生活成为一部可被回放、可被打断、可被放大的电影。</p><p>空间的建构方式，正是将这些帧景层层嵌套、错位、重叠、拼贴，共同形成一部非线性叙事的生活剧作。在这里，空间不是风格的统一化建构，将其理解为一组组的场景帧（frame），如同电影分镜；每一帧既承载场景，也激发情绪。</p><p>帧中构景，每一处空间，都是被构图“框定”的情绪单元。</p><p>叠境构情，空间与空间之间不是边界，而是层层情绪的转场。</p><p>场景拼叙，如蒙太奇剪辑，空间中跳接的不是功能，而是情绪。</p></div></section>`;
+    const renderGmmImage = ([file, alt]) => `<img src="Images/Professional Works/GMMSH/${file}" alt="${alt}">`;
+    const gmmGallery = `<section class="gmm-project-content" aria-label="GMM SHANGHAI 项目效果图"><div class="gmm-collage">${renderGmmImage([gmmShanghai.collage, 'GMM SHANGHAI Collage'])}</div><div class="gmm-gallery">${gmmShanghai.galleryGroups.map(({ layout, images }) => {
+      if (layout === 'feature-stack') return `<div class="gmm-gallery-row gmm-gallery-row--feature-stack">${renderGmmImage(images[0])}<div class="gmm-gallery-stack">${images.slice(1).map(renderGmmImage).join('')}</div></div>`;
+      return `<div class="gmm-gallery-row gmm-gallery-row--${layout}">${images.map(renderGmmImage).join('')}</div>`;
+    }).join('')}</div></section>`;
     const openCollection = ({ index, title, label = '', description = '', image = '', after = '', dark = false }) => {
       const gallery = document.getElementById('gallery');
-      document.body.classList.remove('is-scrunchie-page');
+      document.body.classList.remove('is-scrunchie-page', 'is-professional-index');
       document.body.classList.toggle('is-professional-page', Boolean(image));
       document.getElementById('category-index').textContent = `${index} / PORTFOLIO`;
       gallery.className = `collection-gallery${dark ? ' collection-dark' : ''}`;
@@ -210,6 +236,23 @@ Object.assign(figure.style, {
         : `<section class="collection-page">${label ? `<p>${label}</p>` : ''}<h1>${title}</h1>${description ? `<span>${description}</span>` : ''}</section>`;
       document.querySelector('.project-pager')?.remove();
       goTo('portfolio-detail');
+    };
+    const openProfessionalIndex = () => {
+      const gallery = document.getElementById('gallery');
+      document.body.classList.remove('is-scrunchie-page', 'is-professional-page');
+      document.body.classList.add('is-professional-index');
+      document.getElementById('category-index').textContent = '03.02 / PORTFOLIO';
+      gallery.className = 'professional-index';
+      gallery.innerHTML = `<section class="professional-index-page"><header class="professional-index-header"><p>03.02 / PORTFOLIO</p><h1>Professional Works</h1></header><div class="professional-projects">${professionalProjects.map(({ key, number, title, cover }) => `<button type="button" class="professional-project" data-professional-project="${key}" aria-label="打开 PROJECT ${number} ${title}"><img src="${cover}" alt="${title} 项目封面"><span class="professional-project-shade" aria-hidden="true"></span><span class="professional-project-copy"><small>PROJECT ${number}</small><strong>${title}</strong></span></button>`).join('')}</div></section>`;
+      document.querySelector('.project-pager')?.remove();
+      goTo('portfolio-detail');
+    };
+    const openXianBay = () => {
+      openCollection({ index: '03.02', title: '招商西安湾', image: 'Images/Professional Works/照片/zhaxa (1).png', after: `${professionalConcept}${professionalBoardComplete}`, dark: true });
+    };
+    const openGmmShanghai = () => {
+      openCollection({ index: gmmShanghai.index, title: gmmShanghai.title, image: gmmShanghai.hero, after: `${gmmConcept}${gmmGallery}`, dark: true });
+      document.getElementById('gallery').classList.add('gmm-shanghai');
     };
     const openScrunchieGallery = () => {
       const pieces = [
@@ -236,7 +279,7 @@ Object.assign(figure.style, {
       const group6Path = 'Images/personal-creation/group6/';
       const gallery = document.getElementById('gallery');
       document.body.classList.add('is-scrunchie-page');
-      document.body.classList.remove('is-professional-page');
+      document.body.classList.remove('is-professional-page', 'is-professional-index');
       document.getElementById('category-index').textContent = '03.03 / PORTFOLIO';
       gallery.className = 'scrunchie-gallery';
       const switcher = (items, basePath, label) => `<div class="scrunchie-layout craft-switcher" data-craft-switcher><div class="scrunchie-preview"><img src="${basePath}${items[0][2]}" alt="${items[0][1]}"><p class="scrunchie-name">${items[0][0]} / ${items[0][1]}</p></div><nav class="scrunchie-thumbnails" aria-label="${label}">${items.map(([number, name, file], index) => `<button type="button" class="${index === 0 ? 'is-selected' : ''}" data-craft-name="${name}" data-craft-number="${number}" data-craft-src="${basePath}${file}" aria-pressed="${index === 0}"><img src="${basePath}${file}" alt="${name}"><span>${number}</span></button>`).join('')}</nav></div>`;
@@ -418,11 +461,18 @@ Object.assign(figure.style, {
     document.addEventListener('click', (event) => {
       const destination = event.target.closest('[data-go]');
       if (destination && destination.dataset.go !== 'portfolio-detail') {
-        document.body.classList.remove('is-professional-page');
+        document.body.classList.remove('is-professional-page', 'is-professional-index');
       }
       if (event.target.closest('[data-go="portfolio"]')) {
         document.body.classList.remove('is-scrunchie-page');
         renderPortfolio();
+        return;
+      }
+      const professionalProject = event.target.closest('[data-professional-project]');
+      if (professionalProject) {
+        event.preventDefault();
+        if (professionalProject.dataset.professionalProject === 'xian-bay') openXianBay();
+        if (professionalProject.dataset.professionalProject === 'gmm-shanghai') openGmmShanghai();
         return;
       }
       const group = event.target.closest('[data-portfolio-group]');
@@ -430,7 +480,7 @@ Object.assign(figure.style, {
       if (group.dataset.portfolioGroup === 'academic') renderPortfolio('academic');
       if (group.dataset.portfolioGroup === 'professional') {
         event.preventDefault();
-        openCollection({ index: '03.02', title: '招商西安湾', image: 'Images/Professional Works/照片/zhaxa (1).png', after: `${professionalConcept}${professionalBoardComplete}`, dark: true });
+        openProfessionalIndex();
       }
       if (group.dataset.portfolioGroup === 'personal') {
         event.preventDefault();
