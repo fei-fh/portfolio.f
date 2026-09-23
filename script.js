@@ -76,10 +76,6 @@ const portfolioIntro=document.querySelector('#portfolio .portfolio-overview>div>
 if(portfolioIntro) portfolioIntro.textContent='Inspiration';
 const adobeSkills=document.querySelector('.skills-list p:nth-child(3)');
 if(adobeSkills) adobeSkills.innerHTML='<b>Adobe 系列</b>Photoshop（PS）、Illustrator（AI）、InDesign（ID）、Lightroom（LR）';
-const workRows=document.querySelector('.work-rows');
-if(workRows&&workRows.children.length===2){
-  workRows.firstElementChild.insertAdjacentHTML('afterend','<article><span>2023.02 — 05</span><div><h2>兰心文旅有限公司 ｜建筑实习生</h2><p><span>参与东钱湖南岸公厕平面设计及渲染效果图制作，协助完成项目提案的展示与汇报。</span></p></div></article><article><span>2025.03 — 05</span><div><h2>bpi 照明设计 ｜照明实习生</h2><p><span>负责照明设计提案；绘制灯光效果图、动画效果等。</span></p></div></article>');
-}
 if(timelineEntries[0]) timelineEntries[0].querySelector('time').textContent='2017';
 if(timelineEntries[2]) timelineEntries[2].querySelector('time').textContent='2019';
 if(timelineEntries[3]) timelineEntries[3].querySelector('time').textContent='2020';

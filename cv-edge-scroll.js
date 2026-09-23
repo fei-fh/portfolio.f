@@ -130,10 +130,8 @@ Object.assign(figure.style, {
     title.className = "timeline-title";
     Object.assign(work.style, { display: "grid", gridTemplateColumns: "24% 1fr", columnGap: "3vw", alignItems: "start", minHeight: "100dvh", padding: "12vh 10vw 7vh" });
     Object.assign(rows.style, { gridColumn: "2", width: "100%", margin: "8vh 0 0" });
-    const dates = ['2021.06-2021.09', '2023.02-2023.05', '2025.03-2025.05', '2025.07-2026.05'];
-    rows.querySelectorAll('article > span').forEach((date, index) => {
-      date.textContent = dates[index] || date.textContent;
-      Object.assign(date.style, { whiteSpace: 'nowrap', transform: 'translateY(-15px)' });
+    rows.querySelectorAll('article > .work-date').forEach((date) => {
+      Object.assign(date.style, { whiteSpace: 'nowrap', transform: 'none' });
     });
   }
 
