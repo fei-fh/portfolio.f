@@ -450,6 +450,11 @@ body.is-professional-page .site-nav .nav-item.active {
   background: #f4f4f3;
 }
 
+#portfolio-detail #gallery.professional-index,
+#portfolio-detail #gallery.collection-gallery {
+  overflow-anchor: none;
+}
+
 .professional-index-page {
   min-height: 100%;
   padding: 0;
@@ -492,24 +497,32 @@ body.is-professional-page .site-nav .nav-item.active {
   pointer-events: none;
 }
 
-.professional-project-copy {
+.professional-project-number,
+.professional-project-prompt {
   position: absolute;
   z-index: 1;
-  right: 4vw;
-  bottom: 5vh;
-  left: 4vw;
+  right: 7vw;
+  color: #fff;
+  font: 10px "DM Mono", monospace;
+  letter-spacing: 0;
+  pointer-events: none;
 }
 
-.professional-project-copy small {
-  display: block;
-  margin-bottom: .85rem;
-  font: 11px "DM Mono", monospace;
-  letter-spacing: 0;
+.professional-project-number {
+  top: 7vh;
+}
+
+.professional-project-prompt {
+  top: 12vh;
+}
+
+.professional-project-copy {
+  pointer-events: none;
 }
 
 .professional-project-copy strong {
   display: block;
-  font: 500 clamp(42px, 6vw, 92px)/.92 "Playfair Display", "Songti SC", serif;
+  font: 600 53px/.9 "Playfair Display", "Songti SC", serif;
   letter-spacing: 0;
 }
 
@@ -608,16 +621,6 @@ body.is-professional-page .site-nav .nav-item.active {
 }
 
 @media (max-width: 700px) {
-  .professional-project-copy {
-    right: 6vw;
-    bottom: 5vh;
-    left: 6vw;
-  }
-
-  .professional-project-copy strong {
-    font-size: clamp(34px, 10vw, 52px);
-  }
-
   .gmm-project-content {
     padding: 0 7vw 10vh;
   }

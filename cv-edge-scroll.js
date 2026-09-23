@@ -225,6 +225,25 @@ Object.assign(figure.style, {
       if (layout === 'feature-stack') return `<div class="gmm-gallery-row gmm-gallery-row--feature-stack">${renderGmmImage(images[0])}<div class="gmm-gallery-stack">${images.slice(1).map(renderGmmImage).join('')}</div></div>`;
       return `<div class="gmm-gallery-row gmm-gallery-row--${layout}">${images.map(renderGmmImage).join('')}</div>`;
     }).join('')}</div></section>`;
+    let activeProfessionalProject = null;
+    let professionalScrollVersion = 0;
+    const resetProfessionalScroll = (gallery, getTop = () => 0) => {
+      const version = ++professionalScrollVersion;
+      const applyScroll = () => {
+        if (version !== professionalScrollVersion) return;
+        const top = getTop();
+        gallery.scrollTop = top;
+        gallery.scrollLeft = 0;
+        window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+      };
+      applyScroll();
+      requestAnimationFrame(() => {
+        applyScroll();
+        requestAnimationFrame(applyScroll);
+      });
+    };
     const openCollection = ({ index, title, label = '', description = '', image = '', after = '', dark = false }) => {
       const gallery = document.getElementById('gallery');
       document.body.classList.remove('is-scrunchie-page', 'is-professional-index');
@@ -237,23 +256,41 @@ Object.assign(figure.style, {
       document.querySelector('.project-pager')?.remove();
       goTo('portfolio-detail');
     };
-    const openProfessionalIndex = () => {
+    const openProfessionalIndex = (projectKey = null) => {
       const gallery = document.getElementById('gallery');
       document.body.classList.remove('is-scrunchie-page', 'is-professional-page');
       document.body.classList.add('is-professional-index');
       document.getElementById('category-index').textContent = '03.02 / PORTFOLIO';
       gallery.className = 'professional-index';
-      gallery.innerHTML = `<section class="professional-index-page"><div class="professional-projects">${professionalProjects.map(({ key, number, title, cover }) => `<button type="button" class="professional-project" data-professional-project="${key}" aria-label="打开 PROJECT ${number} ${title}"><img src="${cover}" alt="${title} 项目封面"><span class="professional-project-shade" aria-hidden="true"></span><span class="professional-project-copy"><small>PROJECT ${number}</small><strong>${title}</strong></span></button>`).join('')}</div></section>`;
+      gallery.innerHTML = `<section class="professional-index-page"><div class="professional-projects">${professionalProjects.map(({ key, number, title, cover }) => `<button type="button" class="professional-project" data-professional-project="${key}" aria-label="打开 PROJECT ${number} ${title}"><img src="${cover}" alt="${title} 项目封面"><span class="professional-project-shade" aria-hidden="true"></span><span class="professional-project-number">PROJECT ${number}</span><div class="project-copy professional-project-copy"><strong>${title}</strong></div><span class="professional-project-prompt">CLICK TO EXPLORE</span></button>`).join('')}</div></section>`;
       document.querySelector('.project-pager')?.remove();
       goTo('portfolio-detail');
+      activeProfessionalProject = null;
+      resetProfessionalScroll(gallery, () => gallery.querySelector(`[data-professional-project="${projectKey}"]`)?.offsetTop || 0);
     };
     const openXianBay = () => {
+      activeProfessionalProject = 'xian-bay';
       openCollection({ index: '03.02', title: '招商西安湾', image: 'Images/Professional Works/照片/zhaxa (1).png', after: `${professionalConcept}${professionalBoardComplete}`, dark: true });
+      resetProfessionalScroll(document.getElementById('gallery'));
     };
     const openGmmShanghai = () => {
+      activeProfessionalProject = 'gmm-shanghai';
       openCollection({ index: gmmShanghai.index, title: gmmShanghai.title, image: gmmShanghai.hero, after: `${gmmConcept}${gmmGallery}`, dark: true });
-      document.getElementById('gallery').classList.add('gmm-shanghai');
+      const gallery = document.getElementById('gallery');
+      gallery.classList.add('gmm-shanghai');
+      resetProfessionalScroll(gallery);
     };
+    document.getElementById('gallery').addEventListener('click', (event) => {
+      const gallery = event.currentTarget;
+      const target = event.target;
+      if (!activeProfessionalProject || !gallery.classList.contains('collection-gallery') || !(target instanceof Element)) return;
+      if (target.closest('img, a, button, input, textarea, select, label, [role="button"], [tabindex]')) return;
+      if (target.closest('.collection-hero-overlay, .collection-concept-heading, .collection-concept-copy')) return;
+      const blankArea = target === gallery || target.matches('.collection-page--image, .collection-concept, .professional-board, .professional-board-section, .professional-photos-figma, .professional-photo-additions, .professional-closing-photo, .professional-collage, .professional-photos, .professional-photo-pairs, .professional-furniture, .gmm-project-content, .gmm-collage, .gmm-gallery, .gmm-gallery-row, .gmm-gallery-stack');
+      if (!blankArea) return;
+      const projectKey = activeProfessionalProject;
+      openProfessionalIndex(projectKey);
+    });
     const openScrunchieGallery = () => {
       const pieces = [
         ['01', '宝蓝色发圈', '01-宝蓝色发圈.png'],
