@@ -2,13 +2,15 @@
 
 /* HOME sheep test animation controls. */
 .home-sheep-track {
-  --sheep-width: 180px;
-  --sheep-crossing-duration: 7s;
+--sheep-width: 180px;
+--sheep-crossing-duration: 9s;
 --sheep-bottom: 8vh;
 --sheep-small-jump: -26px;
 --sheep-big-jump: -54px;
 --sheep-landing-squash: 5px;
 --sheep-bounce-duration: 7s;
+--sheep-text-size: 28px;
+--sheep-text-sheep-gap: 32px;
   position: absolute;
   z-index: 3;
   inset: 0;
@@ -20,12 +22,28 @@
   position: absolute;
   left: 0;
   bottom: var(--sheep-bottom);
-  width: var(--sheep-width);
+  display: flex;
+  align-items: center;
+  width: max-content;
   animation: sheep-cross-screen var(--sheep-crossing-duration) linear infinite;
   will-change: transform;
 }
 
+.home-sheep-message {
+  margin: 0 var(--sheep-text-sheep-gap) 0 0;
+  color: #1a1a1a;
+  font-family: "Chalkboard SE", "Comic Sans MS", "Bradley Hand", cursive;
+  font-size: var(--sheep-text-size);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+
+
 .home-sheep-bounce {
+  width: var(--sheep-width);
+  flex: 0 0 var(--sheep-width);
   animation: sheep-natural-bounce var(--sheep-bounce-duration) linear infinite;
   will-change: transform;
 }
@@ -62,3 +80,4 @@
   94% { transform: translateY(calc(var(--sheep-landing-squash) * .8)); }
   96%, 100% { transform: translateY(0); }
 }
+
