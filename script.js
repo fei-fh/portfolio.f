@@ -3,7 +3,80 @@ const portfolioData={architecture:{index:'03.01',title:'Architecture',label:'建
 portfolioData.architecture={index:'03.01',title:'Architecture',label:'建筑课程作品',description:'本科与硕士阶段的建筑课程项目。',images:[{key:'relocatable-corridor',title:'Relocatable Corridor',summary:'在田野之中、新旧农村之间，在原有交通道路处，利用长约 95m 的建构长廊，搭建村庄和城市之间的互动可能性。',src:'Images/研二final.png'},{key:'floating-sound-waves',title:'Floating Sound Waves<br>Civic Center',src:'Images/大五.png'},'Tea Culture Resort and Leisure Center','Experimental Rural Primary School','Mountain and Stone Museum','Mountain and Stone Museum']};
 const projectDetails={'relocatable-corridor':{title:'Relocatable Corridor',summary:'在田野之中，新旧农村之间，在原有交通道路处，利用长约 95m 的建构长廊，搭建村庄和城市之间的互动可能性。保留行车道路的初始功能，增设系列公共功能：<br><br>1. 艺术展览、舞台演出。<br>让艺术承担振兴乡村的任务，成为连接过去的途径。发展现有建筑语言文脉，使文村成为一座现当代艺术云集地。<br><br>2. 游学联盟。<br>联合高校进行暑期实践，整个村子就是研学活动区域。<br><br>3. 文村村民文化中心。',hero:'Images/研二final.png',images:['Images/研二final2.png','Images/研二site plan.jpg','Images/研二2Falley.png','Images/研二07.png','Images/研二09.png']},'floating-sound-waves':{title:'Floating Sound Waves Civic Center',summary:'',hero:'Images/大五.png',images:['Images/大五总图.png','Images/大五1f.png','Images/大五爆炸图剖面.png','Images/大五剖轴测1.png','Images/大五剖轴测2.png','Images/大五模型照片 (0).jpg','Images/大五模型照片 (1).jpg']}};
 const scenes=document.querySelectorAll('.scene'),navItems=document.querySelectorAll('.nav-item');
-function goTo(id){scenes.forEach(s=>s.classList.remove('scene-active'));document.getElementById(id).classList.add('scene-active');document.body.classList.toggle('is-home',id==='home');document.body.classList.toggle('is-portfolio-detail',id==='portfolio-detail');navItems.forEach(n=>n.classList.toggle('active',n.dataset.go===id));}
+const CV_VERIFIED_KEY='fei-cv-verified';
+const CV_ACTIVE_KEY='fei-cv-active';
+let cvVerifiedThisPage=false;
+function hasCvAccess(){
+  if(cvVerifiedThisPage)return true;
+  try{return sessionStorage.getItem(CV_VERIFIED_KEY)==='true';}catch{return false;}
+}
+function goTo(id){
+  if(id==='cv'&&!hasCvAccess())id='cv-verification';
+  scenes.forEach(s=>s.classList.remove('scene-active'));
+  document.getElementById(id).classList.add('scene-active');
+  document.body.classList.toggle('is-home',id==='home');
+  document.body.classList.toggle('is-portfolio-detail',id==='portfolio-detail');
+  navItems.forEach(n=>n.classList.toggle('active',n.dataset.go===(id==='cv-verification'?'cv':id)));
+  try{
+    if(id==='cv')sessionStorage.setItem(CV_ACTIVE_KEY,'true');
+    else sessionStorage.removeItem(CV_ACTIVE_KEY);
+  }catch{}
+}
+const cvVerificationForm=document.querySelector('.cv-verification-form');
+cvVerificationForm.addEventListener('submit',event=>{
+  event.preventDefault();
+  const input=cvVerificationForm.querySelector('.cv-verification-input');
+  const error=cvVerificationForm.querySelector('.cv-verification-error');
+  if(input.value.trim()!=='费芳华'){
+    error.textContent='答案不正确，请重新输入';
+    input.setAttribute('aria-invalid','true');
+    return;
+  }
+  cvVerifiedThisPage=true;
+  try{sessionStorage.setItem(CV_VERIFIED_KEY,'true');}catch{}
+  error.textContent='';
+  input.removeAttribute('aria-invalid');
+  input.value='';
+  goTo('cv');
+  const cv=document.getElementById('cv');
+  cv.scrollTo({top:0,left:0,behavior:'instant'});
+  requestAnimationFrame(()=>cv.scrollTo({top:0,left:0,behavior:'instant'}));
+});
+cvVerificationForm.querySelector('.cv-verification-input').addEventListener('input',event=>{
+  event.target.removeAttribute('aria-invalid');
+  cvVerificationForm.querySelector('.cv-verification-error').textContent='';
+});
+try{
+  if(sessionStorage.getItem(CV_ACTIVE_KEY)==='true'&&hasCvAccess())goTo('cv');
+}catch{}
+document.querySelectorAll('#contact [data-contact-copy]').forEach(button=>{
+  let feedbackTimer;
+  button.addEventListener('click',async()=>{
+    const status=button.querySelector('.contact-copy-status');
+    let copied=false;
+    try{
+      if(!navigator.clipboard?.writeText)throw new Error('Clipboard API unavailable');
+      await navigator.clipboard.writeText(button.dataset.contactCopy);
+      copied=true;
+    }catch{
+      const field=document.createElement('textarea');
+      field.value=button.dataset.contactCopy;
+      field.style.cssText='position:fixed;left:-9999px;opacity:0';
+      document.body.append(field);
+      field.select();
+      try{copied=document.execCommand('copy');}catch{}
+      field.remove();
+      button.focus({preventScroll:true});
+    }
+    clearTimeout(feedbackTimer);
+    status.textContent=copied?'已复制':'复制失败';
+    status.classList.add('is-visible');
+    feedbackTimer=setTimeout(()=>{
+      status.classList.remove('is-visible');
+      status.textContent='';
+    },1300);
+  });
+});
 function renderPrioritizedImages(container,markup,eagerSelector=''){const template=document.createElement('template');template.innerHTML=markup;const eager=eagerSelector?template.content.querySelector(eagerSelector):null;template.content.querySelectorAll('img').forEach(image=>{image.decoding='async';if(image===eager){image.loading='eager';image.fetchPriority='high';}else{image.loading='lazy';image.fetchPriority='auto';}});container.replaceChildren(template.content);}
 function resetMobileScroll(container){if(!window.matchMedia('(max-width: 768px)').matches)return;const reset=()=>{if(container){container.scrollTop=0;container.scrollLeft=0;}window.scrollTo({top:0,left:0,behavior:'auto'});document.documentElement.scrollTop=0;document.body.scrollTop=0;};reset();requestAnimationFrame(()=>requestAnimationFrame(reset));}
 function showCategory(key){const d=portfolioData[key],gallery=document.getElementById('gallery');document.getElementById('category-index').textContent=`${d.index} / PORTFOLIO`;document.getElementById('category-kicker').textContent=d.label;document.getElementById('category-title').textContent=d.title;document.getElementById('category-description').textContent=d.description;const markup=d.images.map((entry,i)=>{const x=typeof entry==='string'?entry:entry.title,src=typeof entry==='string'?'':entry.src,project=typeof entry==='string'?'':entry.key||'',summary=typeof entry==='string'?'':entry.summary||'';return `<button class="image-placeholder" type="button" data-image="${src}" data-project="${project}" aria-label="查看 ${x} 项目详情">${src?`<img src="${src}" alt="${x}">`:''}<span>PROJECT ${String(i+1).padStart(2,'0')}</span><div class="project-copy"><strong>${x}</strong>${summary?`<p>${summary}</p>`:''}</div><small>${String(i+1).padStart(2,'0')} / ${String(d.images.length).padStart(2,'0')}</small></button>`}).join('');renderPrioritizedImages(gallery,markup,'.image-placeholder:first-child img');document.querySelector('.project-pager')?.remove();gallery.insertAdjacentHTML('afterend','<div class="project-pager"><span>SCROLL TO EXPLORE ↓</span></div>');goTo('portfolio-detail');resetMobileScroll(gallery);}

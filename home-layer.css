@@ -1,1 +1,64 @@
 .home-scene{background:#f4f4f3}.home-portrait{mix-blend-mode:multiply}.home-shade{background:transparent}.home-name-art{position:absolute;z-index:2;top:13vh;left:50%;width:min(48vw,680px);max-height:48vh;object-fit:contain;transform:translateX(-50%);mix-blend-mode:multiply;filter:contrast(1.08);cursor:pointer}.home-name-art:hover{animation:name-ink-drift 1.15s ease-in-out infinite alternate;filter:contrast(1.16)}@keyframes name-ink-drift{to{transform:translateX(-50%) translateY(-5px) rotate(-.7deg)}}@media(max-width:700px){.home-name-art{top:15vh;width:76vw;max-height:35vh}}
+
+/* HOME sheep test animation controls. */
+.home-sheep-track {
+  --sheep-width: 180px;
+  --sheep-crossing-duration: 7s;
+--sheep-bottom: 8vh;
+--sheep-small-jump: -26px;
+--sheep-big-jump: -54px;
+--sheep-landing-squash: 5px;
+--sheep-bounce-duration: 7s;
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.home-sheep-runner {
+  position: absolute;
+  left: 0;
+  bottom: var(--sheep-bottom);
+  width: var(--sheep-width);
+  animation: sheep-cross-screen var(--sheep-crossing-duration) linear infinite;
+  will-change: transform;
+}
+
+.home-sheep-bounce {
+  animation: sheep-natural-bounce var(--sheep-bounce-duration) linear infinite;
+  will-change: transform;
+}
+
+.home-sheep {
+  display: block;
+  width: 100%;
+  height: auto;
+  user-select: none;
+}
+
+@keyframes sheep-cross-screen {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(100vw); }
+}
+
+@keyframes sheep-natural-bounce {
+  0%, 8% { transform: translateY(0); }
+  12% { transform: translateY(var(--sheep-small-jump)); }
+  16% { transform: translateY(0); }
+  18% { transform: translateY(var(--sheep-landing-squash)); }
+  20%, 31% { transform: translateY(0); }
+  35% { transform: translateY(calc(var(--sheep-small-jump) * .82)); }
+  39% { transform: translateY(0); }
+  41% { transform: translateY(calc(var(--sheep-landing-squash) * .7)); }
+  43%, 55% { transform: translateY(0); }
+  61% { transform: translateY(var(--sheep-big-jump)); }
+  67% { transform: translateY(0); }
+  69% { transform: translateY(var(--sheep-landing-squash)); }
+  71% { transform: translateY(-4px); }
+  73%, 84% { transform: translateY(0); }
+  88% { transform: translateY(calc(var(--sheep-small-jump) * .92)); }
+  92% { transform: translateY(0); }
+  94% { transform: translateY(calc(var(--sheep-landing-squash) * .8)); }
+  96%, 100% { transform: translateY(0); }
+}

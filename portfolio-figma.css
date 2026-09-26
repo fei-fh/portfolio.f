@@ -710,6 +710,7 @@ body.is-professional-page .site-nav .nav-item.active {
 /* Work Experience — role titles only. */
 #cv .work-panel .work-rows h2 {
   font-family: Arial, "PingFang SC", "Microsoft YaHei", sans-serif !important;
+  font-size: clamp(20px, 1.9vw, 28px);
 }
 
 #cv .work-panel .work-rows article {
@@ -827,7 +828,7 @@ body.is-professional-page .site-nav .nav-item.active {
   }
 
   #cv .work-panel .work-rows h2 {
-    font-size: 27px;
+    font-size: 22px;
     line-height: 1.12;
   }
 
@@ -858,4 +859,129 @@ body.is-professional-page .site-nav .nav-item.active {
   min-height: 0 !important;
   margin: 0 auto 20px;
   object-fit: contain;
+}
+
+/* Contact actions keep the existing text layout. */
+#contact .contact-details .contact-action {
+  position: relative;
+  display: inline-block;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  line-height: inherit;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#contact .contact-details .contact-action:hover {
+  color: #333;
+}
+
+#contact .contact-copy-status {
+  position: absolute;
+  top: 50%;
+  left: calc(100% + 12px);
+  color: #999;
+  font-size: 12px;
+  line-height: 1;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+#contact .contact-copy-status.is-visible {
+  opacity: 1;
+}
+
+/* CV entry verification is a separate scene; the CV panels stay untouched. */
+#cv-verification.scene-active {
+  display: grid;
+  place-items: center;
+}
+
+#cv-verification {
+  padding: 100px 24px 48px;
+  background: #f4f4f3;
+  text-align: center;
+}
+
+#cv-verification .cv-verification-content {
+  width: min(100%, 380px);
+}
+
+#cv-verification .cv-verification-label {
+  margin: 0 0 20px;
+  font: 10px 'DM Mono', monospace;
+  letter-spacing: .16em;
+}
+
+#cv-verification .cv-verification-title {
+  margin: 0;
+  font: 600 clamp(30px, 3.2vw, 44px)/1.2 Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  letter-spacing: 0;
+}
+
+#cv-verification .cv-verification-description {
+  margin: 16px 0 36px;
+  color: #777;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+#cv-verification .cv-verification-form {
+  width: 100%;
+}
+
+#cv-verification .cv-verification-input,
+#cv-verification .cv-verification-submit {
+  display: block;
+  width: 100%;
+  height: 48px;
+  border: 1px solid #aaa;
+  border-radius: 0;
+  background: transparent;
+  color: #222;
+  font: 14px Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+}
+
+#cv-verification .cv-verification-input {
+  padding: 0 15px;
+  outline-offset: 2px;
+}
+
+#cv-verification .cv-verification-input::placeholder {
+  color: #999;
+}
+
+#cv-verification .cv-verification-submit {
+  margin-top: 14px;
+  border-color: #333;
+  cursor: pointer;
+}
+
+#cv-verification .cv-verification-submit:hover {
+  border-color: #000;
+  color: #000;
+}
+
+#cv-verification .cv-verification-error {
+  margin: 8px 0 0;
+  color: #666;
+  font-size: 12px;
+  line-height: 1.5;
+  text-align: left;
+}
+
+#cv-verification .cv-verification-error:empty {
+  display: none;
+}
+
+@media (max-width: 700px) {
+  #cv-verification .cv-verification-title {
+    font-size: 32px;
+  }
 }
