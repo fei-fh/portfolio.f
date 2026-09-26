@@ -137,9 +137,9 @@ section.cv-panel.work-panel .work-rows p span{white-space:nowrap}
 }
 /* ===== ABOUT EDITORIAL COLLAGE ===== */
 #about {
-    --about-copy-column: minmax(250px, .72fr);
-    --about-gallery-column: minmax(540px, 1.55fr);
-    --about-collage-height: 720px;
+    --about-copy-column: minmax(300px, .72fr);
+    --about-gallery-column: minmax(0, 1.55fr);
+    --about-collage-height: clamp(620px, calc(100dvh - 118px), 900px);
     overflow-x: hidden;
     overflow-y: auto;
     background: #f4f4f3;
@@ -148,13 +148,13 @@ section.cv-panel.work-panel .work-rows p span{white-space:nowrap}
 #about .about-layout {
     display: grid;
     grid-template-columns: var(--about-copy-column) var(--about-gallery-column);
-    gap: clamp(34px, 5vw, 82px);
+    gap: clamp(34px, 4.5vw, 76px);
     align-items: start;
-    width: min(88vw, 1420px);
+    width: min(92vw, 1680px);
     min-height: 100%;
     margin: 0 auto;
     padding-bottom: 40px;
-    padding-top: clamp(88px, 11vh, 118px);
+    padding-top: clamp(90px, 10.5vh, 112px);
 }
 
 #about .about-stable-intro {
@@ -167,9 +167,9 @@ section.cv-panel.work-panel .work-rows p span{white-space:nowrap}
 
 #about .about-copy {
     width: 100%;
-    max-width: 390px;
+    max-width: 470px;
     color: #171717;
-    font: 400 14px/1.82 Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
+    font: 400 clamp(13px, .82vw, 16px)/1.82 Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
 }
 
 #about .about-copy p { margin: 0; }
@@ -190,7 +190,7 @@ section.cv-panel.work-panel .work-rows p span{white-space:nowrap}
 #about .about-composition {
   position: relative;
   height: var(--about-collage-height);
-  margin-bottom: 80px;
+  margin-bottom: 32px;
 }
 #about .about-photo {
   position: absolute;
@@ -215,7 +215,15 @@ section.cv-panel.work-panel .work-rows p span{white-space:nowrap}
 }
 #about .about-photo:hover { z-index: 30; }
 #about .about-photo:hover img { transform: scale(1.03); }
-@media (max-width: 1000px) {
+@media (min-width: 821px) and (max-width: 1100px) {
+  #about .about-layout {
+    grid-template-columns: minmax(270px, .72fr) minmax(0, 1.55fr);
+    gap: 3vw;
+    width: 94vw;
+  }
+  #about .about-copy { font-size: 12.5px; }
+}
+@media (max-width: 820px) {
   #about .about-layout { grid-template-columns: 1fr; height: auto; }
   #about .about-copy { max-width: 620px; }
   #about .about-stable-intro { position: relative; top: auto; }

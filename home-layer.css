@@ -11,6 +11,9 @@
 --sheep-bounce-duration: 7s;
 --sheep-text-size: 28px;
 --sheep-text-sheep-gap: 32px;
+--sheep-path-gap: 82px;
+--sheep-left-boundary: 0.05;
+--sheep-right-boundary: 0.90;
   position: absolute;
   z-index: 3;
   inset: 0;
@@ -24,26 +27,36 @@
   bottom: var(--sheep-bottom);
   display: flex;
   align-items: center;
-  width: max-content;
-  animation: sheep-cross-screen var(--sheep-crossing-duration) linear infinite;
+  width: min(var(--sheep-width), 42vw, 40vh);
   will-change: transform;
 }
 
 .home-sheep-message {
-  margin: 0 var(--sheep-text-sheep-gap) 0 0;
+  position: absolute;
+  right: calc(100% + var(--sheep-text-sheep-gap));
+  width: max-content;
+  max-width: calc(100vw - 32px);
+  margin: 0;
+  transform: translateX(var(--sheep-message-shift, 0px));
   color: #1a1a1a;
   font-family: "Chalkboard SE", "Comic Sans MS", "Bradley Hand", cursive;
   font-size: var(--sheep-text-size);
   font-weight: 400;
   line-height: 1;
   letter-spacing: 0;
-  white-space: nowrap;
+  text-align: center;
 }
 
 
+.home-sheep-path {
+  width: 100%;
+  flex: 0 0 100%;
+  transform: translateY(var(--sheep-path-shift, 0px)) rotate(var(--sheep-path-angle, 0deg));
+  transform-origin: center;
+  will-change: transform;
+}
+
 .home-sheep-bounce {
-  width: var(--sheep-width);
-  flex: 0 0 var(--sheep-width);
   animation: sheep-natural-bounce var(--sheep-bounce-duration) linear infinite;
   will-change: transform;
 }
@@ -53,11 +66,7 @@
   width: 100%;
   height: auto;
   user-select: none;
-}
-
-@keyframes sheep-cross-screen {
-  from { transform: translateX(-100%); }
-  to { transform: translateX(100vw); }
+  transform: scaleX(var(--sheep-facing, 1));
 }
 
 @keyframes sheep-natural-bounce {
@@ -80,4 +89,3 @@
   94% { transform: translateY(calc(var(--sheep-landing-squash) * .8)); }
   96%, 100% { transform: translateY(0); }
 }
-

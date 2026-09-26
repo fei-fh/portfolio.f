@@ -6,29 +6,24 @@
   if (!about || !copy || !gallery || !track) return;
   const photos = ['IMG_3301.JPG','IMG_2967.JPG','IMG_5206.JPG','IMG_5213.JPG','IMG_3110.JPG','IMG_8779.JPG','IMG_2452.jpg','fxn 2024-11-22 152017.049.jpg','IMG_4948.JPG','IMG_9263.JPG','Weixin Image_2026-09-21_141317_071.jpg','DSC03853.JPG','IMG_1821.jpg','IMG_9891.JPG','cv-1.JPG','cv-3.JPG','cv-2.JPG','IMG_2477.JPG','IMG_1787.JPG','IMG_8984.jpg','IMG_4628.JPG','IMG_5279.JPG','DSC02922.jpg','DSC03515.JPEG','DSC02918.jpg','3c6d2fb830a84247e7f0ee03114779b3.jpg','630911154a69ea6067867bcd41914c.JPG','69FA46D7-CB1B-40F1-9A51-2C9DAF787983-2566-000001DF0EF187B5.JPG','c9a59691a6caac14f03b2ef0994d95.JPG','DSC03085.jpg','DSC05865.JPG','IMG_0130.JPG','Weixin Image_20260922135028_29_12.png','Weixin Image_20260922135036_30_12.png','Weixin Image_20260922135044_31_12.png','Weixin Image_20260922135053_32_12.png','Weixin Image_20260922135111_33_12.png','Weixin Image_20260922135121_34_12.png','Weixin Image_20260922135142_35_12.png','Weixin Image_20260922135210_36_12.jpg','Weixin Image_20260922135225_37_12.jpg','Weixin Image_20260922135258_39_12.png'];
   // Fixed editorial compositions: x, y, width, height (%), z-index.
-  const COMPOSITIONS = [
-    [[20,8,52,54,3],[2,2,28,28,2],[70,0,28,30,1],[0,48,30,40,4],[68,56,30,30,5],[38,73,27,25,6]],
-    [[2,8,49,50,2],[61,0,35,33,3],[43,40,37,42,4],[3,70,29,28,3],[70,77,28,21,5],[22,53,24,24,6]],
-    [[40,12,57,48,2],[2,0,30,36,3],[10,45,35,35,4],[68,64,29,34,3],[40,78,23,20,5],[35,1,24,24,4]],
-    [[17,26,55,48,3],[0,0,36,31,2],[65,5,32,38,4],[2,64,29,33,5],[64,68,33,29,4],[39,79,23,20,6]],
-    [[0,13,50,52,3],[62,0,35,35,2],[48,44,42,39,4],[5,76,30,23,5],[71,78,27,21,6],[32,0,26,27,4]]
-  ];
+  const COMPOSITIONS = [[[29,18,40,44,3],[1,2,29,28,2],[72,0,26,30,1],[0,37,29,35,4],[70,40,28,29,5],[36,72,28,26,6],[36,0,27,20,2],[2,76,29,23,4],[72,76,25,22,5]],[[0,18,39,44,3],[43,0,27,29,2],[73,8,25,27,1],[40,40,30,33,4],[73,46,25,29,5],[5,76,30,23,6],[4,0,27,17,2],[39,79,28,20,3],[73,81,25,18,4]],[[56,23,42,43,3],[1,0,30,29,2],[37,0,24,24,1],[0,39,27,32,4],[30,34,28,32,5],[38,75,28,24,6],[72,0,25,22,2],[2,77,29,21,3],[73,73,25,26,4]],[[28,30,42,42,3],[0,0,31,29,2],[65,0,32,31,1],[0,41,28,32,4],[74,42,24,29,5],[37,78,27,21,6],[36,0,25,25,2],[3,80,27,19,4],[74,77,24,22,5]],[[0,27,42,43,3],[38,0,27,24,2],[72,5,26,30,1],[43,38,28,31,4],[75,47,23,26,5],[37,78,28,21,6],[0,0,29,23,2],[2,79,28,20,4],[75,79,23,20,5]]];
   const fragment = document.createDocumentFragment();
   photos.forEach((file, index) => {
-    const patternIndex = Math.floor(index / 6);
-    if (index % 6 === 0) {
+    const patternSize = COMPOSITIONS[0].length;
+    const patternIndex = Math.floor(index / patternSize);
+    if (index % patternSize === 0) {
       const canvas = document.createElement('div');
       canvas.className = 'about-composition';
       fragment.append(canvas);
     }
-    const [x, y, w, h, z] = COMPOSITIONS[patternIndex % COMPOSITIONS.length][index % 6];
+    const [x, y, w, h, z] = COMPOSITIONS[patternIndex % COMPOSITIONS.length][index % patternSize];
     const figure = document.createElement('figure');
     figure.className = 'about-photo';
     figure.style.cssText = `--photo-x:${x}%;--photo-y:${y}%;--photo-width:${w}%;--photo-height:${h}%;--photo-z:${z}`;
     const image = document.createElement('img');
     image.loading = index < 3 ? 'eager' : 'lazy';
     image.decoding = 'async';
-    image.src = `Images/about/${file}`;
+    image.src = optimizedImageSource(`Images/about/${file}`);
     image.alt = `学习、制作与生活记录 ${index + 1}`;
     image.draggable = false;
     figure.append(image);
@@ -85,17 +80,17 @@
     };
     renderPortfolio();
     const professionalConcept = `<section class="collection-concept"><div class="collection-concept-heading"><p>DESIGN CONCEPT</p><h2>LUMINOUS RIPPLES · GLAZE RESONANCE</h2><h3>漪光釉韵</h3></div><div class="collection-concept-copy"><p>在灞河西岸最后的低密之境，十八里水纹与三彩釉色开启了一场跨越千年的对话。</p><p>盛唐的釉彩是凝固的浪，当代的水波是流动的涟漪。在这片灞河最后珍藏的低密之境，空间化作一方水与火淬炼的乐章。而指尖揉捏的陶土，正将千年的长安水脉与此刻的生活温度，悄然塑成第三种永恒的形状。</p><p>这双声部乐章里：</p><p class="collection-concept-lines">高音是灞河映射进的瞬息波光<br>低音是陶土内封存的千年水脉<br>而休止符——<br>是业主推窗时，那片突然静默的河面</p><p>所谓永恒，不过是灞水与三彩每一次相遇时，那稍纵即逝却又不断重演的韵脚。</p><p>当空间成为盛唐水文与现代水岸生活的双声部乐章，每一处转折都是釉色与水波即兴创作的韵脚。</p></div></section>`;
-    const professionalBoard = `<section class="professional-board" aria-label="招商西安湾项目内容"><div class="professional-board-section"><h2>CONCEPT COLLAGE <span>概念拼贴</span></h2><div class="professional-collage"><img src="Images/Professional Works/2.png" alt="漪光釉韵概念拼贴"><img src="Images/Professional Works/1.png" alt="陶土与釉彩概念拼贴"></div></div><div class="professional-board-section">
+    const professionalBoard = `<section class="professional-board" aria-label="招商西安湾项目内容"><div class="professional-board-section"><h2>CONCEPT COLLAGE <span>概念拼贴</span></h2><div class="professional-collage"><img src="Images-web/Professional Works/2.webp" alt="漪光釉韵概念拼贴"><img src="Images-web/Professional Works/1.webp" alt="陶土与釉彩概念拼贴"></div></div><div class="professional-board-section">
   <h2>PHOTOS <span>落地照片</span></h2>
 
   <div class="professional-photos-figma">
 
     <img class="photo-1"
-         src="Images/Professional Works/照片/zhaxa (1).png"
+         src="Images-web/Professional Works/照片/zhaxa (1).webp"
          alt="招商西安湾客厅">
 
     <img class="photo-2"
-         src="Images/Professional Works/照片/zhaxa (4).png"
+         src="Images-web/Professional Works/照片/zhaxa (4).webp"
          alt="招商西安湾空间细节">
 
     <img class="photo-3"
@@ -103,7 +98,7 @@
          alt="招商西安湾软装细节">
 
     <img class="photo-4"
-         src="Images/Professional Works/照片/zhaxa (2).png"
+         src="Images-web/Professional Works/照片/zhaxa (2).webp"
          alt="招商西安湾餐厅">
 
     <img class="photo-5"
@@ -111,15 +106,15 @@
          alt="招商西安湾空间">
 
     <img class="photo-6"
-         src="Images/Professional Works/照片/zhaxa (3).png"
+         src="Images-web/Professional Works/照片/zhaxa (3).webp"
          alt="招商西安湾室内细节">
 
     <img class="photo-7"
-         src="Images/Professional Works/照片/31.png"
+         src="Images-web/Professional Works/照片/31.webp"
          alt="招商西安湾落地照片">
 
     <img class="photo-8"
-         src="Images/Professional Works/照片/32.png"
+         src="Images-web/Professional Works/照片/32.webp"
          alt="招商西安湾落地照片">
 
     <img class="photo-9"
@@ -127,17 +122,17 @@
          alt="招商西安湾落地照片">
 
   </div>
-</div><div class="professional-board-section"><h2>FURNITURE <span>家具产品图纸及照片</span></h2><div class="professional-furniture"><img src="Images/Professional Works/ffe/251114_ZHAXA_270__Custom Lighting Package_18.png" alt="灯具图纸"><img src="Images/Professional Works/ffe/251114_ZHAXA_270__Custom Lighting Package_20.png" alt="灯具图纸"><img src="Images/Professional Works/ffe/微信图片_20260122170031_1531_1224.jpg" alt="家具照片"><img src="Images/Professional Works/ffe/CSS ZHAXA 道具图纸 251219_46.png" alt="家具图纸"><img src="Images/Professional Works/ffe/微信图片_20260123113518_1573_1224.jpg" alt="家具照片"><img src="Images/Professional Works/ffe/CSS ZHAXA 道具图纸 251219_08.png" alt="家具图纸"><img src="Images/Professional Works/ffe/微信图片_20260122165949_1517_1224.jpg" alt="家具照片"><img src="Images/Professional Works/ffe/CSS ZHAXA 道具图纸 251219_25.png" alt="家具图纸"><img src="Images/Professional Works/ffe/微信图片_20260122170040_1538_1224.jpg" alt="家具照片"></div></div></section>`;
-    const professionalBoardWithAddedPhotos = professionalBoard.replace('</div></div></div><div class="professional-board-section"><h2>FURNITURE', '<img class="professional-photo-wide" src="Images/Professional Works/照片/zhaxa (2).png" alt="招商西安湾补充空间照片"></div></div><div class="professional-photo-additions"><img src="Images/Professional Works/照片/31.png" alt="招商西安湾落地照片 31"><img src="Images/Professional Works/照片/32.png" alt="招商西安湾落地照片 32"></div></div><section class="professional-closing-photo"><img src="Images/Professional Works/照片/1.jpg" alt="招商西安湾项目收尾照片"></section><div class="professional-board-section"><h2>FURNITURE');
+</div><div class="professional-board-section"><h2>FURNITURE <span>家具产品图纸及照片</span></h2><div class="professional-furniture"><img src="Images/Professional Works/ffe/251114_ZHAXA_270__Custom Lighting Package_18.png" alt="灯具图纸"><img src="Images/Professional Works/ffe/251114_ZHAXA_270__Custom Lighting Package_20.png" alt="灯具图纸"><img src="Images/Professional Works/ffe/微信图片_20260122170031_1531_1224.jpg" alt="家具照片"><img src="Images/Professional Works/ffe/CSS ZHAXA 道具图纸 251219_46.png" alt="家具图纸"><img src="Images-web/Professional Works/ffe/微信图片_20260123113518_1573_1224.webp" alt="家具照片"><img src="Images/Professional Works/ffe/CSS ZHAXA 道具图纸 251219_08.png" alt="家具图纸"><img src="Images/Professional Works/ffe/微信图片_20260122165949_1517_1224.jpg" alt="家具照片"><img src="Images/Professional Works/ffe/CSS ZHAXA 道具图纸 251219_25.png" alt="家具图纸"><img src="Images/Professional Works/ffe/微信图片_20260122170040_1538_1224.jpg" alt="家具照片"></div></div></section>`;
+    const professionalBoardWithAddedPhotos = professionalBoard.replace('</div></div></div><div class="professional-board-section"><h2>FURNITURE', '<img class="professional-photo-wide" src="Images-web/Professional Works/照片/zhaxa (2).webp" alt="招商西安湾补充空间照片"></div></div><div class="professional-photo-additions"><img src="Images-web/Professional Works/照片/31.webp" alt="招商西安湾落地照片 31"><img src="Images-web/Professional Works/照片/32.webp" alt="招商西安湾落地照片 32"></div></div><section class="professional-closing-photo"><img src="Images/Professional Works/照片/1.jpg" alt="招商西安湾项目收尾照片"></section><div class="professional-board-section"><h2>FURNITURE');
     const professionalBoardComplete = professionalBoardWithAddedPhotos;
     const professionalProjects = [
-      { key: 'xian-bay', number: '01', title: '招商西安湾', cover: 'Images/Professional Works/照片/zhaxa (1).png' },
-      { key: 'gmm-shanghai', number: '02', title: 'GMM SHANGHAI', cover: 'Images/Professional Works/GMMSH/主卧套.png' }
+      { key: 'xian-bay', number: '01', title: '招商西安湾', cover: 'Images-web/Professional Works/照片/zhaxa (1).webp' },
+      { key: 'gmm-shanghai', number: '02', title: 'GMM SHANGHAI', cover: 'Images-web/Professional Works/GMMSH/主卧套.webp' }
     ];
     const gmmShanghai = {
       index: '03.02.02',
       title: 'GMM SHANGHAI',
-      hero: 'Images/Professional Works/GMMSH/主卧套.png',
+      hero: 'Images-web/Professional Works/GMMSH/主卧套.webp',
       collage: 'Collage/collage.png',
       galleryGroups: [
         { layout: 'pair-portrait', images: [['玄关1.png', 'GMM SHANGHAI 玄关一'], ['玄关2.png', 'GMM SHANGHAI 玄关二']] },
@@ -203,7 +198,7 @@
     };
     const openXianBay = () => {
       activeProfessionalProject = 'xian-bay';
-      openCollection({ index: '03.02', title: '招商西安湾', image: 'Images/Professional Works/照片/zhaxa (1).png', after: `${professionalConcept}${professionalBoardComplete}`, dark: true });
+      openCollection({ index: '03.02', title: '招商西安湾', image: 'Images-web/Professional Works/照片/zhaxa (1).webp', after: `${professionalConcept}${professionalBoardComplete}`, dark: true });
       resetProfessionalScroll(document.getElementById('gallery'));
     };
     const openGmmShanghai = () => {
@@ -298,7 +293,7 @@
         const image = switcherElement.querySelector('.scrunchie-preview img');
         image.classList.remove('is-changing');
         void image.offsetWidth;
-        image.src = item.dataset.craftSrc;
+        image.src = optimizedImageSource(item.dataset.craftSrc);
         image.alt = item.dataset.craftName;
         image.classList.add('is-changing');
         switcherElement.querySelector('.scrunchie-name').textContent = `${item.dataset.craftNumber} / ${item.dataset.craftName}`;
