@@ -135,33 +135,94 @@ section.cv-panel.work-panel .work-rows p span{white-space:nowrap}
 .project-overlay[data-project="kasa-lamp"] .project-intro {
     display: none !important;
 }
-/* ===== ABOUT PAGE ONLY ===== */
-
-#about .about-copy{
-    width:100%;
-    max-width:1280px;
+/* ===== ABOUT EDITORIAL COLLAGE ===== */
+#about {
+    --about-copy-column: minmax(250px, .72fr);
+    --about-gallery-column: minmax(540px, 1.55fr);
+    --about-collage-height: 720px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background: #f4f4f3;
 }
 
-#about .about-copy p.feif-signature{
-    width:100%;
-    text-align:right;
-    margin-top:2rem;
-}
-/* ===== ABOUT 页面正文宽度 ===== */
-
-#about .about-stable-intro{
-    width:min(1080px, 88vw) !important;
-}
-
-#about .about-copy{
-    width:100% !important;
-    max-width:none !important;
+#about .about-layout {
+    display: grid;
+    grid-template-columns: var(--about-copy-column) var(--about-gallery-column);
+    gap: clamp(34px, 5vw, 82px);
+    align-items: start;
+    width: min(88vw, 1420px);
+    min-height: 100%;
+    margin: 0 auto;
+    padding-bottom: 40px;
+    padding-top: clamp(88px, 11vh, 118px);
 }
 
-#about .about-copy p.feif-signature{
-    width:100%;
-    text-align:right;
-    margin-top:2rem;
+#about .about-stable-intro {
+    position: sticky;
+    top: 100px;
+    align-self: start;
+    min-width: 0;
+    width: 100%;
+}
+
+#about .about-copy {
+    width: 100%;
+    max-width: 390px;
+    color: #171717;
+    font: 400 14px/1.82 Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+
+#about .about-copy p { margin: 0; }
+#about .about-copy p + p { margin-top: .9rem; }
+#about .about-copy p:first-child {
+    margin-bottom: 1.35rem;
+    font-size: 1.08em;
+}
+#about .about-copy p.feif-signature {
+    margin-top: 1.8rem;
+    text-align: right;
+    font: 500 13px/1 'DM Mono', monospace;
+    letter-spacing: 0;
+}
+
+#about .about-gallery { position: relative; width: 100%; min-width: 0; }
+#about .about-track { position: relative; }
+#about .about-composition {
+  position: relative;
+  height: var(--about-collage-height);
+  margin-bottom: 80px;
+}
+#about .about-photo {
+  position: absolute;
+  left: var(--photo-x);
+  top: var(--photo-y);
+  width: var(--photo-width);
+  height: var(--photo-height);
+  z-index: var(--photo-z);
+  margin: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+#about .about-photo img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  transition: transform 280ms ease;
+}
+#about .about-photo:hover { z-index: 30; }
+#about .about-photo:hover img { transform: scale(1.03); }
+@media (max-width: 1000px) {
+  #about .about-layout { grid-template-columns: 1fr; height: auto; }
+  #about .about-copy { max-width: 620px; }
+  #about .about-stable-intro { position: relative; top: auto; }
+  #about .about-gallery { --about-collage-height: 540px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #about .about-photo:hover img { transform: none; }
 }
 /* ===== PROFESSIONAL PHOTOS / FIGMA LAYOUT ===== */
 

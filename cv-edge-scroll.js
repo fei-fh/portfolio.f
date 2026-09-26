@@ -5,106 +5,36 @@
   const track = about?.querySelector('.about-track');
   if (!about || !copy || !gallery || !track) return;
   const photos = ['IMG_3301.JPG','IMG_2967.JPG','IMG_5206.JPG','IMG_5213.JPG','IMG_3110.JPG','IMG_8779.JPG','IMG_2452.jpg','fxn 2024-11-22 152017.049.jpg','IMG_4948.JPG','IMG_9263.JPG','Weixin Image_2026-09-21_141317_071.jpg','DSC03853.JPG','IMG_1821.jpg','IMG_9891.JPG','cv-1.JPG','cv-3.JPG','cv-2.JPG','IMG_2477.JPG','IMG_1787.JPG','IMG_8984.jpg','IMG_4628.JPG','IMG_5279.JPG','DSC02922.jpg','DSC03515.JPEG','DSC02918.jpg','3c6d2fb830a84247e7f0ee03114779b3.jpg','630911154a69ea6067867bcd41914c.JPG','69FA46D7-CB1B-40F1-9A51-2C9DAF787983-2566-000001DF0EF187B5.JPG','c9a59691a6caac14f03b2ef0994d95.JPG','DSC03085.jpg','DSC05865.JPG','IMG_0130.JPG','Weixin Image_20260922135028_29_12.png','Weixin Image_20260922135036_30_12.png','Weixin Image_20260922135044_31_12.png','Weixin Image_20260922135053_32_12.png','Weixin Image_20260922135111_33_12.png','Weixin Image_20260922135121_34_12.png','Weixin Image_20260922135142_35_12.png','Weixin Image_20260922135210_36_12.jpg','Weixin Image_20260922135225_37_12.jpg','Weixin Image_20260922135258_39_12.png'];
-  track.replaceChildren(...photos.map((file) => {
+  // Fixed editorial compositions: x, y, width, height (%), z-index.
+  const COMPOSITIONS = [
+    [[20,8,52,54,3],[2,2,28,28,2],[70,0,28,30,1],[0,48,30,40,4],[68,56,30,30,5],[38,73,27,25,6]],
+    [[2,8,49,50,2],[61,0,35,33,3],[43,40,37,42,4],[3,70,29,28,3],[70,77,28,21,5],[22,53,24,24,6]],
+    [[40,12,57,48,2],[2,0,30,36,3],[10,45,35,35,4],[68,64,29,34,3],[40,78,23,20,5],[35,1,24,24,4]],
+    [[17,26,55,48,3],[0,0,36,31,2],[65,5,32,38,4],[2,64,29,33,5],[64,68,33,29,4],[39,79,23,20,6]],
+    [[0,13,50,52,3],[62,0,35,35,2],[48,44,42,39,4],[5,76,30,23,5],[71,78,27,21,6],[32,0,26,27,4]]
+  ];
+  const fragment = document.createDocumentFragment();
+  photos.forEach((file, index) => {
+    const patternIndex = Math.floor(index / 6);
+    if (index % 6 === 0) {
+      const canvas = document.createElement('div');
+      canvas.className = 'about-composition';
+      fragment.append(canvas);
+    }
+    const [x, y, w, h, z] = COMPOSITIONS[patternIndex % COMPOSITIONS.length][index % 6];
     const figure = document.createElement('figure');
     figure.className = 'about-photo';
+    figure.style.cssText = `--photo-x:${x}%;--photo-y:${y}%;--photo-width:${w}%;--photo-height:${h}%;--photo-z:${z}`;
     const image = document.createElement('img');
-    image.loading = 'lazy';
+    image.loading = index < 3 ? 'eager' : 'lazy';
     image.decoding = 'async';
     image.src = `Images/about/${file}`;
-    image.alt = '学习、制作与生活记录';
+    image.alt = `学习、制作与生活记录 ${index + 1}`;
+    image.draggable = false;
     figure.append(image);
-    return figure;
-  }));
-const greeting = 'Hi，欢迎来到我的网站。';
-
-const bodyParagraphs = [
-
-  '本人本科与硕士均就读于中国美术学院的建筑学专业，研究生期间曾赴法国圣埃蒂安艺术与设计学院交换学习一学期，学习空间设计、产品设计与平面设计。我的兴趣从空间延伸到日常物件、手工创作与影像表达，喜欢观察生活中的细节，也享受把想法变成具体作品的过程。',
-
-  '学习之余，我喜欢探索不同材料与制作方式，动手能力较强。在业余创作中，我喜欢钩针、刺绣等手工创作，并尝试通过摆摊市集的形式让作品与呈面。对我而言，创作的乐趣既在于构思，也在于亲手制作、反复调整，以及看到作品被人喜欢和使用。',
-
-  '除此之外，摄影与视频也是我记录和表达的方式。交换期间，我走访了11个国家，用镜头记录建筑与人文，并拍摄图文、剪辑了一系列 Vlog。这些经历让我持续练习观察、选择与叙事，也为创作积累了不同文化和日常生活中的灵感。',
-
-  '作为“高精力人群”的一员，生活中，我喜欢跑步、徒步等各类运动，保持着积极乐观的状态。我期待将自己的审美、动手能力和多种媒介的表达经验，带入更多与设计和创意相关的工作。',
-
-  'feif'
-
-];
-
-copy.replaceChildren();
-
-const greetingLine = document.createElement('p');
-greetingLine.textContent = greeting;
-
-copy.append(
-  greetingLine,
-  ...bodyParagraphs.map((text) => {
-
-    const paragraph = document.createElement('p');
-    paragraph.textContent = text;
-
-    if (text === 'feif') {
-      paragraph.classList.add('feif-signature');
-    }
-
-    return paragraph;
-
-  })
-);
-
-  Object.assign(about.style, { background: '#f4f4f3', overflow: 'hidden' });
-  Object.assign(copy.parentElement.style, { position: 'absolute', top: '15vh', left: '50%', zIndex: '2', width: 'min(830px, calc(100vw - 12vw))', transform: 'translateX(-50%)' });
-  Object.assign(copy.style, { width: '100%', maxWidth: 'none', margin: '0', color: '#171717', font: '400 clamp(13px, 1.15vw, 16px)/1.85 Arial, "PingFang SC", "Microsoft YaHei", sans-serif', textAlign: 'left' });
-  Object.assign(greetingLine.style, { margin: '0 0 18px', fontSize: '1.15em' });
-  greetingLine.style.textAlign = 'center';
-  [...copy.querySelectorAll('p:not(:first-child)')].forEach((paragraph) => {
-    Object.assign(paragraph.style, { margin: '0', textIndent: '2em' });
+    fragment.lastChild.append(figure);
   });
-  Object.assign(gallery.style, { position: 'absolute', zIndex: '1', left: '0', right: '0', bottom: '8vh', height: '22vh', overflow: 'hidden', cursor: 'ew-resize' });
-  Object.assign(track.style, { boxSizing: 'border-box', display: 'flex', alignItems: 'flex-end', gap: '2vw', width: 'max-content', minWidth: '100%', height: '100%', padding: '0 0 0 10vw', transform: 'translate3d(0,0,0)', willChange: 'transform' });
-  [...track.children].forEach((figure, index) => {
-Object.assign(figure.style, {
-  display: 'block',
-  flex: '0 0 auto',
-  width: '195px',
-  height: '150px',
-  margin: '0',
-  overflow: 'hidden'
-});
-    const image = figure.querySelector('img');
-    if (image) {
-      Object.assign(image.style, { display: 'block', width: '100%', height: '100%', objectFit: 'cover' });
-      image.addEventListener('error', () => figure.remove(), { once: true });
-    }
-  });
-  let target = 0;
-  let current = 0;
-  let pointerInside = false;
-  let previousTime = performance.now();
-  const galleryRange = () => Math.max(0, track.scrollWidth - gallery.clientWidth);
-  const animateGallery = () => {
-    const now = performance.now();
-    const elapsed = now - previousTime;
-    previousTime = now;
-    const max = galleryRange();
-    if (!pointerInside && max) {
-      target += elapsed * 0.2;
-      if (target >= max) target = max;
-    }
-    target = Math.max(0, Math.min(max, target));
-    current += (target - current) * 0.002;
-    track.style.transform = `translate3d(${-current}px,0,0)`;
-    requestAnimationFrame(animateGallery);
-  };
-  gallery.addEventListener('pointermove', (event) => {
-    pointerInside = true;
-    const bounds = gallery.getBoundingClientRect();
-    const ratio = Math.max(0, Math.min(1, (event.clientX - bounds.left) / bounds.width));
-    target = ratio * galleryRange() * 0.02;
-  }, { passive: true });
-  gallery.addEventListener('pointerleave', () => { pointerInside = false; });
-  requestAnimationFrame(animateGallery);
+  track.replaceChildren(fragment);
 
   const education = document.querySelector('#cv .education-panel');
   if (education) {

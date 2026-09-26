@@ -140,10 +140,6 @@ function openProjectDetail(key){const d=projectDetails[key];if(!d)return;project
 function openProjectDetail(key){const d=projectDetails[key];if(!d)return;const columns=[d.images.filter((_,i)=>i%2===0),d.images.filter((_,i)=>i%2===1)];projectOverlay.innerHTML=`<button class="project-close" type="button" aria-label="关闭项目详情">×</button><section class="project-detail-hero" style="background-image:url('${d.hero}')"><div><h1>${d.title}</h1></div><span class="project-scroll">PLEASE SCROLL ↓</span></section><section class="project-intro"><p>${d.summary}</p></section><div class="project-detail-gallery">${columns.map(column=>`<div class="project-gallery-column">${column.map((src,i)=>`<img src="${src}" alt="${d.title} 项目图 ${i+1}" loading="lazy" decoding="async">`).join('')}</div>`).join('')}</div>`;projectOverlay.classList.add('is-open');}
 document.addEventListener('click',e=>{const n=e.target.closest('[data-go]');if(n)goTo(n.dataset.go);const c=e.target.closest('[data-category]');if(c)showCategory(c.dataset.category);const image=e.target.closest('.image-placeholder');if(image){if(image.dataset.project)openProjectDetail(image.dataset.project);else openImagePreview(image);}const step=e.target.closest('[data-project-step]');if(step)document.getElementById('gallery').scrollBy({left:step.dataset.projectStep*document.getElementById('gallery').clientWidth,behavior:'smooth'});if(e.target===imageLightbox||e.target.closest('.lightbox-close'))imageLightbox.classList.remove('is-open');if(e.target.closest('.project-close'))projectOverlay.classList.remove('is-open');});
 
-/* About: horizontal image drift follows the pointer; photos can be replaced in index.html later. */
-const aboutGallery=document.querySelector('.about-gallery');
-if(aboutGallery){aboutGallery.addEventListener('mousemove',event=>{const range=aboutGallery.scrollWidth-aboutGallery.clientWidth;const ratio=event.clientX/window.innerWidth;aboutGallery.scrollTo({left:range*ratio,behavior:'smooth'});});}
-
 /* Fine-grained CV timeline grouping. */
 const timelineEntries=document.querySelectorAll('.timeline-list article');
 document.querySelector('.timeline-title>span')?.remove();

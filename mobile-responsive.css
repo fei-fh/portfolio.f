@@ -42,42 +42,39 @@
   }
 
   #about {
-    overflow-x: clip !important;
+    overflow-x: hidden !important;
     overflow-y: auto !important;
+  }
+
+  #about .about-layout {
+    display: block;
+    width: 100%;
+    height: auto;
+    padding: 13vh 7vw 7vh;
   }
 
   #about .about-stable-intro {
     position: relative !important;
-    top: auto !important;
-    left: auto !important;
     width: 100% !important;
-    max-width: none !important;
-    padding: 14vh 7vw 2.5rem;
-    transform: none !important;
+    padding: 0;
   }
 
   #about .about-copy {
-    font-size: 13px !important;
-    line-height: 1.85 !important;
+    max-width: none;
+    font-size: 13px;
+    line-height: 1.85;
   }
 
   #about .about-gallery {
-    position: relative !important;
-    right: auto !important;
-    bottom: auto !important;
-    height: clamp(190px, 26vh, 235px) !important;
-    margin-bottom: 6vh;
+    --about-collage-height: clamp(390px, 105vw, 520px);
+    position: relative;
+    width: 100%;
+    min-height: 0;
+    margin-top: 2.8rem;
+    overflow: visible;
   }
 
-  #about .about-track {
-    gap: 12px !important;
-    padding-left: 7vw !important;
-  }
-
-  #about .about-photo {
-    width: min(54vw, 210px) !important;
-    height: 100% !important;
-  }
+  #about .about-composition { margin-bottom: 44px; }
 
   #cv {
     overflow-x: clip;
