@@ -2,18 +2,18 @@
 
 /* HOME sheep test animation controls. */
 .home-sheep-track {
---sheep-width: 180px;
+--sheep-width: 200px;
 --sheep-crossing-duration: 9s;
---sheep-bottom: 8vh;
+--sheep-bottom: 30vh;
 --sheep-small-jump: -26px;
 --sheep-big-jump: -54px;
 --sheep-landing-squash: 5px;
 --sheep-bounce-duration: 7s;
 --sheep-text-size: 28px;
---sheep-text-sheep-gap: 32px;
---sheep-path-gap: 82px;
---sheep-left-boundary: 0.05;
---sheep-right-boundary: 0.90;
+--sheep-text-sheep-gap: -22px;
+--sheep-path-gap: 12px;
+--sheep-left-boundary: -0.03;
+--sheep-right-boundary: 1.0;
   position: absolute;
   z-index: 3;
   inset: 0;
@@ -27,7 +27,7 @@
   bottom: var(--sheep-bottom);
   display: flex;
   align-items: center;
-  width: min(var(--sheep-width), 42vw, 40vh);
+  width: min(var(--sheep-width), 50vw, 40vh);
   will-change: transform;
 }
 
@@ -45,6 +45,7 @@
   line-height: 1;
   letter-spacing: 0;
   text-align: center;
+  
 }
 
 

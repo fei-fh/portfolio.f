@@ -55,7 +55,7 @@
     const available = height - lowestCurve - gap - landing - textSpace;
     const ratio = sheep.naturalHeight / sheep.naturalWidth;
     const fittedWidth = Math.max(1, available / (ratio + Math.sin(7 * Math.PI / 180) / 2));
-    sheepRunner.style.width = `${Math.min(parseFloat(styles.getPropertyValue('--sheep-width')), width * 0.42, fittedWidth)}px`;
+    sheepRunner.style.width = `${parseFloat(styles.getPropertyValue('--sheep-width'))}px`;
   }
 
   window.addEventListener('resize', fitSheep);
@@ -89,10 +89,10 @@
 
     if (sheepMessage) {
       const gap = parseFloat(styles.getPropertyValue('--sheep-text-sheep-gap'));
-      const naturalLeft = x - gap - sheepMessage.offsetWidth;
-      const messageLeft = Math.max(16, Math.min(viewportWidth - sheepMessage.offsetWidth - 16, naturalLeft));
+      const naturalLeft = x - gap - sheepMessage.offsetWidth - 100;
+      const messageLeft = naturalLeft;
       sheepMessage.style.setProperty('--sheep-message-shift', `${messageLeft - naturalLeft}px`);
-      sheepMessage.style.top = `${sheepTrack.clientHeight - sheepRunner.offsetTop - sheepMessage.offsetHeight - 16}px`;
+      sheepMessage.style.top = `${sheepTrack.clientHeight - sheepRunner.offsetTop - sheepMessage.offsetHeight - 66}px`;
     }
   }
 
