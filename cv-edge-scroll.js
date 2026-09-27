@@ -9,8 +9,47 @@
   const figmaOriginals = new Set(['IMG_1821.jpg','Weixin Image_20260922135121_34_12.png','IMG_8984.jpg','IMG_9263.JPG','Weixin Image_20260922135111_33_12.png','Weixin Image_2026-09-21_141317_071.jpg']);
   const desktopPhotos = [...figmaPhotos, ...allPhotos.filter((file) => !figmaOriginals.has(file))];
   // Figma desktop composition: x, y, width, height (%), z-index.
-  const DESKTOP_COMPOSITIONS = [[[7,5,47,25,2],[59,2,24,34,5],[3,30,22,20,3],[30,30,33,34,6],[71,39,25,22,4],[3,58,22,21,3],[18,64,25,31,7],[47,58,36,25,8]]];
+  const DESKTOP_COMPOSITIONS = [[[7,5,47,45,2],[59,2,24,54,5],[3,30,22,20,3],[30,40,33,34,6],[71,60,25,22,4],[3,58,22,21,3],[18,64,25,31,7],[47,58,36,25,8]]];
   const MOBILE_COMPOSITIONS = [[[29,18,40,44,3],[1,2,29,28,2],[72,0,26,30,1],[0,37,29,35,4],[70,40,28,29,5],[36,72,28,26,6],[36,0,27,20,2],[2,76,29,23,4],[72,76,25,22,5]],[[0,18,39,44,3],[43,0,27,29,2],[73,8,25,27,1],[40,40,30,33,4],[73,46,25,29,5],[5,76,30,23,6],[4,0,27,17,2],[39,79,28,20,3],[73,81,25,18,4]],[[56,23,42,43,3],[1,0,30,29,2],[37,0,24,24,1],[0,39,27,32,4],[30,34,28,32,5],[38,75,28,24,6],[72,0,25,22,2],[2,77,29,21,3],[73,73,25,26,4]],[[28,30,42,42,3],[0,0,31,29,2],[65,0,32,31,1],[0,41,28,32,4],[74,42,24,29,5],[37,78,27,21,6],[36,0,25,25,2],[3,80,27,19,4],[74,77,24,22,5]],[[0,27,42,43,3],[38,0,27,24,2],[72,5,26,30,1],[43,38,28,31,4],[75,47,23,26,5],[37,78,28,21,6],[0,0,29,23,2],[2,79,28,20,4],[75,79,23,20,5]]];
+  const DESKTOP_IMAGE_ADJUSTMENTS = {
+    '1-1': { marginTop: '-14px', marginLeft: '89px', paddingLeft: '70px', height: '235.09px', maxHeight: 'none' },
+    '1-3': { marginTop: '-65px', marginLeft: '36px', height: '220.59px', maxHeight: 'none' },
+    '1-4': { marginTop: '94px', marginLeft: '-4px' },
+    '1-5': { marginTop: '-32px', marginLeft: '113px' },
+    '1-6': { height: '276.18px', maxHeight: 'none' },
+    '1-7': { marginTop: '174px', marginLeft: '64px', height: '282.98px', maxHeight: 'none' },
+    '1-8': { marginTop: '116px', marginLeft: '114px', height: '229.5px', maxHeight: 'none' },
+    '2-1': { marginTop: '-47px', marginLeft: '-50px', width: '158.06px', height: '218.09px', maxWidth: 'none', maxHeight: 'none', objectFit: 'cover' },
+    '2-2': { marginTop: '30px', marginLeft: '-92px', width: '443.52px', height: '183.31px', maxWidth: 'none', maxHeight: 'none', objectFit: 'cover' },
+    '2-5': { marginTop: '-166px', marginLeft: '-16px' },
+    '2-7': { paddingTop: '23px', paddingBottom: '23px', paddingLeft: '14px', width: '259.5px', height: '293.98px', maxWidth: 'none', maxHeight: 'none', objectFit: 'cover' },
+    '2-8': { marginTop: '88px', width: '330.27px', height: '388.5px', maxWidth: 'none', maxHeight: 'none', objectFit: 'cover' },
+    '3-1': { marginTop: '-82px', width: '270.06px', height: '350px', maxWidth: 'none', maxHeight: 'none', objectFit: 'cover' },
+    '3-2': { marginTop: '155px', marginLeft: '125px' },
+    '3-3': { marginTop: '17px', marginRight: '1px', marginLeft: '164px', width: '215.56px', height: '288.59px', maxWidth: 'none', maxHeight: 'none', objectFit: 'cover' },
+    '3-4': { marginTop: '20px', marginLeft: '123px' },
+    '3-5': { marginTop: '243px' },
+    '3-6': { width: '180px', height: '170px', maxWidth: 'none', maxHeight: 'none', objectFit: 'cover' },
+    '3-7': { marginTop: '93px' },
+    '3-8': { marginTop: '135px', width: '254.27px', maxWidth: 'none' },
+    '4-1': { width: '233px', maxWidth: 'none' },
+    '4-2': { marginTop: '-13px', marginLeft: '-26px', width: '124px', height: '183px', maxWidth: 'none', maxHeight: 'none', objectFit: 'cover' },
+    '4-3': { marginTop: '87px', width: '233.56px', height: '311.59px', maxWidth: 'none', maxHeight: 'none', objectFit: 'cover' },
+    '4-4': { marginTop: '-102px' },
+    '4-5': { marginTop: '-186px', marginLeft: '-19px', height: '180px', maxHeight: 'none' },
+    '4-7': { marginLeft: '108px', height: '297.98px', maxHeight: 'none' },
+    '4-8': { paddingBottom: '25px', paddingLeft: '164px', height: '203.5px', maxHeight: 'none' },
+    '5-1': { marginTop: '-62px' },
+    '5-2': { marginTop: '-129px' },
+    '5-3': { marginTop: '-62px', height: '228.59px', maxHeight: 'none' },
+    '5-4': { marginTop: '-42px' },
+    '5-5': { marginTop: '-148px', height: '300.76px', maxHeight: 'none' },
+    '5-8': { marginTop: '47px', paddingRight: '130px', height: '264.5px', maxHeight: 'none' },
+    '6-1': { marginTop: '-105px' },
+    '6-2': { marginTop: '-109px', marginLeft: '59px' },
+    '6-4': { marginTop: '-37px' }
+  };
+  const DESKTOP_HIDDEN_IMAGES = new Set(['4-6']);
   const desktopAbout = window.matchMedia('(min-width: 821px)');
   let aboutGalleryMode = '';
   const mountAboutGallery = () => {
@@ -32,12 +71,20 @@
       const figure = document.createElement('figure');
       figure.className = 'about-photo';
       figure.style.cssText = `--photo-x:${x}%;--photo-y:${y}%;--photo-width:${w}%;--photo-height:${h}%;--photo-z:${z}`;
+      const slot = `${patternIndex + 1}-${(index % patternSize) + 1}`;
+      if (mode === 'desktop' && DESKTOP_HIDDEN_IMAGES.has(slot)) {
+        fragment.lastChild.append(figure);
+        return;
+      }
       const image = document.createElement('img');
       image.loading = index < 3 ? 'eager' : 'lazy';
       image.decoding = 'async';
       image.src = file.endsWith('.webp') ? `Images-web/about/${file}` : optimizedImageSource(`Images/about/${file}`);
       image.alt = `学习、制作与生活记录 ${index + 1}`;
       image.draggable = false;
+      if (mode === 'desktop') {
+        Object.assign(image.style, DESKTOP_IMAGE_ADJUSTMENTS[slot] || {});
+      }
       figure.append(image);
       fragment.lastChild.append(figure);
     });
