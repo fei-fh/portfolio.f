@@ -13,7 +13,13 @@ function hasCvAccess(){
 function goTo(id){
   if(id==='cv'&&!hasCvAccess())id='cv-verification';
   scenes.forEach(s=>s.classList.remove('scene-active'));
-  document.getElementById(id).classList.add('scene-active');
+  const nextScene=document.getElementById(id);
+  nextScene.classList.add('scene-active');
+  nextScene.querySelectorAll('img[data-eager-when-active]').forEach(image=>{
+    image.loading='eager';
+    image.fetchPriority='high';
+    image.removeAttribute('data-eager-when-active');
+  });
   document.body.classList.toggle('is-home',id==='home');
   document.body.classList.toggle('is-portfolio-detail',id==='portfolio-detail');
   navItems.forEach(n=>n.classList.toggle('active',n.dataset.go===(id==='cv-verification'?'cv':id)));
@@ -21,6 +27,7 @@ function goTo(id){
     if(id==='cv')sessionStorage.setItem(CV_ACTIVE_KEY,'true');
     else sessionStorage.removeItem(CV_ACTIVE_KEY);
   }catch{}
+  document.dispatchEvent(new CustomEvent('site:scenechange',{detail:{id}}));
 }
 const cvVerificationForm=document.querySelector('.cv-verification-form');
 cvVerificationForm.addEventListener('submit',event=>{
@@ -80,8 +87,22 @@ document.querySelectorAll('#contact [data-contact-copy]').forEach(button=>{
 const optimizedImageFiles=new Set([
   'Professional Works/1.webp',
   'Professional Works/2.webp',
+  'Professional Works/GMMSH/Collage/collage.webp',
+  'Professional Works/GMMSH/b地下玄关.webp',
+  'Professional Works/GMMSH/主卧套-卫生间.webp',
   'Professional Works/GMMSH/主卧套.webp',
+  'Professional Works/GMMSH/壁画.webp',
+  'Professional Works/GMMSH/客卧套.webp',
+  'Professional Works/GMMSH/玄关1.webp',
+  'Professional Works/GMMSH/玄关2.webp',
+  'Professional Works/GMMSH/衣帽间.webp',
+  'Professional Works/GMMSH/车库.webp',
+  'Professional Works/ffe/251114_ZHAXA_270__Custom Lighting Package_20.webp',
+  'Professional Works/ffe/CSS ZHAXA 道具图纸 251219_08.webp',
+  'Professional Works/ffe/CSS ZHAXA 道具图纸 251219_46.webp',
   'Professional Works/ffe/微信图片_20260123113518_1573_1224.webp',
+  'Professional Works/照片/1.webp',
+  'Professional Works/照片/233.webp',
   'Professional Works/照片/31.webp',
   'Professional Works/照片/32.webp',
   'Professional Works/照片/zhaxa (1).webp',
@@ -89,7 +110,9 @@ const optimizedImageFiles=new Set([
   'Professional Works/照片/zhaxa (3).webp',
   'Professional Works/照片/zhaxa (4).webp',
   'about/69FA46D7-CB1B-40F1-9A51-2C9DAF787983-2566-000001DF0EF187B5.webp',
+  'about/DSC02918.webp',
   'about/DSC02922.webp',
+  'about/DSC03085.webp',
   'about/DSC03515.webp',
   'about/DSC03853.webp',
   'about/DSC05865.webp',
@@ -108,6 +131,13 @@ const optimizedImageFiles=new Set([
   'about/IMG_8984.webp',
   'about/IMG_9263.webp',
   'about/IMG_9891.webp',
+  'about/Weixin Image_20260922135028_29_12.webp',
+  'about/Weixin Image_20260922135036_30_12.webp',
+  'about/Weixin Image_20260922135044_31_12.webp',
+  'about/Weixin Image_20260922135053_32_12.webp',
+  'about/Weixin Image_20260922135111_33_12.webp',
+  'about/Weixin Image_20260922135121_34_12.webp',
+  'about/Weixin Image_20260922135142_35_12.webp',
   'about/Weixin Image_20260922135210_36_12.webp',
   'about/Weixin Image_20260922135225_37_12.webp',
   'about/Weixin Image_20260922135258_39_12.webp',
@@ -116,12 +146,35 @@ const optimizedImageFiles=new Set([
   'lamp1.webp',
   'lamp2.webp',
   'lamp3.webp',
+  'lamp4.webp',
   'lamp6.webp',
   'lamp7.webp',
   'lamp8.webp',
   'lamp9.webp',
+  'personal-creation/01-宝蓝色发圈.webp',
+  'personal-creation/02-浅蓝白边.webp',
+  'personal-creation/03-棕色钩织.webp',
+  'personal-creation/04-马卡龙配色.webp',
+  'personal-creation/05-白色红边-补绘.webp',
+  'personal-creation/06-薄荷色长线-补绘.webp',
+  'personal-creation/07-棕色白边-补绘.webp',
+  'personal-creation/08-灰蓝色-补绘.webp',
+  'personal-creation/Group5/group5-detail-01.webp',
+  'personal-creation/Group5/group5-detail-02.webp',
+  'personal-creation/Group5/group5-detail-03.webp',
+  'personal-creation/Group5/group5-detail-04.webp',
   'personal-creation/Group5/group5-dish-main.webp',
+  'personal-creation/Group5/group5-food-01.webp',
+  'personal-creation/Group5/group5-food-02.webp',
+  'personal-creation/Group5/group5-food-03.webp',
+  'personal-creation/Group5/group5-food-04.webp',
   'personal-creation/Group5/group5-food-table.webp',
+  'personal-creation/Group5/group5-motif-02.webp',
+  'personal-creation/Group5/group5-motif-03.webp',
+  'personal-creation/Group5/group5-motif-04.webp',
+  'personal-creation/Group5/group5-table-embroidery.webp',
+  'personal-creation/group6/Group6-1.webp',
+  'personal-creation/group6/image 16.webp',
   'ph1.webp',
   'ph11.webp',
   'ph12.webp',
@@ -130,23 +183,39 @@ const optimizedImageFiles=new Set([
   'ph15.webp',
   'ph16.webp',
   'ph3.webp',
+  'ph4.webp',
   'ph5.webp',
   'ph6.webp',
   'ph7.webp',
   'ph8.webp',
+  'portfolio-group2-bg.webp',
   '大三1.webp',
+  '大三28.webp',
+  '大三29.webp',
   '大二1.webp',
+  '大二30.webp',
+  '大二31.webp',
   '大五.webp',
+  '大五11.webp',
   '大五12.webp',
   '大五13.webp',
+  '大五14.webp',
   '大五15.webp',
   '大四1.webp',
+  '大四16.webp',
   '大四17.webp',
   '大四18.webp',
+  '大四19.webp',
   '大四20.webp',
   '大四上1.webp',
+  '大四上21.webp',
+  '大四上22.webp',
   '大四上23.webp',
+  '大四上24.webp',
+  '大四上25.webp',
+  '大四上26.webp',
   '大四上27.webp',
+  '头图.webp',
   '研二07.webp',
   '研二08.webp',
   '研二09.webp',
@@ -161,7 +230,7 @@ function optimizedImageSource(source){
   const webpPath=`${match[1]}.webp`;
   return optimizedImageFiles.has(webpPath)?`Images-web/${webpPath}${match[2]||''}`:source;
 }
-function renderPrioritizedImages(container,markup,eagerSelector=''){const template=document.createElement('template');template.innerHTML=markup;const eager=eagerSelector?template.content.querySelector(eagerSelector):null;template.content.querySelectorAll('img').forEach(image=>{image.src=optimizedImageSource(image.getAttribute('src'));image.decoding='async';if(image===eager){image.loading='eager';image.fetchPriority='high';}else{image.loading='lazy';image.fetchPriority='auto';}});container.replaceChildren(template.content);}
+function renderPrioritizedImages(container,markup,eagerSelector=''){const template=document.createElement('template');template.innerHTML=markup;const eager=eagerSelector?template.content.querySelector(eagerSelector):null;const scene=container.closest('.scene');const sceneIsActive=!scene||scene.classList.contains('scene-active');template.content.querySelectorAll('img').forEach(image=>{image.src=optimizedImageSource(image.getAttribute('src'));image.decoding='async';if(image===eager&&sceneIsActive){image.loading='eager';image.fetchPriority='high';}else{image.loading='lazy';image.fetchPriority='auto';if(image===eager)image.setAttribute('data-eager-when-active','');}});container.replaceChildren(template.content);}
 function resetMobileScroll(container){if(!window.matchMedia('(max-width: 768px)').matches)return;const reset=()=>{if(container){container.scrollTop=0;container.scrollLeft=0;}window.scrollTo({top:0,left:0,behavior:'auto'});document.documentElement.scrollTop=0;document.body.scrollTop=0;};reset();requestAnimationFrame(()=>requestAnimationFrame(reset));}
 function showCategory(key){const d=portfolioData[key],gallery=document.getElementById('gallery');document.getElementById('category-index').textContent=`${d.index} / PORTFOLIO`;document.getElementById('category-kicker').textContent=d.label;document.getElementById('category-title').textContent=d.title;document.getElementById('category-description').textContent=d.description;const markup=d.images.map((entry,i)=>{const x=typeof entry==='string'?entry:entry.title,src=typeof entry==='string'?'':entry.src,project=typeof entry==='string'?'':entry.key||'',summary=typeof entry==='string'?'':entry.summary||'';return `<button class="image-placeholder" type="button" data-image="${src}" data-project="${project}" aria-label="查看 ${x} 项目详情">${src?`<img src="${src}" alt="${x}">`:''}<span>PROJECT ${String(i+1).padStart(2,'0')}</span><div class="project-copy"><strong>${x}</strong>${summary?`<p>${summary}</p>`:''}</div><small>${String(i+1).padStart(2,'0')} / ${String(d.images.length).padStart(2,'0')}</small></button>`}).join('');renderPrioritizedImages(gallery,markup,'.image-placeholder:first-child img');document.querySelector('.project-pager')?.remove();gallery.insertAdjacentHTML('afterend','<div class="project-pager"><span>SCROLL TO EXPLORE ↓</span></div>');goTo('portfolio-detail');resetMobileScroll(gallery);}
 const showCategoryWithPrompt=showCategory;
@@ -177,7 +246,7 @@ projectDetails['floating-sound-waves'].afterword='设计场地位于香港九龙
 projectDetails['floating-sound-waves'].summary=projectDetails['floating-sound-waves'].afterword;
 projectDetails['floating-sound-waves'].afterword='';
 document.head.insertAdjacentHTML('beforeend','<style>.project-overlay[data-project="floating-sound-waves"] .project-intro{display:flex!important;min-height:100dvh;padding:12vh 7vw;background:#111;align-items:center;justify-content:center}.project-overlay[data-project="floating-sound-waves"] .project-intro p{max-width:780px;margin:0;color:#fff;font-size:18px;font-weight:400;line-height:1.9;text-align:center}</style>');
-projectDetails['floating-sound-waves'].images=['Images/大五11.png','Images-web/大五12.webp','Images-web/大五13.webp','Images/大五14.png','Images-web/大五15.webp'];
+projectDetails['floating-sound-waves'].images=['Images-web/大五11.webp','Images-web/大五12.webp','Images-web/大五13.webp','Images-web/大五14.webp','Images-web/大五15.webp'];
 projectDetails['relocatable-corridor'].images=['Images-web/研二15.webp','Images-web/研二07.webp','Images-web/研二09.webp','Images-web/研二08.webp','Images-web/研二10.webp'];
 portfolioData.architecture.images[0].summary='';
 portfolioData.architecture.images[2]={key:'tea-culture-resort',title:'Tea Culture Resort and Leisure Center',src:'Images-web/大四1.webp'};
@@ -188,13 +257,13 @@ projectDetails['experimental-rural-primary-school']={title:'Experimental Rural P
 portfolioData.architecture.images[4]={key:'mountain-and-stone-museum',title:'Mountain and Stone Museum',src:'Images-web/大三1.webp'};
 projectDetails['mountain-and-stone-museum']={title:'Mountain and Stone Museum',summary:'',hero:'Images-web/大三1.webp',images:[]};
 projectDetails['mountain-and-stone-museum'].afterword='中国传统山水画中的山石是画家描摹自然的物象符号，自然山石被进行简化概括，笔墨皴法成为了描绘山石最基础的特征符号。<br><br>建筑形式效法中国南派画论中的山石符号，以描绘低矮丘陵的披麻皴为原型。披麻皴线条形状似麻披散的样子，其基本形状是略带弧度的松软线条，是线皴中的一种。我以此为形式来源，利用犀牛软件中的指令生发出建筑形式的可能性，再结合场地地形对产生的单体形式进行组合堆叠，呈现最终的建筑形式。';
-projectDetails['mountain-and-stone-museum'].afterImages=['Images/大三28.png','Images/大三29.png'];
+projectDetails['mountain-and-stone-museum'].afterImages=['Images-web/大三28.webp','Images-web/大三29.webp'];
 document.addEventListener('click',e=>{if(!e.target.closest('.image-placeholder[data-project="mountain-and-stone-museum"]'))return;setTimeout(()=>{const afterword=projectOverlay.querySelector('.project-afterword');const d=projectDetails['mountain-and-stone-museum'];if(!afterword||afterword.nextElementSibling?.classList.contains('project-after-gallery'))return;afterword.insertAdjacentHTML('afterend',`<div class="project-after-gallery" style="background:#111;padding:0 0 20px">${d.afterImages.map((src,i)=>`<img src="${src}" alt="${d.title} 项目图 ${i+2}" loading="lazy" decoding="async" style="display:block;width:100%;height:auto;margin:0 auto 20px">`).join('')}</div>`);},0);});
 portfolioData.architecture.images[5]='Nurturing Hive';
 portfolioData.handcraft.images[0]={title:'Embroidery',src:'Images/embroidery1.png'};
 portfolioData.product.images[0]={key:'kasa-lamp',title:'KASA LAMP',src:'Images-web/lamp1.webp'};
 portfolioData.product.images.length=1;
-projectDetails['kasa-lamp']={title:'KASA LAMP',summary:'',hero:'Images-web/lamp1.webp',images:['Images-web/lamp2.webp','Images-web/lamp3.webp','Images/lamp4.png','Images/lamp5.png','Images-web/lamp6.webp','Images-web/lamp7.webp','Images-web/lamp8.webp','Images-web/lamp9.webp']};
+projectDetails['kasa-lamp']={title:'KASA LAMP',summary:'',hero:'Images-web/lamp1.webp',images:['Images-web/lamp2.webp','Images-web/lamp3.webp','Images-web/lamp4.webp','Images/lamp5.png','Images-web/lamp6.webp','Images-web/lamp7.webp','Images-web/lamp8.webp','Images-web/lamp9.webp']};
 projectDetails['mountain-and-stone-museum'].images=[];
 document.addEventListener('click',e=>{const category=e.target.closest('[data-category]');if(!category||category.dataset.category==='art')return;setTimeout(()=>document.getElementById('gallery')?.classList.remove('art-gallery'),0);});
 document.addEventListener('click',e=>{const image=e.target.closest('#gallery.art-gallery figure img');if(!image)return;image.closest('figure').classList.toggle('is-expanded');});
@@ -208,15 +277,15 @@ projectDetails['nurturing-hive'].images=[];
 document.addEventListener('click',e=>{if(!e.target.closest('[data-category="art"]'))return;setTimeout(()=>{const image=document.querySelectorAll('#gallery.art-gallery figure img')[3];if(image)image.src='Images-web/ph5.webp?v=20260921';},0);});
 document.addEventListener('click',e=>{if(!e.target.closest('[data-category="art"]'))return;setTimeout(()=>{const gallery=document.getElementById('gallery');if(!gallery?.classList.contains('art-gallery'))return;gallery.style.setProperty('display','block','important');gallery.style.setProperty('column-count','1','important');gallery.style.setProperty('overflow-y','auto','important');gallery.querySelectorAll('figure').forEach(figure=>{figure.style.setProperty('display','block','important');figure.style.setProperty('position','relative','important');figure.style.setProperty('width','100%','important');figure.style.setProperty('height','auto','important');figure.style.setProperty('min-height','0','important');figure.style.setProperty('margin','0 0 28px','important');figure.style.setProperty('overflow','visible','important');const image=figure.querySelector('img');image.style.setProperty('position','static','important');image.style.setProperty('display','block','important');image.style.setProperty('width','100%','important');image.style.setProperty('height','auto','important');image.style.setProperty('object-fit','contain','important');});},0);});
 projectDetails['nurturing-hive'].afterword='该社区方案以产后妈妈为主体人群，打造一所一流的符合时代共居理念的月子中心。在经过长时间的备孕到最终生产的过程，对妈妈来说是幸福而又辛苦的，而产后六周的恢复期就显得尤为重要。我们所设想的月子社区不只使她们能够受到一对一的精心照料，同时也希望她们能够在月子期间具备主动享受的意识。而这种主动意识体现在该方案中设置的公共空间中：妈妈们互相分享育儿理念；阅读书籍提升自我价值；通过瑜伽运动主动进行生理修复；咨询心理专家获得心理调节。<br><br>这些事件会发生以六边形为原型的单元中，通过体块组合，生成共享空间和育婴室，打造一所以共同居住为理念的服务性空间；以共同享受为出发点的服务性空间；以共同服务为目标的服务性空间。';
-projectDetails['nurturing-hive'].afterImages=['Images/大二30.png','Images/大二31.png'];
+projectDetails['nurturing-hive'].afterImages=['Images-web/大二30.webp','Images-web/大二31.webp'];
 document.addEventListener('click',e=>{if(!e.target.closest('.image-placeholder[data-project="nurturing-hive"]'))return;setTimeout(()=>{const afterword=projectOverlay.querySelector('.project-afterword');const d=projectDetails['nurturing-hive'];if(!afterword||afterword.nextElementSibling?.classList.contains('project-after-gallery'))return;afterword.insertAdjacentHTML('afterend',`<div class="project-after-gallery" style="background:#111;padding:0 0 20px">${d.afterImages.map((src,i)=>`<img src="${src}" alt="${d.title} 项目图 ${i+2}" loading="lazy" decoding="async" style="display:block;width:100%;height:auto;margin:0 auto 20px">`).join('')}</div>`);},0);});
 projectDetails['experimental-rural-primary-school'].images=[];
 projectDetails['experimental-rural-primary-school'].summary='以周边茶文化为线索，建筑设计构思为一个度假休闲中心。以木质桁架结构作为支撑结构。其功能包含游客服务中心、餐饮区、民宿区、制茶工坊及文创中心。建筑旨在为游客提供一个既可学习茶艺又可放松身心的场所，给游客独一无二的极致体验。';
-projectDetails['experimental-rural-primary-school'].afterImages=['Images/大四上21.png','Images/大四上22.png','Images-web/大四上23.webp','Images/大四上24.png','Images/大四上25.png','Images/大四上26.png','Images-web/大四上27.webp'];
+projectDetails['experimental-rural-primary-school'].afterImages=['Images-web/大四上21.webp','Images-web/大四上22.webp','Images-web/大四上23.webp','Images-web/大四上24.webp','Images-web/大四上25.webp','Images-web/大四上26.webp','Images-web/大四上27.webp'];
 document.head.insertAdjacentHTML('beforeend','<style>.project-overlay[data-project="experimental-rural-primary-school"] .project-intro{display:flex!important;min-height:100dvh;padding:12vh 7vw;background:#111;align-items:center;justify-content:center}.project-overlay[data-project="experimental-rural-primary-school"] .project-intro p{max-width:780px;margin:0;color:#fff;font-size:18px;font-weight:400;line-height:1.9;text-align:center}</style>');
 document.addEventListener('click',e=>{if(!e.target.closest('.image-placeholder[data-project="experimental-rural-primary-school"]'))return;setTimeout(()=>{const intro=projectOverlay.querySelector('.project-intro');const d=projectDetails['experimental-rural-primary-school'];if(!intro||intro.nextElementSibling?.classList.contains('project-after-gallery'))return;intro.insertAdjacentHTML('afterend',`<div class="project-after-gallery" style="background:#111;padding:0 0 20px">${d.afterImages.map((src,i)=>`<img src="${src}" alt="${d.title} 项目图 ${i+1}" loading="lazy" decoding="async" style="display:block;width:100%;height:auto;margin:0 auto 20px">`).join('')}</div>`);},0);});
 projectDetails['tea-culture-resort'].afterword='场地选址为浙江省杭州市黄湖镇青山村。由于原住民家庭搬离，从城市来的“新村民”的小孩面临着受教育问题。我们意指利用当地材料：夯土、木材、竹子，以夯土作为承重结构，打造一个乡村实验小学，为当地儿童提供一个在地的、融于自然的受教育可能性。<br><br>项目利用夯土为主要材料，再结合其他的材料形成合成的材料建造系统。利用夯土的特性与清晰的建构逻辑，来赋予建筑设计在功能、结构、造型等方面的语言。';
-projectDetails['tea-culture-resort'].afterImages=['Images/大四16.png','Images-web/大四17.webp','Images-web/大四18.webp','Images/大四19.png','Images-web/大四20.webp'];
+projectDetails['tea-culture-resort'].afterImages=['Images-web/大四16.webp','Images-web/大四17.webp','Images-web/大四18.webp','Images-web/大四19.webp','Images-web/大四20.webp'];
 document.head.insertAdjacentHTML('beforeend','<style>.project-overlay[data-project="relocatable-corridor"] .project-intro{display:flex!important;min-height:100dvh;padding:12vh 7vw;background:#111;align-items:center;justify-content:center}.project-overlay[data-project="relocatable-corridor"] .project-intro p{max-width:780px;margin:0;color:#fff;font-size:18px;font-weight:400;line-height:1.9;text-align:center}</style>');
 document.addEventListener('click',e=>{if(!e.target.closest('.image-placeholder[data-project="tea-culture-resort"]'))return;setTimeout(()=>{const afterword=projectOverlay.querySelector('.project-afterword');const d=projectDetails['tea-culture-resort'];if(!afterword||afterword.nextElementSibling?.classList.contains('project-after-gallery'))return;afterword.insertAdjacentHTML('afterend',`<div class="project-after-gallery" style="background:#111;padding:0 0 20px">${d.afterImages.map((src,i)=>`<img src="${src}" alt="${d.title} 项目图 ${i+2}" loading="lazy" decoding="async" style="display:block;width:100%;height:auto;margin:0 auto 20px">`).join('')}</div>`);},0);});
 const projectOverlay=document.createElement('div');projectOverlay.className='project-overlay';document.body.append(projectOverlay);projectOverlay.addEventListener('click',()=>projectOverlay.classList.remove('is-open'));document.addEventListener('click',e=>{if(!e.target.closest('[data-category="art"]'))return;setTimeout(()=>{if(document.getElementById('art-image-proportions'))return;document.head.insertAdjacentHTML('beforeend','<style id="art-image-proportions">#portfolio-detail #gallery.art-gallery figure{min-height:0!important;background:transparent!important}#portfolio-detail #gallery.art-gallery figure img{height:auto!important;object-fit:contain!important}</style>');},0);});

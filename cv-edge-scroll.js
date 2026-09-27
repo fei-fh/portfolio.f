@@ -4,32 +4,52 @@
   const gallery = about?.querySelector('.about-gallery');
   const track = about?.querySelector('.about-track');
   if (!about || !copy || !gallery || !track) return;
-  const photos = ['IMG_3301.JPG','IMG_2967.JPG','IMG_5206.JPG','IMG_5213.JPG','IMG_3110.JPG','IMG_8779.JPG','IMG_2452.jpg','fxn 2024-11-22 152017.049.jpg','IMG_4948.JPG','IMG_9263.JPG','Weixin Image_2026-09-21_141317_071.jpg','DSC03853.JPG','IMG_1821.jpg','IMG_9891.JPG','cv-1.JPG','cv-3.JPG','cv-2.JPG','IMG_2477.JPG','IMG_1787.JPG','IMG_8984.jpg','IMG_4628.JPG','IMG_5279.JPG','DSC02922.jpg','DSC03515.JPEG','DSC02918.jpg','3c6d2fb830a84247e7f0ee03114779b3.jpg','630911154a69ea6067867bcd41914c.JPG','69FA46D7-CB1B-40F1-9A51-2C9DAF787983-2566-000001DF0EF187B5.JPG','c9a59691a6caac14f03b2ef0994d95.JPG','DSC03085.jpg','DSC05865.JPG','IMG_0130.JPG','Weixin Image_20260922135028_29_12.png','Weixin Image_20260922135036_30_12.png','Weixin Image_20260922135044_31_12.png','Weixin Image_20260922135053_32_12.png','Weixin Image_20260922135111_33_12.png','Weixin Image_20260922135121_34_12.png','Weixin Image_20260922135142_35_12.png','Weixin Image_20260922135210_36_12.jpg','Weixin Image_20260922135225_37_12.jpg','Weixin Image_20260922135258_39_12.png'];
-  // Fixed editorial compositions: x, y, width, height (%), z-index.
-  const COMPOSITIONS = [[[29,18,40,44,3],[1,2,29,28,2],[72,0,26,30,1],[0,37,29,35,4],[70,40,28,29,5],[36,72,28,26,6],[36,0,27,20,2],[2,76,29,23,4],[72,76,25,22,5]],[[0,18,39,44,3],[43,0,27,29,2],[73,8,25,27,1],[40,40,30,33,4],[73,46,25,29,5],[5,76,30,23,6],[4,0,27,17,2],[39,79,28,20,3],[73,81,25,18,4]],[[56,23,42,43,3],[1,0,30,29,2],[37,0,24,24,1],[0,39,27,32,4],[30,34,28,32,5],[38,75,28,24,6],[72,0,25,22,2],[2,77,29,21,3],[73,73,25,26,4]],[[28,30,42,42,3],[0,0,31,29,2],[65,0,32,31,1],[0,41,28,32,4],[74,42,24,29,5],[37,78,27,21,6],[36,0,25,25,2],[3,80,27,19,4],[74,77,24,22,5]],[[0,27,42,43,3],[38,0,27,24,2],[72,5,26,30,1],[43,38,28,31,4],[75,47,23,26,5],[37,78,28,21,6],[0,0,29,23,2],[2,79,28,20,4],[75,79,23,20,5]]];
-  const fragment = document.createDocumentFragment();
-  photos.forEach((file, index) => {
-    const patternSize = COMPOSITIONS[0].length;
-    const patternIndex = Math.floor(index / patternSize);
-    if (index % patternSize === 0) {
-      const canvas = document.createElement('div');
-      canvas.className = 'about-composition';
-      fragment.append(canvas);
-    }
-    const [x, y, w, h, z] = COMPOSITIONS[patternIndex % COMPOSITIONS.length][index % patternSize];
-    const figure = document.createElement('figure');
-    figure.className = 'about-photo';
-    figure.style.cssText = `--photo-x:${x}%;--photo-y:${y}%;--photo-width:${w}%;--photo-height:${h}%;--photo-z:${z}`;
-    const image = document.createElement('img');
-    image.loading = index < 3 ? 'eager' : 'lazy';
-    image.decoding = 'async';
-    image.src = optimizedImageSource(`Images/about/${file}`);
-    image.alt = `学习、制作与生活记录 ${index + 1}`;
-    image.draggable = false;
-    figure.append(image);
-    fragment.lastChild.append(figure);
+  const allPhotos = ['IMG_3301.JPG','IMG_2967.JPG','IMG_5206.JPG','IMG_5213.JPG','IMG_3110.JPG','IMG_8779.JPG','IMG_2452.jpg','fxn 2024-11-22 152017.049.jpg','IMG_4948.JPG','IMG_9263.JPG','Weixin Image_2026-09-21_141317_071.jpg','DSC03853.JPG','IMG_1821.jpg','IMG_9891.JPG','cv-1.JPG','cv-3.JPG','cv-2.JPG','IMG_2477.JPG','IMG_1787.JPG','IMG_8984.jpg','IMG_4628.JPG','IMG_5279.JPG','DSC02922.jpg','DSC03515.JPEG','DSC02918.jpg','3c6d2fb830a84247e7f0ee03114779b3.jpg','630911154a69ea6067867bcd41914c.JPG','69FA46D7-CB1B-40F1-9A51-2C9DAF787983-2566-000001DF0EF187B5.JPG','c9a59691a6caac14f03b2ef0994d95.JPG','DSC03085.jpg','DSC05865.JPG','IMG_0130.JPG','Weixin Image_20260922135028_29_12.png','Weixin Image_20260922135036_30_12.png','Weixin Image_20260922135044_31_12.png','Weixin Image_20260922135053_32_12.png','Weixin Image_20260922135111_33_12.png','Weixin Image_20260922135121_34_12.png','Weixin Image_20260922135142_35_12.png','Weixin Image_20260922135210_36_12.jpg','Weixin Image_20260922135225_37_12.jpg','Weixin Image_20260922135258_39_12.png'];
+  const figmaPhotos = ['IMG_1821.jpg','IMG_3678.webp','Weixin Image_20260922135121_34_12.png','IMG_8984.jpg','IMG_9263.JPG','Weixin Image_20260922135111_33_12.png','IMG_3332.webp','Weixin Image_2026-09-21_141317_071.jpg'];
+  const figmaOriginals = new Set(['IMG_1821.jpg','Weixin Image_20260922135121_34_12.png','IMG_8984.jpg','IMG_9263.JPG','Weixin Image_20260922135111_33_12.png','Weixin Image_2026-09-21_141317_071.jpg']);
+  const desktopPhotos = [...figmaPhotos, ...allPhotos.filter((file) => !figmaOriginals.has(file))];
+  // Figma desktop composition: x, y, width, height (%), z-index.
+  const DESKTOP_COMPOSITIONS = [[[7,5,47,25,2],[59,2,24,34,5],[3,30,22,20,3],[30,30,33,34,6],[71,39,25,22,4],[3,58,22,21,3],[18,64,25,31,7],[47,58,36,25,8]]];
+  const MOBILE_COMPOSITIONS = [[[29,18,40,44,3],[1,2,29,28,2],[72,0,26,30,1],[0,37,29,35,4],[70,40,28,29,5],[36,72,28,26,6],[36,0,27,20,2],[2,76,29,23,4],[72,76,25,22,5]],[[0,18,39,44,3],[43,0,27,29,2],[73,8,25,27,1],[40,40,30,33,4],[73,46,25,29,5],[5,76,30,23,6],[4,0,27,17,2],[39,79,28,20,3],[73,81,25,18,4]],[[56,23,42,43,3],[1,0,30,29,2],[37,0,24,24,1],[0,39,27,32,4],[30,34,28,32,5],[38,75,28,24,6],[72,0,25,22,2],[2,77,29,21,3],[73,73,25,26,4]],[[28,30,42,42,3],[0,0,31,29,2],[65,0,32,31,1],[0,41,28,32,4],[74,42,24,29,5],[37,78,27,21,6],[36,0,25,25,2],[3,80,27,19,4],[74,77,24,22,5]],[[0,27,42,43,3],[38,0,27,24,2],[72,5,26,30,1],[43,38,28,31,4],[75,47,23,26,5],[37,78,28,21,6],[0,0,29,23,2],[2,79,28,20,4],[75,79,23,20,5]]];
+  const desktopAbout = window.matchMedia('(min-width: 821px)');
+  let aboutGalleryMode = '';
+  const mountAboutGallery = () => {
+    const mode = desktopAbout.matches ? 'desktop' : 'mobile';
+    if (aboutGalleryMode === mode) return;
+    aboutGalleryMode = mode;
+    const photos = mode === 'desktop' ? desktopPhotos : allPhotos;
+    const compositions = mode === 'desktop' ? DESKTOP_COMPOSITIONS : MOBILE_COMPOSITIONS;
+    const fragment = document.createDocumentFragment();
+    photos.forEach((file, index) => {
+      const patternSize = compositions[0].length;
+      const patternIndex = Math.floor(index / patternSize);
+      if (index % patternSize === 0) {
+        const canvas = document.createElement('div');
+        canvas.className = 'about-composition';
+        fragment.append(canvas);
+      }
+      const [x, y, w, h, z] = compositions[patternIndex % compositions.length][index % patternSize];
+      const figure = document.createElement('figure');
+      figure.className = 'about-photo';
+      figure.style.cssText = `--photo-x:${x}%;--photo-y:${y}%;--photo-width:${w}%;--photo-height:${h}%;--photo-z:${z}`;
+      const image = document.createElement('img');
+      image.loading = index < 3 ? 'eager' : 'lazy';
+      image.decoding = 'async';
+      image.src = file.endsWith('.webp') ? `Images-web/about/${file}` : optimizedImageSource(`Images/about/${file}`);
+      image.alt = `学习、制作与生活记录 ${index + 1}`;
+      image.draggable = false;
+      figure.append(image);
+      fragment.lastChild.append(figure);
+    });
+    track.replaceChildren(fragment);
+  };
+  document.addEventListener('site:scenechange', (event) => {
+    if (event.detail?.id === 'about') mountAboutGallery();
   });
-  track.replaceChildren(fragment);
+  desktopAbout.addEventListener('change', () => {
+    if (about.classList.contains('scene-active')) mountAboutGallery();
+  });
+  if (about.classList.contains('scene-active')) mountAboutGallery();
 
   const education = document.querySelector('#cv .education-panel');
   if (education) {
@@ -73,7 +93,7 @@
       const cards = view === 'academic'
         ? [['1', 'Architecture', '建筑课程', 'architecture'], ['2', 'Product', '产品设计', 'product'], ['3', 'Art', '现象素描', 'art']]
         : [['01', 'Academic Works', '学生作品', 'academic'], ['02', 'Professional Works', '落地项目', 'professional'], ['03', 'Personal Creation', '个人项目', 'personal']];
-      const background = view === 'academic' ? 'Images/portfolio-group2-bg.png' : 'Images/Portfolio/Group1/1.png';
+      const background = view === 'academic' ? 'Images-web/portfolio-group2-bg.webp' : 'Images/Portfolio/Group1/1.png';
       const markup = `<img class="portfolio-figma-bg" src="${background}" alt="" aria-hidden="true"><p class="portfolio-figma-word" aria-hidden="true">portfolio</p>${view === 'academic' ? '<p class="portfolio-academic-origin" aria-hidden="true">01&nbsp; Academic Works</p>' : ''}<nav class="portfolio-figma-menu portfolio-figma-menu--${view}" aria-label="${view === 'academic' ? 'Academic Works 分类' : '作品分类'}">${cards.map(([number, title, label, action]) => `<button type="button" ${view === 'academic' ? `data-category="${action}"` : `data-portfolio-group="${action}"`}><strong>${number}&nbsp; ${title}</strong><em>${label}</em></button>`).join('')}</nav>`;
       renderPrioritizedImages(portfolio, markup, '.portfolio-figma-bg');
       portfolio.dataset.view = view;
@@ -94,7 +114,7 @@
          alt="招商西安湾空间细节">
 
     <img class="photo-3"
-         src="Images/Professional Works/照片/233.jpg"
+         src="Images-web/Professional Works/照片/233.webp"
          alt="招商西安湾软装细节">
 
     <img class="photo-4"
@@ -102,7 +122,7 @@
          alt="招商西安湾餐厅">
 
     <img class="photo-5"
-         src="Images/Professional Works/照片/233.jpg"
+         src="Images-web/Professional Works/照片/233.webp"
          alt="招商西安湾空间">
 
     <img class="photo-6"
@@ -118,12 +138,12 @@
          alt="招商西安湾落地照片">
 
     <img class="photo-9"
-         src="Images/Professional Works/照片/1.jpg"
+         src="Images-web/Professional Works/照片/1.webp"
          alt="招商西安湾落地照片">
 
   </div>
-</div><div class="professional-board-section"><h2>FURNITURE <span>家具产品图纸及照片</span></h2><div class="professional-furniture"><img src="Images/Professional Works/ffe/251114_ZHAXA_270__Custom Lighting Package_18.png" alt="灯具图纸"><img src="Images/Professional Works/ffe/251114_ZHAXA_270__Custom Lighting Package_20.png" alt="灯具图纸"><img src="Images/Professional Works/ffe/微信图片_20260122170031_1531_1224.jpg" alt="家具照片"><img src="Images/Professional Works/ffe/CSS ZHAXA 道具图纸 251219_46.png" alt="家具图纸"><img src="Images-web/Professional Works/ffe/微信图片_20260123113518_1573_1224.webp" alt="家具照片"><img src="Images/Professional Works/ffe/CSS ZHAXA 道具图纸 251219_08.png" alt="家具图纸"><img src="Images/Professional Works/ffe/微信图片_20260122165949_1517_1224.jpg" alt="家具照片"><img src="Images/Professional Works/ffe/CSS ZHAXA 道具图纸 251219_25.png" alt="家具图纸"><img src="Images/Professional Works/ffe/微信图片_20260122170040_1538_1224.jpg" alt="家具照片"></div></div></section>`;
-    const professionalBoardWithAddedPhotos = professionalBoard.replace('</div></div></div><div class="professional-board-section"><h2>FURNITURE', '<img class="professional-photo-wide" src="Images-web/Professional Works/照片/zhaxa (2).webp" alt="招商西安湾补充空间照片"></div></div><div class="professional-photo-additions"><img src="Images-web/Professional Works/照片/31.webp" alt="招商西安湾落地照片 31"><img src="Images-web/Professional Works/照片/32.webp" alt="招商西安湾落地照片 32"></div></div><section class="professional-closing-photo"><img src="Images/Professional Works/照片/1.jpg" alt="招商西安湾项目收尾照片"></section><div class="professional-board-section"><h2>FURNITURE');
+</div><div class="professional-board-section"><h2>FURNITURE <span>家具产品图纸及照片</span></h2><div class="professional-furniture"><img src="Images/Professional Works/ffe/251114_ZHAXA_270__Custom Lighting Package_18.png" alt="灯具图纸"><img src="Images-web/Professional Works/ffe/251114_ZHAXA_270__Custom Lighting Package_20.webp" alt="灯具图纸"><img src="Images/Professional Works/ffe/微信图片_20260122170031_1531_1224.jpg" alt="家具照片"><img src="Images-web/Professional Works/ffe/CSS ZHAXA 道具图纸 251219_46.webp" alt="家具图纸"><img src="Images-web/Professional Works/ffe/微信图片_20260123113518_1573_1224.webp" alt="家具照片"><img src="Images-web/Professional Works/ffe/CSS ZHAXA 道具图纸 251219_08.webp" alt="家具图纸"><img src="Images/Professional Works/ffe/微信图片_20260122165949_1517_1224.jpg" alt="家具照片"><img src="Images/Professional Works/ffe/CSS ZHAXA 道具图纸 251219_25.png" alt="家具图纸"><img src="Images/Professional Works/ffe/微信图片_20260122170040_1538_1224.jpg" alt="家具照片"></div></div></section>`;
+    const professionalBoardWithAddedPhotos = professionalBoard.replace('</div></div></div><div class="professional-board-section"><h2>FURNITURE', '<img class="professional-photo-wide" src="Images-web/Professional Works/照片/zhaxa (2).webp" alt="招商西安湾补充空间照片"></div></div><div class="professional-photo-additions"><img src="Images-web/Professional Works/照片/31.webp" alt="招商西安湾落地照片 31"><img src="Images-web/Professional Works/照片/32.webp" alt="招商西安湾落地照片 32"></div></div><section class="professional-closing-photo"><img src="Images-web/Professional Works/照片/1.webp" alt="招商西安湾项目收尾照片"></section><div class="professional-board-section"><h2>FURNITURE');
     const professionalBoardComplete = professionalBoardWithAddedPhotos;
     const professionalProjects = [
       { key: 'xian-bay', number: '01', title: '招商西安湾', cover: 'Images-web/Professional Works/照片/zhaxa (1).webp' },
