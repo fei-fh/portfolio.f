@@ -167,7 +167,7 @@
   position: absolute;
   z-index: 3;
   display: grid;
-  justify-items: center;
+  justify-items: stretch;
   gap: 3px;
   min-width: clamp(132px, 15vw, 220px);
   padding: clamp(7px, .8vw, 12px) clamp(9px, 1vw, 15px);
@@ -179,7 +179,7 @@
 
 #portfolio .portfolio-sheep-copy strong {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   gap: .38em;
   font-size: clamp(17px, 1.65vw, 25px);
   line-height: 1.02;
@@ -187,7 +187,10 @@
 }
 
 #portfolio .portfolio-sheep-copy em {
+  justify-self: stretch;
+  width: 100%;
   font-size: clamp(8px, .7vw, 11px);
+  text-align: right;
 }
 
 #portfolio .portfolio-sheep-number {
@@ -202,6 +205,8 @@
   left: 0;
   width: 34%;
   height: 62%;
+  margin-top: -92px;
+  margin-left: -41px;
 }
 
 #portfolio .portfolio-figma-menu--root .portfolio-sheep-option:nth-child(1) .portfolio-sheep-copy {
@@ -214,6 +219,8 @@
   left: 34%;
   width: 37%;
   height: 64%;
+  margin-top: -61px;
+  margin-left: -103px;
 }
 
 #portfolio .portfolio-figma-menu--root .portfolio-sheep-option:nth-child(2) .portfolio-sheep-copy {
@@ -226,6 +233,8 @@
   left: 61%;
   width: 35%;
   height: 68%;
+  margin-top: -73px;
+  margin-left: -216px;
 }
 
 #portfolio .portfolio-figma-menu--root .portfolio-sheep-option:nth-child(3) .portfolio-sheep-copy {
@@ -245,6 +254,8 @@
   left: 0;
   width: 39%;
   height: 65%;
+  margin-top: -60px;
+  margin-left: -50px;
 }
 
 #portfolio .portfolio-figma-menu--academic .portfolio-sheep-option:nth-child(1) .portfolio-sheep-copy {
@@ -257,6 +268,8 @@
   left: 39%;
   width: 32%;
   height: 65%;
+  margin-top: -117px;
+  margin-left: -99px;
 }
 
 #portfolio .portfolio-figma-menu--academic .portfolio-sheep-option:nth-child(2) .portfolio-sheep-copy {
@@ -269,6 +282,8 @@
   left: 70%;
   width: 28%;
   height: 68%;
+  margin-top: -35px;
+  margin-left: -116px;
 }
 
 #portfolio .portfolio-figma-menu--academic .portfolio-sheep-option:nth-child(3) .portfolio-sheep-copy {
@@ -374,6 +389,10 @@
     width: 94%;
     height: 62%;
     transform: none;
+  }
+
+  #portfolio .portfolio-figma-menu.portfolio-sheep-menu .portfolio-sheep-option {
+    margin: 0;
   }
 
   #portfolio .portfolio-sheep-copy {
