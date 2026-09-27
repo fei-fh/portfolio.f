@@ -529,35 +529,33 @@
   }
 
   #portfolio .portfolio-figma-menu.portfolio-sheep-menu,
-  #portfolio .portfolio-figma-menu.portfolio-sheep-menu--academic {
-    top: 16%;
-    left: 5%;
-    display: flex;
-    width: 92%;
-    gap: 0;
+  #portfolio .portfolio-figma-menu.portfolio-figma-menu--academic {
+    top: 31%;
+    left: 3%;
+    display: block;
+    width: 94%;
+    height: 62%;
     transform: none;
   }
 
   #portfolio .portfolio-figma-menu.portfolio-sheep-menu button.portfolio-sheep-option {
-    --option-offset: 0px;
-    display: flex;
+    position: absolute;
+    display: block;
     grid-template-columns: none;
-    width: 100%;
-    min-height: clamp(104px, 15.8vh, 132px);
-    gap: 4px;
+    min-height: 0;
     padding: 0;
   }
 
   #portfolio .portfolio-figma-menu.portfolio-sheep-menu .portfolio-sheep-copy {
-    flex: 1 1 auto;
-    grid-template-columns: minmax(0, 1fr) auto;
-    gap: 7px;
+    display: grid;
+    min-width: clamp(112px, 34vw, 145px);
+    padding: 6px 8px;
   }
 
   #portfolio .portfolio-figma-menu.portfolio-sheep-menu .portfolio-sheep-copy strong {
     display: flex;
-    gap: 6px;
-    font-size: clamp(18px, 5.4vw, 23px);
+    gap: 5px;
+    font-size: clamp(14px, 4.2vw, 18px);
     line-height: 1.04;
     white-space: normal;
   }
