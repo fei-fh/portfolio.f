@@ -94,7 +94,7 @@
         ? [['1', 'Architecture', '建筑课程', 'architecture'], ['2', 'Product', '产品设计', 'product'], ['3', 'Art', '现象素描', 'art']]
         : [['01', 'Academic Works', '学生作品', 'academic'], ['02', 'Professional Works', '落地项目', 'professional'], ['03', 'Personal Creation', '个人项目', 'personal']];
       const background = view === 'academic' ? 'Images-web/portfolio-group2-bg.webp' : 'Images/Portfolio/Group1/1.png';
-      const markup = `<img class="portfolio-figma-bg" src="${background}" alt="" aria-hidden="true"><p class="portfolio-figma-word" aria-hidden="true">portfolio</p>${view === 'academic' ? '<p class="portfolio-academic-origin" aria-hidden="true">01&nbsp; Academic Works</p>' : ''}<nav class="portfolio-figma-menu portfolio-figma-menu--${view}" aria-label="${view === 'academic' ? 'Academic Works 分类' : '作品分类'}">${cards.map(([number, title, label, action]) => `<button type="button" ${view === 'academic' ? `data-category="${action}"` : `data-portfolio-group="${action}"`}><strong>${number}&nbsp; ${title}</strong><em>${label}</em></button>`).join('')}</nav>`;
+      const markup = `<img class="portfolio-figma-bg" src="${background}" alt="" aria-hidden="true"><img class="portfolio-sheep-parade" src="Images/sheep-animation/5.png" alt="" aria-hidden="true"><p class="portfolio-figma-word" aria-hidden="true">portfolio</p>${view === 'academic' ? '<p class="portfolio-academic-origin" aria-hidden="true">01&nbsp; Academic Works</p>' : ''}<nav class="portfolio-figma-menu portfolio-figma-menu--${view} portfolio-sheep-menu" aria-label="${view === 'academic' ? 'Academic Works 分类' : '作品分类'}">${cards.map(([number, title, label, action], index) => `<button class="portfolio-sheep-option" style="--sheep-index:${index}" type="button" ${view === 'academic' ? `data-category="${action}"` : `data-portfolio-group="${action}"`}><span class="portfolio-sheep-bead" aria-hidden="true"><img src="Images/sheep-animation/1.1.png" alt=""></span><span class="portfolio-sheep-copy"><strong><span class="portfolio-sheep-number">${number}</span><span>${title}</span></strong><em>${label}</em></span></button>`).join('')}</nav>`;
       renderPrioritizedImages(portfolio, markup, '.portfolio-figma-bg');
       portfolio.dataset.view = view;
     };
@@ -407,6 +407,45 @@
         }
       </style>`);
     }
+    const reducedPortfolioMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    portfolio.addEventListener('click', (event) => {
+      const option = event.target.closest('.portfolio-sheep-option');
+      if (!option || portfolio.dataset.motionBypass === 'true') return;
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      if (portfolio.classList.contains('is-sheep-launching')) return;
+      portfolio.classList.add('is-sheep-launching');
+      option.classList.add('is-launching');
+      const delay = reducedPortfolioMotion.matches ? 0 : 260;
+      window.setTimeout(() => {
+        if (option.dataset.portfolioGroup === 'academic') {
+          academicRevealedAt = performance.now();
+          renderPortfolio('academic');
+          portfolio.classList.remove('is-sheep-launching');
+          return;
+        }
+        portfolio.dataset.motionBypass = 'true';
+        option.click();
+        delete portfolio.dataset.motionBypass;
+        portfolio.classList.remove('is-sheep-launching');
+      }, delay);
+    }, true);
+    let portfolioMotionFrame = 0;
+    portfolio.addEventListener('pointermove', (event) => {
+      if (event.pointerType === 'touch' || reducedPortfolioMotion.matches || portfolioMotionFrame) return;
+      portfolioMotionFrame = requestAnimationFrame(() => {
+        const bounds = portfolio.getBoundingClientRect();
+        const x = ((event.clientX - bounds.left) / bounds.width - .5) * 10;
+        const y = ((event.clientY - bounds.top) / bounds.height - .5) * 6;
+        portfolio.style.setProperty('--portfolio-motion-x', `${x.toFixed(2)}px`);
+        portfolio.style.setProperty('--portfolio-motion-y', `${y.toFixed(2)}px`);
+        portfolioMotionFrame = 0;
+      });
+    });
+    portfolio.addEventListener('pointerleave', () => {
+      portfolio.style.setProperty('--portfolio-motion-x', '0px');
+      portfolio.style.setProperty('--portfolio-motion-y', '0px');
+    });
     portfolio.addEventListener('click', (event) => {
       if (portfolio.dataset.view === 'academic' && !event.target.closest('button')) renderPortfolio();
     });

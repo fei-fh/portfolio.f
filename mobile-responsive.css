@@ -527,6 +527,48 @@
   .group6-photos {
     grid-template-columns: minmax(0, 1fr) !important;
   }
+
+  #portfolio .portfolio-figma-menu.portfolio-sheep-menu,
+  #portfolio .portfolio-figma-menu.portfolio-sheep-menu--academic {
+    top: 16%;
+    left: 5%;
+    display: flex;
+    width: 92%;
+    gap: 0;
+    transform: none;
+  }
+
+  #portfolio .portfolio-figma-menu.portfolio-sheep-menu button.portfolio-sheep-option {
+    --option-offset: 0px;
+    display: flex;
+    grid-template-columns: none;
+    width: 100%;
+    min-height: clamp(104px, 15.8vh, 132px);
+    gap: 4px;
+    padding: 0;
+  }
+
+  #portfolio .portfolio-figma-menu.portfolio-sheep-menu .portfolio-sheep-copy {
+    flex: 1 1 auto;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 7px;
+  }
+
+  #portfolio .portfolio-figma-menu.portfolio-sheep-menu .portfolio-sheep-copy strong {
+    display: flex;
+    gap: 6px;
+    font-size: clamp(18px, 5.4vw, 23px);
+    line-height: 1.04;
+    white-space: normal;
+  }
+
+  #portfolio .portfolio-overview.portfolio-figma-overview > .portfolio-academic-origin {
+    top: auto;
+    right: 7vw;
+    bottom: 13%;
+    left: auto;
+    font-size: 16px;
+  }
 }
 
 @media (max-width: 380px) {
