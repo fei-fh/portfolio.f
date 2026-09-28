@@ -213,7 +213,7 @@
 
       <section class="zhijiang-section zhijiang-research">
         <header class="zhijiang-section-heading"><span>01</span><div><p>FIELD RESEARCH</p><h2>从花海与江畔开始</h2></div></header>
-        <div class="zhijiang-research-lead"><p>团队通过实地调研梳理之江村的自然资源、摄影基础与乡村产业。新安江晨雾、花海田园、村落肌理和摄影社群共同构成项目的在地底色。</p>${zhijiangImage('site-context-map.webp', '之江村场地现状与周边资源分析')}</div>
+        <div class="zhijiang-research-lead"><p>团队通过实地调研梳理之江村的自然资源、摄影基础与乡村产业。新安江晨雾、花海田园、村落肌理和摄影社群共同构成项目的在地底色。</p>${zhijiangImage('site-context-map-transparent.webp', '之江村场地现状与周边资源分析')}</div>
         <div class="zhijiang-photo-strip">${zhijiangImage('research-flower-field.webp', '之江村花海调研')}${zhijiangImage('research-site-visit.webp', '团队实地调研')}${zhijiangImage('research-workshop.webp', '团队与当地人员讨论')}${zhijiangImage('photography-base.webp', '之江村摄影活动')}</div>
         <div class="zhijiang-landscape-grid">${zhijiangImage('river-landscape.webp', '新安江晨雾景观')}${zhijiangImage('village-landscape.webp', '之江村田园景观')}${zhijiangImage('tea-landscape.webp', '山水与田园景观')}</div>
       </section>
@@ -221,7 +221,7 @@
       <section class="zhijiang-section zhijiang-strategy">
         <header class="zhijiang-section-heading"><span>02</span><div><p>POSITIONING &amp; STRATEGY</p><h2>摄影基地与文旅体验</h2></div></header>
         <div class="zhijiang-strategy-copy"><p>以自然景观和摄影艺术特色为基础，项目提出婚纱摄影、美拍旅拍、影视拍摄与短视频创作等复合体验，并通过数字导览、线上消费与一键租赁补全游客从到访到分享的服务链路。</p></div>
-        <div class="zhijiang-diagram-pair">${zhijiangImage('strategy-map.webp', '项目定位与规划策略')}${zhijiangImage('audience-map.webp', '目标人群与市场定位')}</div>
+        <div class="zhijiang-diagram-pair">${zhijiangImage('strategy-map-transparent.webp', '项目定位与规划策略')}${zhijiangImage('audience-map-transparent.webp', '目标人群与市场定位')}</div>
         <div class="zhijiang-digital-grid">${zhijiangImage('digital-guide.webp', '景点线路导览方案')}${zhijiangImage('digital-commerce.webp', '线上消费方案')}${zhijiangImage('digital-service.webp', '一键租赁服务方案')}</div>
       </section>
 

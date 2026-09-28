@@ -212,6 +212,10 @@
   align-items: start;
 }
 
+.zhijiang-diagram-pair img:nth-child(2) {
+  margin-top: 81px;
+}
+
 .zhijiang-digital-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -484,6 +488,10 @@
   .zhijiang-ip-intro {
     grid-template-columns: minmax(0, 1fr);
     gap: 2.5rem;
+  }
+
+  .zhijiang-diagram-pair img:nth-child(2) {
+    margin-top: 0;
   }
 
   .zhijiang-photo-strip,
