@@ -4,7 +4,7 @@
 .home-sheep-track {
 --sheep-width: 200px;
 --sheep-crossing-duration: 9s;
---sheep-bottom: 30vh;
+--sheep-bottom: 0vh;
 --sheep-small-jump: -26px;
 --sheep-big-jump: -54px;
 --sheep-landing-squash: 5px;
@@ -89,4 +89,33 @@
   92% { transform: translateY(0); }
   94% { transform: translateY(calc(var(--sheep-landing-squash) * .8)); }
   96%, 100% { transform: translateY(0); }
+}
+
+/* Mobile HOME animation controls. Keep these independent from desktop. */
+@media (max-width: 768px) {
+  .home-sheep-track {
+    --sheep-width: 128px;
+    --sheep-crossing-duration: 8s;
+    --sheep-bottom: 0vh;
+    --sheep-small-jump: -14px;
+    --sheep-big-jump: -28px;
+    --sheep-landing-squash: 3px;
+    --sheep-text-size: 20px;
+    --sheep-path-gap: 6px;
+    --sheep-left-boundary: -0.2;
+    --sheep-right-boundary: 1.2;
+  }
+
+  .home-sheep-runner {
+    width: var(--sheep-width);
+  }
+
+  .home-sheep-message {
+    right: auto;
+    left: 50%;
+    max-width: calc(100vw - 24px);
+    transform: translateX(calc(-50% + var(--sheep-message-shift, 0px)));
+    line-height: 1.05;
+    white-space: nowrap;
+  }
 }
