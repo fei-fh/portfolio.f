@@ -50,45 +50,104 @@
     '6-4': { marginTop: '-37px' }
   };
   const DESKTOP_HIDDEN_IMAGES = new Set(['4-6']);
+  const ABOUT_RESPONSIVE_MAX_WIDTHS = {
+    'IMG_3678.webp': 750,
+    'Weixin Image_20260922135121_34_12.png': 812,
+    'Weixin Image_20260922135111_33_12.png': 870,
+    'IMG_3332.webp': 750,
+    'Weixin Image_2026-09-21_141317_071.jpg': 913,
+    'IMG_8779.JPG': 1080,
+    'cv-1.JPG': 1080,
+    'cv-2.JPG': 1080,
+    '3c6d2fb830a84247e7f0ee03114779b3.jpg': 1080,
+    '630911154a69ea6067867bcd41914c.JPG': 1080,
+    'c9a59691a6caac14f03b2ef0994d95.JPG': 1080,
+    'Weixin Image_20260922135028_29_12.png': 860,
+    'Weixin Image_20260922135036_30_12.png': 860,
+    'Weixin Image_20260922135044_31_12.png': 862,
+    'Weixin Image_20260922135053_32_12.png': 876,
+    'Weixin Image_20260922135142_35_12.png': 706
+  };
+  const aboutResponsiveWidths = (file) => {
+    const maxWidth = ABOUT_RESPONSIVE_MAX_WIDTHS[file] || 1440;
+    return [...new Set([480, 960, 1440, maxWidth].filter((width) => width <= maxWidth))].sort((a, b) => a - b);
+  };
+  const aboutResponsivePath = (file, width) =>
+    `Images-web/about/responsive/${file.replace(/\.[^.]+$/, '')}-${width}.webp`;
   const desktopAbout = window.matchMedia('(min-width: 821px)');
   let aboutGalleryMode = '';
+  let aboutCompositionObserver = null;
   const mountAboutGallery = () => {
     const mode = desktopAbout.matches ? 'desktop' : 'mobile';
     if (aboutGalleryMode === mode) return;
     aboutGalleryMode = mode;
+    aboutCompositionObserver?.disconnect();
+    aboutCompositionObserver = null;
     const photos = mode === 'desktop' ? desktopPhotos : allPhotos;
     const compositions = mode === 'desktop' ? DESKTOP_COMPOSITIONS : MOBILE_COMPOSITIONS;
+    const patternSize = compositions[0].length;
+    const compositionCount = Math.ceil(photos.length / patternSize);
     const fragment = document.createDocumentFragment();
-    photos.forEach((file, index) => {
-      const patternSize = compositions[0].length;
-      const patternIndex = Math.floor(index / patternSize);
-      if (index % patternSize === 0) {
-        const canvas = document.createElement('div');
-        canvas.className = 'about-composition';
-        fragment.append(canvas);
-      }
-      const [x, y, w, h, z] = compositions[patternIndex % compositions.length][index % patternSize];
-      const figure = document.createElement('figure');
-      figure.className = 'about-photo';
-      figure.style.cssText = `--photo-x:${x}%;--photo-y:${y}%;--photo-width:${w}%;--photo-height:${h}%;--photo-z:${z}`;
-      const slot = `${patternIndex + 1}-${(index % patternSize) + 1}`;
-      if (mode === 'desktop' && DESKTOP_HIDDEN_IMAGES.has(slot)) {
-        fragment.lastChild.append(figure);
-        return;
-      }
-      const image = document.createElement('img');
-      image.loading = index < 3 ? 'eager' : 'lazy';
-      image.decoding = 'async';
-      image.src = file.endsWith('.webp') ? `Images-web/about/${file}` : optimizedImageSource(`Images/about/${file}`);
-      image.alt = `学习、制作与生活记录 ${index + 1}`;
-      image.draggable = false;
-      if (mode === 'desktop') {
-        Object.assign(image.style, DESKTOP_IMAGE_ADJUSTMENTS[slot] || {});
-      }
-      figure.append(image);
-      fragment.lastChild.append(figure);
+    const canvases = Array.from({ length: compositionCount }, (_, patternIndex) => {
+      const canvas = document.createElement('div');
+      canvas.className = 'about-composition';
+      canvas.dataset.aboutComposition = String(patternIndex);
+      fragment.append(canvas);
+      return canvas;
     });
     track.replaceChildren(fragment);
+
+    const renderComposition = (canvas, patternIndex) => {
+      if (canvas.dataset.mounted === 'true') return;
+      canvas.dataset.mounted = 'true';
+      const start = patternIndex * patternSize;
+      const end = Math.min(start + patternSize, photos.length);
+      const composition = compositions[patternIndex % compositions.length];
+      const compositionFragment = document.createDocumentFragment();
+      for (let index = start; index < end; index += 1) {
+        const file = photos[index];
+        const itemIndex = index % patternSize;
+        const [x, y, w, h, z] = composition[itemIndex];
+        const figure = document.createElement('figure');
+        figure.className = 'about-photo';
+        figure.style.cssText = `--photo-x:${x}%;--photo-y:${y}%;--photo-width:${w}%;--photo-height:${h}%;--photo-z:${z}`;
+        const slot = `${patternIndex + 1}-${itemIndex + 1}`;
+        if (mode === 'desktop' && DESKTOP_HIDDEN_IMAGES.has(slot)) {
+          compositionFragment.append(figure);
+          continue;
+        }
+        const image = document.createElement('img');
+        const widths = aboutResponsiveWidths(file);
+        image.loading = index < 3 ? 'eager' : 'lazy';
+        image.decoding = 'async';
+        image.src = aboutResponsivePath(file, widths.at(-1));
+        image.srcset = widths.map((width) => `${aboutResponsivePath(file, width)} ${width}w`).join(', ');
+        image.sizes = '(min-width: 821px) 32vw, 40vw';
+        image.alt = `学习、制作与生活记录 ${index + 1}`;
+        image.draggable = false;
+        if (mode === 'desktop') {
+          Object.assign(image.style, DESKTOP_IMAGE_ADJUSTMENTS[slot] || {});
+        }
+        figure.append(image);
+        compositionFragment.append(figure);
+      }
+      canvas.append(compositionFragment);
+    };
+
+    renderComposition(canvases[0], 0);
+    if (!('IntersectionObserver' in window)) {
+      canvases.slice(1).forEach((canvas, index) => renderComposition(canvas, index + 1));
+      return;
+    }
+    aboutCompositionObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const canvas = entry.target;
+        renderComposition(canvas, Number(canvas.dataset.aboutComposition));
+        aboutCompositionObserver.unobserve(canvas);
+      });
+    }, { root: about, rootMargin: '75% 0px 75% 0px' });
+    canvases.slice(1).forEach((canvas) => aboutCompositionObserver.observe(canvas));
   };
   document.addEventListener('site:scenechange', (event) => {
     if (event.detail?.id === 'about') mountAboutGallery();
