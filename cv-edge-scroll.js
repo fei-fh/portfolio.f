@@ -193,11 +193,74 @@
     const professionalBoardWithAddedPhotos = professionalBoard.replace('</div></div></div><div class="professional-board-section"><h2>FURNITURE', '<img class="professional-photo-wide" src="Images-web/Professional Works/照片/zhaxa (2).webp" alt="招商西安湾补充空间照片"></div></div><div class="professional-photo-additions"><img src="Images-web/Professional Works/照片/31.webp" alt="招商西安湾落地照片 31"><img src="Images-web/Professional Works/照片/32.webp" alt="招商西安湾落地照片 32"></div></div><section class="professional-closing-photo"><img src="Images-web/Professional Works/照片/1.webp" alt="招商西安湾项目收尾照片"></section><div class="professional-board-section"><h2>FURNITURE');
     const professionalBoardComplete = professionalBoardWithAddedPhotos;
     const professionalProjects = [
-      { key: 'xian-bay', number: '01', title: '招商西安湾', cover: 'Images-web/Professional Works/照片/zhaxa (1).webp' },
-      { key: 'gmm-shanghai', number: '02', title: 'GMM SHANGHAI', cover: 'Images-web/Professional Works/GMMSH/主卧套.webp' }
+      { key: 'zhijiang-huaying', number: '01', title: '之江花影', cover: 'Images-web/zhijiang-huaying/hero-flower-field.webp', meta: '乡村品牌与文旅策划 · 2024' },
+      { key: 'xian-bay', number: '02', title: '招商西安湾', cover: 'Images-web/Professional Works/照片/zhaxa (1).webp' },
+      { key: 'gmm-shanghai', number: '03', title: 'GMM SHANGHAI', cover: 'Images-web/Professional Works/GMMSH/主卧套.webp' }
     ];
+    const zhijiangAsset = 'Images-web/zhijiang-huaying/';
+    const zhijiangImage = (file, alt, className = '') => `<img${className ? ` class="${className}"` : ''} src="${zhijiangAsset}${file}" alt="${alt}" loading="lazy" decoding="async">`;
+    const zhijiangPosters = [
+      ['flower-january.webp', '一月花神海报'], ['flower-february.webp', '二月花神海报'], ['flower-march.webp', '三月花神海报'],
+      ['flower-peony.webp', '四月花神海报'], ['flower-june.webp', '六月花神海报'], ['flower-july.webp', '七月花神海报'],
+      ['flower-august.webp', '八月花神海报'], ['flower-september.webp', '九月花神海报'], ['flower-october.webp', '十月花神海报'],
+      ['flower-november.webp', '十一月花神海报'], ['flower-december.webp', '十二月花神海报'], ['flower-lotus.webp', '荷花花神海报']
+    ];
+    const zhijiangDetail = `<article class="zhijiang-case" aria-label="之江花影项目详情">
+      <section class="zhijiang-intro">
+        <div class="zhijiang-intro-display" aria-hidden="true"><span>FLOWER</span><span>SHADOW</span></div>
+        <div class="zhijiang-intro-copy"><p class="zhijiang-kicker">FLOWER SHADOW OF ZHI RIVER</p><h2>之江花影 · 江畔旅拍</h2><p>项目立足杭州建德之江村，以在地花卉、江畔田园与摄影产业为线索，将场地调研、文旅定位、空间体验、衍生产品和 IP 内容组织为一套可持续生长的乡村品牌体验。</p><dl><div><dt>LOCATION</dt><dd>浙江 · 建德 · 之江村</dd></div><div><dt>TYPE</dt><dd>乡村品牌 / 文旅策划 / 场景营造</dd></div><div><dt>YEAR</dt><dd>2023–2024</dd></div></dl></div>
+      </section>
+
+      <section class="zhijiang-section zhijiang-research">
+        <header class="zhijiang-section-heading"><span>01</span><div><p>FIELD RESEARCH</p><h2>从花海与江畔开始</h2></div></header>
+        <div class="zhijiang-research-lead"><p>团队通过实地调研梳理之江村的自然资源、摄影基础与乡村产业。新安江晨雾、花海田园、村落肌理和摄影社群共同构成项目的在地底色。</p>${zhijiangImage('site-context-map.webp', '之江村场地现状与周边资源分析')}</div>
+        <div class="zhijiang-photo-strip">${zhijiangImage('research-flower-field.webp', '之江村花海调研')}${zhijiangImage('research-site-visit.webp', '团队实地调研')}${zhijiangImage('research-workshop.webp', '团队与当地人员讨论')}${zhijiangImage('photography-base.webp', '之江村摄影活动')}</div>
+        <div class="zhijiang-landscape-grid">${zhijiangImage('river-landscape.webp', '新安江晨雾景观')}${zhijiangImage('village-landscape.webp', '之江村田园景观')}${zhijiangImage('tea-landscape.webp', '山水与田园景观')}</div>
+      </section>
+
+      <section class="zhijiang-section zhijiang-strategy">
+        <header class="zhijiang-section-heading"><span>02</span><div><p>POSITIONING &amp; STRATEGY</p><h2>摄影基地与文旅体验</h2></div></header>
+        <div class="zhijiang-strategy-copy"><p>以自然景观和摄影艺术特色为基础，项目提出婚纱摄影、美拍旅拍、影视拍摄与短视频创作等复合体验，并通过数字导览、线上消费与一键租赁补全游客从到访到分享的服务链路。</p></div>
+        <div class="zhijiang-diagram-pair">${zhijiangImage('strategy-map.webp', '项目定位与规划策略')}${zhijiangImage('audience-map.webp', '目标人群与市场定位')}</div>
+        <div class="zhijiang-digital-grid">${zhijiangImage('digital-guide.webp', '景点线路导览方案')}${zhijiangImage('digital-commerce.webp', '线上消费方案')}${zhijiangImage('digital-service.webp', '一键租赁服务方案')}</div>
+      </section>
+
+      <section class="zhijiang-section zhijiang-space">
+        <header class="zhijiang-section-heading"><span>03</span><div><p>SPATIAL EXPERIENCE</p><h2>三处花海打卡装置</h2></div></header>
+        <div class="zhijiang-site-pair">${zhijiangImage('site-aerial.webp', '花海栈道场地航拍')}${zhijiangImage('site-masterplan.webp', '花海打卡装置总平面')}</div>
+        <p class="zhijiang-section-note">以“之江花韵，江畔旅拍”为主题，项目在花海栈道设置繁梦云廊、环中月境与雾影江台三处艺术打卡节点，让行走、停留与取景形成连续体验。</p>
+        <div class="zhijiang-installations">
+          <article><div>${zhijiangImage('installation-01-before.webp', '繁梦云廊改造前')}${zhijiangImage('installation-01-visual.webp', '繁梦云廊效果图')}</div><h3><span>01</span>繁梦云廊</h3></article>
+          <article><div>${zhijiangImage('installation-02-before.webp', '环中月境改造前')}${zhijiangImage('installation-02-visual.webp', '环中月境效果图')}</div><h3><span>02</span>环中月境</h3></article>
+          <article><div>${zhijiangImage('installation-03-before.webp', '雾影江台改造前')}${zhijiangImage('installation-03-visual.webp', '雾影江台效果图')}</div><h3><span>03</span>雾影江台</h3></article>
+        </div>
+      </section>
+
+      <section class="zhijiang-section zhijiang-outcome">
+        <header class="zhijiang-section-heading"><span>04</span><div><p>FROM PROPOSAL TO SITE</p><h2>从方案到落地</h2></div></header>
+        <p class="zhijiang-section-note">经过与政府、指导老师和施工团队的多轮沟通，休闲区方案持续调整并进入现场实施。以下三组图像分别对应改造前、空间设想与落地状态。</p>
+        <div class="zhijiang-outcome-block"><h3>花影轩</h3><div class="zhijiang-before-after">${zhijiangImage('pavilion-before.webp', '花影轩改造前')}${zhijiangImage('pavilion-visual.webp', '花影轩效果图')}${zhijiangImage('pavilion-outcome.webp', '花影轩落地状态')}</div></div>
+        <div class="zhijiang-outcome-block"><h3>林下营地</h3><div class="zhijiang-before-after">${zhijiangImage('forest-camp-before.webp', '林下营地改造前')}${zhijiangImage('forest-camp-visual.webp', '林下营地效果图')}${zhijiangImage('forest-camp-outcome.webp', '林下营地落地状态')}</div></div>
+        <div class="zhijiang-outcome-block"><h3>雾森系统</h3><div class="zhijiang-before-after zhijiang-before-after--two">${zhijiangImage('mist-system-visual.webp', '雾森系统效果图')}${zhijiangImage('mist-system-outcome.webp', '雾森系统落地状态')}</div></div>
+        <div class="zhijiang-construction">${zhijiangImage('construction-01.webp', '现场施工照片一')}${zhijiangImage('construction-02.webp', '现场施工照片二')}${zhijiangImage('construction-03.webp', '现场施工照片三')}</div>
+      </section>
+
+      <section class="zhijiang-section zhijiang-products">
+        <header class="zhijiang-section-heading"><span>05</span><div><p>PRODUCTS &amp; SERVICES</p><h2>鲜花 + 日常体验</h2></div></header>
+        <div class="zhijiang-product-hero">${zhijiangImage('brand-board.webp', '之江花影品牌视觉板')}<p>将花卉资源延伸为气味文化、食物饮品和手工艺品，使项目从一次到访继续生长为可以携带、分享与回忆的内容。</p></div>
+        <div class="zhijiang-package-grid">${zhijiangImage('package-dieline.webp', '鲜花产品包装刀版')}${zhijiangImage('package-blue-layout.webp', '蓝色包装展开设计')}${zhijiangImage('package-pink-layout.webp', '粉色包装展开设计')}${zhijiangImage('package-blue.webp', '蓝色包装样机')}${zhijiangImage('package-pink.webp', '粉色包装样机')}${zhijiangImage('fragrance-card.webp', '鲜花气味文化卡片')}</div>
+      </section>
+
+      <section class="zhijiang-section zhijiang-ip">
+        <header class="zhijiang-section-heading"><span>06</span><div><p>IP &amp; CONTENT SYSTEM</p><h2>花之之与十二花神</h2></div></header>
+        <div class="zhijiang-ip-intro">${zhijiangImage('flower-fairy-ip.webp', '花之之 IP 形象设定')}<p>“花之之”取材于之江、花艺与草莓种植三项在地文化，以梅之红、江之蓝和花之黄建立角色识别。十二花神旅拍影集则把传统花月文化转化为可拍摄、可收藏的视觉内容。</p></div>
+        <div class="zhijiang-poster-grid">${zhijiangPosters.map(([file, alt]) => zhijiangImage(file, alt)).join('')}</div>
+      </section>
+
+      <footer class="zhijiang-closing"><p>FLOWER SHADOW OF ZHI RIVER</p><h2>让花海、影像与乡村生活<br>成为同一段旅程</h2></footer>
+    </article>`;
     const gmmShanghai = {
-      index: '03.02.02',
+      index: '03.02.03',
       title: 'GMM SHANGHAI',
       hero: 'Images-web/Professional Works/GMMSH/主卧套.webp',
       collage: 'Collage/collage.png',
@@ -237,14 +300,14 @@
         requestAnimationFrame(applyScroll);
       });
     };
-    const openCollection = ({ index, title, label = '', description = '', image = '', after = '', dark = false }) => {
+    const openCollection = ({ index, title, label = '', description = '', image = '', after = '', heroMeta = '', dark = false }) => {
       const gallery = document.getElementById('gallery');
       document.body.classList.remove('is-scrunchie-page', 'is-professional-index');
       document.body.classList.toggle('is-professional-page', Boolean(image));
       document.getElementById('category-index').textContent = `${index} / PORTFOLIO`;
       gallery.className = `collection-gallery${dark ? ' collection-dark' : ''}`;
       const markup = image
-        ? `<section class="collection-page collection-page--image"><img src="${image}" alt="${title}"><div class="collection-hero-overlay"><h1>${title}</h1></div></section>${after}`
+        ? `<section class="collection-page collection-page--image"><img src="${image}" alt="${title}"><div class="collection-hero-overlay">${heroMeta ? `<p class="collection-hero-meta">${heroMeta}</p>` : ''}<h1>${title}</h1></div></section>${after}`
         : `<section class="collection-page">${label ? `<p>${label}</p>` : ''}<h1>${title}</h1>${description ? `<span>${description}</span>` : ''}</section>`;
       renderPrioritizedImages(gallery, markup, '.collection-page--image > img');
       document.querySelector('.project-pager')?.remove();
@@ -256,16 +319,24 @@
       document.body.classList.add('is-professional-index');
       document.getElementById('category-index').textContent = '03.02 / PORTFOLIO';
       gallery.className = 'professional-index';
-      const markup = `<section class="professional-index-page"><div class="professional-projects">${professionalProjects.map(({ key, number, title, cover }) => `<button type="button" class="professional-project" data-professional-project="${key}" aria-label="打开 PROJECT ${number} ${title}"><img src="${cover}" alt="${title} 项目封面"><span class="professional-project-shade" aria-hidden="true"></span><span class="professional-project-number">PROJECT ${number}</span><div class="project-copy professional-project-copy"><strong>${title}</strong></div><span class="professional-project-prompt">CLICK TO EXPLORE</span></button>`).join('')}</div></section>`;
+      const markup = `<section class="professional-index-page"><div class="professional-projects">${professionalProjects.map(({ key, number, title, cover, meta = '' }) => `<button type="button" class="professional-project" data-professional-project="${key}" aria-label="打开 PROJECT ${number} ${title}"><img src="${cover}" alt="${title} 项目封面"><span class="professional-project-shade" aria-hidden="true"></span><span class="professional-project-number">PROJECT ${number}</span><div class="project-copy professional-project-copy"><strong>${title}</strong>${meta ? `<span class="professional-project-meta">${meta}</span>` : ''}</div><span class="professional-project-prompt">CLICK TO EXPLORE</span></button>`).join('')}</div></section>`;
       renderPrioritizedImages(gallery, markup, '.professional-project:first-child > img');
       document.querySelector('.project-pager')?.remove();
       goTo('portfolio-detail');
       activeProfessionalProject = null;
       resetProfessionalScroll(gallery, () => gallery.querySelector(`[data-professional-project="${projectKey}"]`)?.offsetTop || 0);
     };
+    const openZhijiangHuaying = () => {
+      activeProfessionalProject = 'zhijiang-huaying';
+      openCollection({ index: '03.02.01', title: '之江花影', heroMeta: '乡村品牌与文旅策划 · 建德之江村 · 2024', image: `${zhijiangAsset}hero-flower-field.webp`, after: zhijiangDetail, dark: true });
+      const gallery = document.getElementById('gallery');
+      gallery.classList.add('zhijiang-huaying');
+      resetProfessionalScroll(gallery);
+    };
+    document.querySelector('[data-portfolio-project="zhijiang-huaying"]')?.classList.remove('work-project-link--pending');
     const openXianBay = () => {
       activeProfessionalProject = 'xian-bay';
-      openCollection({ index: '03.02', title: '招商西安湾', image: 'Images-web/Professional Works/照片/zhaxa (1).webp', after: `${professionalConcept}${professionalBoardComplete}`, dark: true });
+      openCollection({ index: '03.02.02', title: '招商西安湾', image: 'Images-web/Professional Works/照片/zhaxa (1).webp', after: `${professionalConcept}${professionalBoardComplete}`, dark: true });
       resetProfessionalScroll(document.getElementById('gallery'));
     };
     const openGmmShanghai = () => {
@@ -281,7 +352,7 @@
       if (!activeProfessionalProject || !gallery.classList.contains('collection-gallery') || !(target instanceof Element)) return;
       if (target.closest('img, a, button, input, textarea, select, label, [role="button"], [tabindex]')) return;
       if (target.closest('.collection-hero-overlay, .collection-concept-heading, .collection-concept-copy')) return;
-      const blankArea = target === gallery || target.matches('.collection-page--image, .collection-concept, .professional-board, .professional-board-section, .professional-photos-figma, .professional-photo-additions, .professional-closing-photo, .professional-collage, .professional-photos, .professional-photo-pairs, .professional-furniture, .gmm-project-content, .gmm-collage, .gmm-gallery, .gmm-gallery-row, .gmm-gallery-stack');
+      const blankArea = target === gallery || target.matches('.collection-page--image, .collection-concept, .professional-board, .professional-board-section, .professional-photos-figma, .professional-photo-additions, .professional-closing-photo, .professional-collage, .professional-photos, .professional-photo-pairs, .professional-furniture, .gmm-project-content, .gmm-collage, .gmm-gallery, .gmm-gallery-row, .gmm-gallery-stack, .zhijiang-case, .zhijiang-intro, .zhijiang-section, .zhijiang-closing');
       if (!blankArea) return;
       const projectKey = activeProfessionalProject;
       openProfessionalIndex(projectKey);
@@ -541,9 +612,16 @@
         renderPortfolio();
         return;
       }
+      const linkedPortfolioProject = event.target.closest('[data-portfolio-project="zhijiang-huaying"]');
+      if (linkedPortfolioProject) {
+        event.preventDefault();
+        openZhijiangHuaying();
+        return;
+      }
       const professionalProject = event.target.closest('[data-professional-project]');
       if (professionalProject) {
         event.preventDefault();
+        if (professionalProject.dataset.professionalProject === 'zhijiang-huaying') openZhijiangHuaying();
         if (professionalProject.dataset.professionalProject === 'xian-bay') openXianBay();
         if (professionalProject.dataset.professionalProject === 'gmm-shanghai') openGmmShanghai();
         return;
