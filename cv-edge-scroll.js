@@ -252,9 +252,9 @@
     const professionalBoardWithAddedPhotos = professionalBoard.replace('</div></div></div><div class="professional-board-section"><h2>FURNITURE', '<img class="professional-photo-wide" src="Images-web/Professional Works/照片/zhaxa (2).webp" alt="招商西安湾补充空间照片"></div></div><div class="professional-photo-additions"><img src="Images-web/Professional Works/照片/31.webp" alt="招商西安湾落地照片 31"><img src="Images-web/Professional Works/照片/32.webp" alt="招商西安湾落地照片 32"></div></div><section class="professional-closing-photo"><img src="Images-web/Professional Works/照片/1.webp" alt="招商西安湾项目收尾照片"></section><div class="professional-board-section"><h2>FURNITURE');
     const professionalBoardComplete = professionalBoardWithAddedPhotos;
     const professionalProjects = [
-      { key: 'zhijiang-huaying', number: '01', title: '之江花影', cover: 'Images-web/zhijiang-huaying/hero-flower-field.webp', meta: '乡村品牌与文旅策划 · 2024' },
-      { key: 'xian-bay', number: '02', title: '招商西安湾', cover: 'Images-web/Professional Works/照片/zhaxa (1).webp' },
-      { key: 'gmm-shanghai', number: '03', title: 'GMM SHANGHAI', cover: 'Images-web/Professional Works/GMMSH/主卧套.webp' }
+      { key: 'zhijiang-huaying', number: '01', title: '之江花影', hoverTitle: 'ZHIJIANG HUAYING', capability: 'Brand · IP · Content · Experience', cover: 'Images-web/zhijiang-huaying/hero-flower-field.webp' },
+      { key: 'xian-bay', number: '02', title: '招商·西安湾', hoverTitle: "XI'AN BAY", capability: 'Product Development · Supply Chain · Delivery', cover: 'Images-web/Professional Works/照片/zhaxa (1).webp' },
+      { key: 'gmm-shanghai', number: '03', title: 'GMM SHANGHAI', hoverTitle: 'GMM SHANGHAI', capability: 'Concept · Experience · Visual', cover: 'Images-web/Professional Works/GMMSH/主卧套.webp' }
     ];
     const zhijiangAsset = 'Images-web/zhijiang-huaying/';
     const zhijiangImage = (file, alt, className = '') => `<img${className ? ` class="${className}"` : ''} src="${zhijiangAsset}${file}" alt="${alt}" loading="lazy" decoding="async">`;
@@ -377,8 +377,9 @@
       document.body.classList.remove('is-scrunchie-page', 'is-professional-page');
       document.body.classList.add('is-professional-index');
       document.getElementById('category-index').textContent = '03.02 / PORTFOLIO';
-      gallery.className = 'professional-index';
-      const markup = `<section class="professional-index-page"><div class="professional-projects">${professionalProjects.map(({ key, number, title, cover, meta = '' }) => `<button type="button" class="professional-project" data-professional-project="${key}" aria-label="打开 PROJECT ${number} ${title}"><img src="${cover}" alt="${title} 项目封面"><span class="professional-project-shade" aria-hidden="true"></span><span class="professional-project-number">PROJECT ${number}</span><div class="project-copy professional-project-copy"><strong>${title}</strong>${meta ? `<span class="professional-project-meta">${meta}</span>` : ''}</div><span class="professional-project-prompt">CLICK TO EXPLORE</span></button>`).join('')}</div></section>`;
+      gallery.className = 'professional-index architecture-overview professional-overview';
+      const projects = professionalProjects.map(({ key, number, title, hoverTitle, capability, cover }) => `<button type="button" class="professional-project architecture-project" data-professional-project="${key}" aria-label="打开 PROJECT ${number} ${title}"><img src="${cover}" alt="${title} 项目封面"><strong class="architecture-project-title professional-project-title"><span class="professional-hover-copy"><span>${hoverTitle}</span><small>${capability}</small></span></strong></button>`).join('');
+      const markup = `<header class="architecture-overview-header"><h1>Professional Works</h1><p>${professionalProjects.length} Projects</p></header><div class="architecture-project-grid professional-project-grid">${projects}</div>`;
       renderPrioritizedImages(gallery, markup, '.professional-project:first-child > img');
       document.querySelector('.project-pager')?.remove();
       goTo('portfolio-detail');
