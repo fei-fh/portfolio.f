@@ -232,7 +232,29 @@ function optimizedImageSource(source){
 }
 function renderPrioritizedImages(container,markup,eagerSelector=''){const template=document.createElement('template');template.innerHTML=markup;const eager=eagerSelector?template.content.querySelector(eagerSelector):null;const scene=container.closest('.scene');const sceneIsActive=!scene||scene.classList.contains('scene-active');template.content.querySelectorAll('img').forEach(image=>{image.src=optimizedImageSource(image.getAttribute('src'));image.decoding='async';if(image===eager&&sceneIsActive){image.loading='eager';image.fetchPriority='high';}else{image.loading='lazy';image.fetchPriority='auto';if(image===eager)image.setAttribute('data-eager-when-active','');}});container.replaceChildren(template.content);}
 function resetMobileScroll(container){if(!window.matchMedia('(max-width: 768px)').matches)return;const reset=()=>{if(container){container.scrollTop=0;container.scrollLeft=0;}window.scrollTo({top:0,left:0,behavior:'auto'});document.documentElement.scrollTop=0;document.body.scrollTop=0;};reset();requestAnimationFrame(()=>requestAnimationFrame(reset));}
-function showCategory(key){const d=portfolioData[key],gallery=document.getElementById('gallery');document.getElementById('category-index').textContent=`${d.index} / PORTFOLIO`;document.getElementById('category-kicker').textContent=d.label;document.getElementById('category-title').textContent=d.title;document.getElementById('category-description').textContent=d.description;const markup=d.images.map((entry,i)=>{const x=typeof entry==='string'?entry:entry.title,src=typeof entry==='string'?'':entry.src,project=typeof entry==='string'?'':entry.key||'',summary=typeof entry==='string'?'':entry.summary||'';return `<button class="image-placeholder" type="button" data-image="${src}" data-project="${project}" aria-label="查看 ${x} 项目详情">${src?`<img src="${src}" alt="${x}">`:''}<span>PROJECT ${String(i+1).padStart(2,'0')}</span><div class="project-copy"><strong>${x}</strong>${summary?`<p>${summary}</p>`:''}</div><small>${String(i+1).padStart(2,'0')} / ${String(d.images.length).padStart(2,'0')}</small></button>`}).join('');renderPrioritizedImages(gallery,markup,'.image-placeholder:first-child img');document.querySelector('.project-pager')?.remove();gallery.insertAdjacentHTML('afterend','<div class="project-pager"><span>SCROLL TO EXPLORE ↓</span></div>');goTo('portfolio-detail');resetMobileScroll(gallery);}
+function showCategory(key){
+  const d=portfolioData[key],gallery=document.getElementById('gallery');
+  document.getElementById('category-index').textContent=`${d.index} / PORTFOLIO`;
+  document.getElementById('category-kicker').textContent=d.label;
+  document.getElementById('category-title').textContent=d.title;
+  document.getElementById('category-description').textContent=d.description;
+  if(key==='architecture'){
+    gallery.className='gallery architecture-overview';
+    const projects=d.images.map((entry)=>`<button class="image-placeholder architecture-project" type="button" data-image="${entry.src}" data-project="${entry.key}" aria-label="打开 ${entry.title} 项目详情"><img src="${entry.src}" alt="${entry.title}"><strong class="architecture-project-title">${entry.title}</strong></button>`).join('');
+    const markup=`<header class="architecture-overview-header"><h1>Academic Architecture</h1><p>${d.images.length} Projects</p></header><div class="architecture-project-grid">${projects}</div>`;
+    renderPrioritizedImages(gallery,markup,'.architecture-project:first-child img');
+    document.querySelector('.project-pager')?.remove();
+    goTo('portfolio-detail');
+    resetMobileScroll(gallery);
+    return;
+  }
+  const markup=d.images.map((entry,i)=>{const x=typeof entry==='string'?entry:entry.title,src=typeof entry==='string'?'':entry.src,project=typeof entry==='string'?'':entry.key||'',summary=typeof entry==='string'?'':entry.summary||'';return `<button class="image-placeholder" type="button" data-image="${src}" data-project="${project}" aria-label="查看 ${x} 项目详情">${src?`<img src="${src}" alt="${x}">`:''}<span>PROJECT ${String(i+1).padStart(2,'0')}</span><div class="project-copy"><strong>${x}</strong>${summary?`<p>${summary}</p>`:''}</div><small>${String(i+1).padStart(2,'0')} / ${String(d.images.length).padStart(2,'0')}</small></button>`}).join('');
+  renderPrioritizedImages(gallery,markup,'.image-placeholder:first-child img');
+  document.querySelector('.project-pager')?.remove();
+  gallery.insertAdjacentHTML('afterend','<div class="project-pager"><span>SCROLL TO EXPLORE ↓</span></div>');
+  goTo('portfolio-detail');
+  resetMobileScroll(gallery);
+}
 const showCategoryWithPrompt=showCategory;
 showCategory=key=>{showCategoryWithPrompt(key);const prompt=document.querySelector('.project-pager span');if(prompt)prompt.textContent='CLICK TO EXPLORE';};
 const imageLightbox=document.createElement('div');
